@@ -4,8 +4,14 @@ import Logo from "@/public/Elk.png";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import classNames from "classnames";
 
 const Navbar = () => {
+  const currentPath = usePathname();
+
+  const links = [{ label: "Completed", href: "/" }];
+
   return (
     <Container className="bg-slate-100">
       <Flex align="center" justify="between" className=" w-full px-5 py-2">
@@ -13,13 +19,21 @@ const Navbar = () => {
           <Link href="/">
             <Image src={Logo} alt="Logo" width={45} />
           </Link>
-          <Link href="/">
-            <Text size="5" className="hoverEffects">
-              Goals
-            </Text>
-          </Link>
+          {links.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className={classNames({
+                "text-indigo-500 font-semibold": link.href === currentPath,
+              })}
+            >
+              {link.label}
+            </Link>
+          ))}
         </Flex>
-        <Button>New Goal</Button>
+        <Link href="/new-goal">
+          <Button>New Goal</Button>
+        </Link>
       </Flex>
     </Container>
   );

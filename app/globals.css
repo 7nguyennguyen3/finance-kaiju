@@ -31,9 +31,3 @@ body {
     text-wrap: balance;
   }
 }
-
-@layer components {
-  .hoverEffects {
-    @apply hover:text-violet-500 hover:font-semibold;
-  }
-}

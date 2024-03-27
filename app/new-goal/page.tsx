@@ -1,15 +1,18 @@
 import { Flex } from "@radix-ui/themes";
-import DisplayGoals from "./DisplayGoals";
+import CreateNewGoal from "./CreateNewGoal";
 
-export default async function Home() {
+const NewGoalPage = () => {
   return (
     <Flex
       align="center"
       justify="center"
       className="min-h-screen"
       direction="column"
+      gap="3"
     >
-      <DisplayGoals />
+      <CreateNewGoal />
     </Flex>
   );
-}
+};
+
+export default NewGoalPage;

@@ -10,7 +10,10 @@ import classNames from "classnames";
 const Navbar = () => {
   const currentPath = usePathname();
 
-  const links = [{ label: "Completed", href: "/" }];
+  const links = [
+    { label: "Current", href: "/goal" },
+    { label: "Completed", href: "/completed" },
+  ];
 
   return (
     <Container className="bg-slate-100">

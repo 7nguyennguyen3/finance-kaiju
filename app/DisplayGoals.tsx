@@ -9,6 +9,7 @@ import {
   Separator,
   Text,
 } from "@radix-ui/themes";
+import Link from "next/link";
 
 const DisplayGoals = async () => {
   const goals = await prisma.gOAL.findMany();
@@ -24,10 +25,12 @@ const DisplayGoals = async () => {
           {goals.map((goal) => (
             <Card>
               <Flex justify="between">
-                <Text className="font-semibold">{goal.title}</Text>
+                <Link href="/new-goal" className="hover:text-indigo-500">
+                  <Text className="font-semibold">{goal.title}</Text>
+                </Link>
                 <Badge color="ruby">{goal.status}</Badge>
               </Flex>
-              <Separator my="1" size="4" />
+              <Separator my="2" size="4" />
               <Blockquote className="font-normal p-3">
                 {goal.description},{" "}
               </Blockquote>

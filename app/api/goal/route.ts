@@ -1,7 +1,6 @@
 import { goalSchema } from "@/app/validationSchema";
 import prisma from "@/prisma/client";
 import { GOAL } from "@prisma/client";
-import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -27,8 +26,3 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(createdGoal, { status: 201 });
 }
-
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {}

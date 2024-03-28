@@ -11,7 +11,10 @@ const fetchGoal = cache((goalId: number) => {
 });
 
 const DetailGoalPage = async ({ params }: { params: { id: string } }) => {
-  const goal = await fetchGoal(parseInt(params.id));
+  const goal = await prisma.gOAL.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+
   if (!goal) notFound();
 
   return (

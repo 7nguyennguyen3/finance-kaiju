@@ -5,13 +5,15 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const GoalDetails = ({ goal }: { goal: GOAL }) => {
-  const router = useRouter();
-  const { id, title, description, status, createdAt, updatedAt } = goal;
+interface Props {
+  goal?: GOAL;
+}
 
-  const completeGoal = async () => {
-    await axios.patch(`/api/goal/${id}`), { status: "COMPLETE" };
-    router.push("/");
+const GoalDetails = ({ goal }: Props) => {
+  const router = useRouter();
+
+  const updateGoal = async () => {
+    await axios.patch("/api/goal/" + goal?.id);
     router.refresh();
   };
 
@@ -24,10 +26,10 @@ const GoalDetails = ({ goal }: { goal: GOAL }) => {
         gap="3"
         className="min-h-screen"
       >
-        <Heading>{title}</Heading>
-        <Badge>{status}</Badge>
-        <Card>{description}</Card>
-        <Button onClick={completeGoal}>I completed this goal</Button>
+        <Heading>{goal?.title}</Heading>
+        <Badge>{goal?.status}</Badge>
+        <Card>{goal?.description}</Card>
+        <Button onClick={updateGoal}>I completed this goal</Button>
       </Flex>
     </>
   );

@@ -23,7 +23,7 @@ const DisplayGoals = async () => {
       <Box maxWidth="360px">
         <Flex direction="column" className="px-3" gap="3">
           {goals.map((goal) => (
-            <Card>
+            <Card key={goal.id}>
               <Flex justify="between">
                 <Link href="/new-goal" className="hover:text-indigo-500">
                   <Text className="font-semibold">{goal.title}</Text>

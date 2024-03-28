@@ -13,3 +13,5 @@ export default async function Home() {
     </Flex>
   );
 }
+
+export const dynamic = "force-dynamic";

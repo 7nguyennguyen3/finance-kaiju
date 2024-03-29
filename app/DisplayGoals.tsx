@@ -39,16 +39,25 @@ const DisplayGoals = async () => {
             {goals.map((goal) => (
               <Card key={goal.id}>
                 <Flex justify="between">
-                  <Link href="/new-goal" className="hover:text-indigo-500">
+                  <Link
+                    href={`/goal/${goal.id}`}
+                    className="hover:text-indigo-500"
+                  >
                     <Text className="font-semibold">{goal.title}</Text>
                   </Link>
                   <Badge color="ruby">{goal.status}</Badge>
                 </Flex>
                 <Separator my="2" size="4" />
                 <Blockquote className="font-normal p-3">
-                  {goal.description},{" "}
+                  {goal.description}
                 </Blockquote>
-                <Text size="2" className="flex flex-row-reverse">
+                <Text
+                  size="2"
+                  className="flex flex-row-reverse"
+                  color="violet"
+                  weight="light"
+                  highContrast
+                >
                   {new Date(goal.createdAt).toLocaleDateString()}
                 </Text>
               </Card>

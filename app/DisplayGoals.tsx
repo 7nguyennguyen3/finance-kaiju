@@ -24,13 +24,21 @@ const DisplayGoals = async () => {
         Current Goals
       </Heading>
 
-      <Box maxWidth={goalsCount < 5 ? "360px" : "1080px"}>
+      <Box
+        maxWidth={
+          goalsCount <= 5
+            ? "360px"
+            : goalsCount > 5 && goalsCount <= 14
+            ? "720px"
+            : "1080px"
+        }
+      >
         <Flex direction="column">
           <Grid
             columns={
-              goalsCount > 12
+              goalsCount > 14
                 ? "3"
-                : goalsCount > 5 && goalsCount < 8
+                : goalsCount > 5 && goalsCount <= 14
                 ? "2"
                 : "1"
             }

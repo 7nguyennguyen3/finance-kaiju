@@ -1,19 +1,20 @@
 "use client";
 import { Button, TextField } from "@radix-ui/themes";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const CreateNewGoal = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const router = useRouter();
 
   const createGoal = async () => {
-    axios
-      .post("/api/goal", {
-        title,
-        description,
-      })
-      .then((res) => console.log(res.data));
+    axios.post("/api/goal", {
+      title,
+      description,
+    });
+    router.push("/goal");
   };
   return (
     <>

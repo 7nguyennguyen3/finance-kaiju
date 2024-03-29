@@ -12,8 +12,8 @@ interface Props {
 const GoalDetails = ({ goal }: Props) => {
   const router = useRouter();
 
-  const updateGoal = async () => {
-    await axios.patch("/api/goal/" + goal?.id);
+  const updateGoal = async (desiredStatus: string) => {
+    await axios.patch("/api/goal/" + goal?.id, { status: desiredStatus });
     router.refresh();
   };
 
@@ -29,7 +29,12 @@ const GoalDetails = ({ goal }: Props) => {
         <Heading>{goal?.title}</Heading>
         <Badge>{goal?.status}</Badge>
         <Card>{goal?.description}</Card>
-        <Button onClick={updateGoal}>I completed this goal</Button>
+        <Button onClick={() => updateGoal("COMPLETE")}>
+          I completed this goal
+        </Button>
+        <Button onClick={() => updateGoal("INCOMPLETE")} color="ruby">
+          It is not completed yet
+        </Button>
       </Flex>
     </>
   );

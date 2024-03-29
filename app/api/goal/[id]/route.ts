@@ -6,6 +6,8 @@ export async function PATCH(
   request: NextRequest,
   params: { params: { id: string } }
 ) {
+  const body = await request.json();
+
   const goal = await prisma.gOAL.findUnique({
     where: { id: parseInt(params.params.id) },
   });
@@ -13,12 +15,14 @@ export async function PATCH(
   if (!goal)
     return NextResponse.json({ error: "Invalid issue" }, { status: 404 });
 
+  const desiredStatus = body.status;
+
   const udpatedGoal = await prisma.gOAL.update({
     where: { id: goal.id },
     data: {
       title: goal.title,
       description: goal.description,
-      status: "COMPLETE",
+      status: desiredStatus,
     },
   });
 

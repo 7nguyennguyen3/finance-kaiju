@@ -8,9 +8,7 @@ export default async function Home() {
       justify="center"
       className="min-h-screen"
       direction="column"
-    >
-      <DisplayGoals />
-    </Flex>
+    ></Flex>
   );
 }
 

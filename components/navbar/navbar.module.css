@@ -1,0 +1,15 @@
+.mobileLinks {
+  z-index: 2;
+  background-color: var(--bg);
+  position: absolute;
+  top: 85px;
+  right: 0;
+  width: 20vh;
+  height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 20px;
+  padding-top: 20px;
+}

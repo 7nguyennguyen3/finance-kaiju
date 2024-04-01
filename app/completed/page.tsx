@@ -16,7 +16,9 @@ const DisplayGoals = async () => {
   const goals = await prisma.gOAL.findMany({
     where: { status: "COMPLETE" },
   });
-  const goalsCount = await prisma.gOAL.count();
+  const goalsCount = await prisma.gOAL.count({
+    where: { status: "COMPLETE" },
+  });
 
   return (
     <Flex
@@ -30,13 +32,13 @@ const DisplayGoals = async () => {
         Completed Goals
       </Heading>
 
-      <Box maxWidth={goalsCount < 5 ? "360px" : "1080px"}>
+      <Box maxWidth={goalsCount < 5 ? "360px" : "1080px"} width="95%">
         <Flex direction="column">
           <Grid
             columns={
               goalsCount > 12
                 ? "3"
-                : goalsCount > 5 && goalsCount < 8
+                : goalsCount > 5 && goalsCount < 9
                 ? "2"
                 : "1"
             }

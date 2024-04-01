@@ -16,7 +16,9 @@ const DisplayGoals = async () => {
   const goals = await prisma.gOAL.findMany({
     where: { status: "INCOMPLETE" },
   });
-  const goalsCount = await prisma.gOAL.count();
+  const goalsCount = await prisma.gOAL.count({
+    where: { status: "INCOMPLETE" },
+  });
 
   return (
     <>
@@ -32,6 +34,7 @@ const DisplayGoals = async () => {
             ? "720px"
             : "1080px"
         }
+        width="95%"
       >
         <Flex direction="column">
           <Grid

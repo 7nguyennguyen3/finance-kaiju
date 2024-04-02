@@ -31,8 +31,8 @@ const Navbar = () => {
     { label: "Current", href: "/goal" },
     { label: "Completed", href: "/completed" },
     { label: "About", href: "/About" },
-    { label: "Contact", href: "/Contact" },
-    { label: "Pricing", href: "/Contact" },
+    { label: "Task", href: "/task" },
+    { label: "Create Task", href: "/create-task" },
   ];
 
   return (

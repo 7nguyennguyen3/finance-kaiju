@@ -1,5 +1,5 @@
 import { Flex } from "@radix-ui/themes";
-import DisplayGoals from "./DisplayGoals";
+import DisplayGoals from "../components/DisplayGoals";
 
 export default async function Home() {
   return (

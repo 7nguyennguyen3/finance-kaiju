@@ -5,16 +5,17 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   const body: TASK = await request.json();
-  // const validation = taskSchema.safeParse(body);
+  const validation = taskSchema.safeParse(body);
 
-  // if (!validation.success)
-  //   return NextResponse.json(validation.error.errors, { status: 404 });
+  if (!validation.success)
+    return NextResponse.json(validation.error.errors, { status: 404 });
 
   const createdTask = await prisma.tASK.create({
     data: {
-      title: "title created",
-      description: "description created",
+      title: body.title,
+      description: body.description,
       imgUrl: body.imgUrl,
+      status: body.status,
     },
   });
 

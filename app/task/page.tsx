@@ -1,7 +1,11 @@
-import ShowTaskImages from "./ShowTaskImages";
+import ShowTask from "./ShowTask";
 
 const DailyTaskPage = () => {
-  return <ShowTaskImages />;
+  return (
+    <>
+      <ShowTask />
+    </>
+  );
 };
 
 export default DailyTaskPage;

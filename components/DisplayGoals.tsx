@@ -12,43 +12,48 @@ import {
 } from "@radix-ui/themes";
 import Link from "next/link";
 
-const DisplayGoals = async () => {
+interface Props {
+  status: "COMPLETE" | "INCOMPLETE";
+  color: "crimson" | "green";
+  goalTitle: "Current" | "Completed";
+  headingColor: "indigo" | "green";
+}
+
+const DisplayGoals = async ({
+  status,
+  color,
+  goalTitle,
+  headingColor,
+}: Props) => {
   const goals = await prisma.gOAL.findMany({
-    where: { status: "INCOMPLETE" },
-  });
-  const goalsCount = await prisma.gOAL.count({
-    where: { status: "INCOMPLETE" },
+    where: {
+      status: status,
+    },
   });
 
   return (
     <>
-      <Heading color="sky" className="m-5">
-        Current Goals
+      <Heading color={headingColor} className="m-5">
+        {`${goalTitle} Goals`}
       </Heading>
 
       <Box
-        maxWidth={
-          goalsCount <= 5
-            ? "360px"
-            : goalsCount > 5 && goalsCount <= 14
-            ? "720px"
-            : "1080px"
-        }
-        width="95%"
+        maxWidth={{
+          initial: "360px",
+          xs: "460px",
+          sm: "540px",
+          md: "820px",
+          xl: "1280px",
+        }}
+        width={{ initial: "90%", xs: "95%" }}
       >
         <Flex direction="column">
-          <Grid
-            columns={
-              goalsCount > 14
-                ? "3"
-                : goalsCount > 5 && goalsCount <= 14
-                ? "2"
-                : "1"
-            }
-            gap="4"
-          >
+          <Grid columns={{ sm: "1", md: "2", xl: "3" }} gap="6">
             {goals.map((goal) => (
-              <Card key={goal.id}>
+              <Card
+                key={goal.id}
+                className="transition-transform duration-200 hover:scale-110"
+              >
                 <Flex justify="between">
                   <Link
                     href={`/goal/${goal.id}`}
@@ -56,7 +61,7 @@ const DisplayGoals = async () => {
                   >
                     <Text className="font-semibold">{goal.title}</Text>
                   </Link>
-                  <Badge color="ruby">{goal.status}</Badge>
+                  <Badge color={color}>{goal.status}</Badge>
                 </Flex>
                 <Separator my="2" size="4" />
                 <Blockquote className="font-normal p-3">

@@ -1,6 +1,5 @@
-import React from "react";
-import DisplayGoals from "../DisplayGoals";
 import { Flex } from "@radix-ui/themes";
+import DisplayGoals from "../../components/DisplayGoals";
 
 const CurrentGoalPage = () => {
   return (
@@ -10,7 +9,13 @@ const CurrentGoalPage = () => {
       className="min-h-screen"
       direction="column"
     >
-      <DisplayGoals />;
+      <DisplayGoals
+        color="crimson"
+        status="INCOMPLETE"
+        goalTitle="Current"
+        headingColor="indigo"
+      />
+      ;
     </Flex>
   );
 };

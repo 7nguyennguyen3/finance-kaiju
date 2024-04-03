@@ -1,5 +1,5 @@
 "use client";
-import { Button, Container, Flex } from "@radix-ui/themes";
+import { Button, Container, Flex, Text } from "@radix-ui/themes";
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,9 +30,7 @@ const Navbar = () => {
   const links = [
     { label: "Current", href: "/goal" },
     { label: "Completed", href: "/completed" },
-    { label: "About", href: "/About" },
-    { label: "Task", href: "/task" },
-    { label: "Create Task", href: "/create-task" },
+    { label: "Task List", href: "/task" },
   ];
 
   return (
@@ -51,12 +49,16 @@ const Navbar = () => {
               className={classNames({
                 "text-indigo-500 font-semibold": link.href === currentPath,
                 "hide-on-mobile": true,
+                "hover:text-indigo-300": true,
               })}
             >
               {link.label}
             </Link>
           ))}
 
+          <Link href="/create-task" className="hide-on-mobile">
+            <Button color="crimson">New Task</Button>
+          </Link>
           <Link href="/new-goal" className="hide-on-mobile">
             <Button>New Goal</Button>
           </Link>
@@ -68,17 +70,30 @@ const Navbar = () => {
               {open && (
                 <div className={styles.mobileLinks}>
                   {links.map((link) => (
-                    <Link
-                      key={link.label}
-                      href={link.href}
-                      className={classNames({
-                        "text-indigo-500 font-semibold":
-                          link.href === currentPath,
-                      })}
-                    >
-                      {link.label}
-                    </Link>
+                    <button className="border-b-4 border-rose-300 p-2 rounded-md bg-slate-200 hover:bg-slate-300 w-40 transition ease-in-out delay-150 hover:scale-110">
+                      <Link
+                        key={link.label}
+                        href={link.href}
+                        className={classNames({
+                          "text-indigo-500 font-semibold ":
+                            link.href === currentPath,
+                          "text-xl ": true,
+                        })}
+                      >
+                        {link.label}
+                      </Link>
+                    </button>
                   ))}
+                  <Link href="/create-task">
+                    <Button color="crimson" size="4">
+                      New Task
+                    </Button>
+                  </Link>
+                  <Link href="/new-goal">
+                    <Button className="w-80" size="4">
+                      New Goal
+                    </Button>
+                  </Link>
                 </div>
               )}
             </>

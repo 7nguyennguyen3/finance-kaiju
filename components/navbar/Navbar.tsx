@@ -1,5 +1,6 @@
 "use client";
-import { Button, Container, Flex, Heading, Text } from "@radix-ui/themes";
+import closeIcon from "@/public/Google Close Icon.png";
+import { Button, Container, Flex, Heading, Separator } from "@radix-ui/themes";
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,7 +8,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { RxDragHandleHorizontal } from "react-icons/rx";
 import styles from "./navbar.module.css";
-import closeIcon from "@/public/Google Close Icon.png";
+import { IoClose } from "react-icons/io5";
 
 const Navbar = () => {
   const currentPath = usePathname();
@@ -36,17 +37,24 @@ const Navbar = () => {
     { label: "Current", href: "/goal" },
     { label: "Completed", href: "/completed" },
     { label: "Task List", href: "/task" },
+  ];
+
+  const mobileLinks = [
+    { label: "Home", href: "/" },
+    ...links,
     { label: "New Goal", href: "/create-task" },
     { label: "New Task", href: "/new-goal" },
   ];
 
   return (
-    <Container className="bg-slate-100">
-      <Flex align="center" justify="between" className=" w-full px-5 py-2">
+    <Container className=" py-3 px-5 mb-20">
+      <Flex align="center" justify="between">
         <Flex>
-          <Heading>Logo</Heading>
+          <Heading>
+            <Link href="/">Logo</Link>
+          </Heading>
         </Flex>
-        <Flex gap="5" align="center">
+        <Flex gap="5" align="center" justify="center">
           {links.map((link) => (
             <Link
               key={link.label}
@@ -70,7 +78,7 @@ const Navbar = () => {
           {isMobile && (
             <>
               <button onClick={closeMenu}>
-                <RxDragHandleHorizontal size="50" />
+                <RxDragHandleHorizontal size="45" />
               </button>
               {open && (
                 <>
@@ -79,16 +87,17 @@ const Navbar = () => {
                       className="flex flex-row-reverse pr-5"
                       onClick={closeMenu}
                     >
-                      <Image alt="close icon" src={closeIcon} width={30} />
+                      {/* <Image alt="close icon" src={closeIcon} width={30} /> */}
+                      <IoClose size="30" />
                     </button>
-                    {links.map((link) => (
+                    {mobileLinks.map((link) => (
                       <Link
                         key={link.label}
                         href={link.href}
                         className={classNames({
                           "text-indigo-500 font-semibold ":
                             link.href === currentPath,
-                          "text-xl ": true,
+                          "text-lg ": true,
                         })}
                         onClick={closeMenu}
                       >

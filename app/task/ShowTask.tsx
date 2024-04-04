@@ -4,7 +4,11 @@ import Image from "next/image";
 import React from "react";
 
 const ShowTask = async () => {
-  const tasks = await prisma.tASK.findMany();
+  const tasks = await prisma.tASK.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
   return (
     <Flex
@@ -21,6 +25,7 @@ const ShowTask = async () => {
           md: "820px",
         }}
         width={{ initial: "90%", xs: "95%" }}
+        mb="5"
       >
         <Grid columns={{ sm: "1", md: "2" }} gap="7">
           {tasks.map((task) => (
@@ -29,12 +34,12 @@ const ShowTask = async () => {
               variant="surface"
               className="transition-transform duration-200 hover:scale-110"
             >
-              <Flex justify="center" direction="column" align="center" gap="2">
+              <Flex justify="center" direction="column" align="center" gap="5">
                 <div
                   style={{
                     position: "relative",
-                    width: "720px",
-                    height: "360px",
+                    width: "90%",
+                    height: "320px",
                   }}
                 >
                   <Image

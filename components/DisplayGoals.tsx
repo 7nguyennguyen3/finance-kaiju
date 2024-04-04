@@ -46,6 +46,7 @@ const DisplayGoals = async ({
           xl: "1280px",
         }}
         width={{ initial: "90%", xs: "95%" }}
+        mb="5"
       >
         <Flex direction="column">
           <Grid columns={{ sm: "1", md: "2", xl: "3" }} gap="6">

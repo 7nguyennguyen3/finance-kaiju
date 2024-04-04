@@ -2,18 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg: #faf6f6;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -24,4 +12,8 @@
   .hide-on-mobile {
     display: none;
   }
+}
+
+.radix-themes {
+  --default-font-family: var(--font-roboto);
 }

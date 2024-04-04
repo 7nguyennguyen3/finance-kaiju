@@ -15,7 +15,6 @@ const CurrentGoalPage = () => {
         goalTitle="Current"
         headingColor="indigo"
       />
-      ;
     </Flex>
   );
 };

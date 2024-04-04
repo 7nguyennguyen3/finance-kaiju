@@ -2,10 +2,14 @@ import Navbar from "@/components/navbar/Navbar";
 import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Oswald, Roboto } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-roboto",
+});
 
 export const metadata: Metadata = {
   title: "Goal Tracker",
@@ -19,10 +23,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Theme accentColor="violet" appearance="light">
-          <Navbar />
-          {children}
+      <body>
+        <Theme accentColor="violet" appearance="dark">
+          <main className={roboto.className}>
+            <Navbar />
+            {children}
+          </main>
         </Theme>
       </body>
     </html>

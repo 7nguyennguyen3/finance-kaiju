@@ -70,7 +70,10 @@ const Navbar = () => {
               {open && (
                 <div className={styles.mobileLinks}>
                   {links.map((link) => (
-                    <button className="border-b-4 border-rose-300 p-2 rounded-md bg-slate-200 hover:bg-slate-300 w-40 transition ease-in-out delay-150 hover:scale-110">
+                    <button
+                      className="border-b-4 border-rose-300 p-2 rounded-md bg-slate-200 hover:bg-slate-300 w-40 transition ease-in-out delay-150 hover:scale-110"
+                      key={link.label}
+                    >
                       <Link
                         key={link.label}
                         href={link.href}

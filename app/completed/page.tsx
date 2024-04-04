@@ -20,4 +20,6 @@ const CompletedGoalPage = () => {
   );
 };
 
+export const dynamic = "force-dynamic";
+
 export default CompletedGoalPage;

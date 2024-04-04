@@ -8,4 +8,6 @@ const DailyTaskPage = () => {
   );
 };
 
+export const dynamic = "force-dynamic";
+
 export default DailyTaskPage;

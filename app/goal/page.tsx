@@ -20,4 +20,6 @@ const CurrentGoalPage = () => {
   );
 };
 
+export const dynamic = "force-dynamic";
+
 export default CurrentGoalPage;

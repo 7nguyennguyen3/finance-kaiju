@@ -1,15 +1,14 @@
 .mobileLinks {
-  z-index: 2;
-  background-color: var(--bg);
+  z-index: 10;
   position: absolute;
-  top: 85px;
+  top: 0;
   right: 0;
-  width: 50%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-
+  background-color: white;
+  box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
   gap: 40px;
-  padding-top: 40px;
+  padding: 25px 10px 0px 50px;
 }

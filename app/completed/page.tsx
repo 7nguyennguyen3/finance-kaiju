@@ -15,7 +15,6 @@ const CompletedGoalPage = () => {
         goalTitle="Completed"
         headingColor="green"
       />
-      ;
     </Flex>
   );
 };

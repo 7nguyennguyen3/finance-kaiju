@@ -1,15 +1,9 @@
 import { Flex } from "@radix-ui/themes";
 import DisplayGoals from "../components/DisplayGoals";
+import Footer from "@/components/footer/Footer";
 
 export default async function Home() {
-  return (
-    <Flex
-      align="center"
-      justify="center"
-      className="min-h-screen"
-      direction="column"
-    ></Flex>
-  );
+  return <></>;
 }
 
 export const dynamic = "force-dynamic";

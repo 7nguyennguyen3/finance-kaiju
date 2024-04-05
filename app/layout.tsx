@@ -4,6 +4,7 @@ import "@radix-ui/themes/styles.css";
 import type { Metadata } from "next";
 import { Oswald, Roboto } from "next/font/google";
 import "./globals.css";
+import Footer from "@/components/footer/Footer";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -28,6 +29,7 @@ export default function RootLayout({
           <main className={roboto.className}>
             <Navbar />
             {children}
+            <Footer />
           </main>
         </Theme>
       </body>

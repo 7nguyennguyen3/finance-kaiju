@@ -11,6 +11,7 @@ import {
   Text,
 } from "@radix-ui/themes";
 import Link from "next/link";
+import { IoEnterOutline } from "react-icons/io5";
 
 interface Props {
   status: "COMPLETE" | "INCOMPLETE";
@@ -60,7 +61,10 @@ const DisplayGoals = async ({
                     href={`/goal/${goal.id}`}
                     className="hover:text-indigo-500"
                   >
-                    <Text className="font-semibold">{goal.title}</Text>
+                    <Flex align="center" gap="2">
+                      <Text className="font-semibold">{goal.title}</Text>
+                      <IoEnterOutline />
+                    </Flex>
                   </Link>
                   <Badge color={color}>{goal.status}</Badge>
                 </Flex>

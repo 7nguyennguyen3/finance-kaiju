@@ -1,7 +1,6 @@
 import prisma from "@/prisma/client";
 import { Badge, Box, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import Image from "next/image";
-import React from "react";
 
 const ShowTask = async () => {
   const tasks = await prisma.tASK.findMany({
@@ -15,7 +14,7 @@ const ShowTask = async () => {
       direction="row"
       align="center"
       justify="center"
-      className="min-h-screen"
+      className="min-h-screen mb-20"
     >
       <Box
         maxWidth={{
@@ -32,7 +31,7 @@ const ShowTask = async () => {
             <Card
               key={task.id}
               variant="surface"
-              className="transition-transform duration-200 hover:scale-110"
+              className="transition-transform duration-200 hover:scale-105"
             >
               <Flex justify="center" direction="column" align="center" gap="5">
                 <div

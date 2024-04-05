@@ -23,7 +23,7 @@ const CreateTaskPage = () => {
         direction="column"
         gap="5"
         align="center"
-        className="min-h-screen border border-sky-500 m-5 m-auto"
+        className="min-h-screen border border-sky-500 m-auto"
         justify="center"
         maxWidth={{ initial: "100%", md: "720px" }}
       >

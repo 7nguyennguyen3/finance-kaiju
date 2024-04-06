@@ -1,9 +1,13 @@
+import chicken from "@/public/walking-cock.gif";
 import { Flex } from "@radix-ui/themes";
-import DisplayGoals from "../components/DisplayGoals";
-import Footer from "@/components/footer/Footer";
+import Image from "next/image";
 
 export default async function Home() {
-  return <></>;
+  return (
+    <Flex align="center" justify="center">
+      <Image src={chicken} alt="chicken walking" />
+    </Flex>
+  );
 }
 
 export const dynamic = "force-dynamic";

@@ -26,7 +26,7 @@ const CreateNewGoal = () => {
       direction="column"
       gap="5"
       align="center"
-      className="min-h-screen border border-sky-500 m-auto"
+      className="min-h-screen m-auto"
       justify="center"
       maxWidth={{ initial: "100%", md: "800px" }}
       width="95%"

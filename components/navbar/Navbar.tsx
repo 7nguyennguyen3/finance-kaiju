@@ -1,19 +1,30 @@
 "use client";
-import closeIcon from "@/public/Google Close Icon.png";
-import { Button, Container, Flex, Heading, Separator } from "@radix-ui/themes";
+import {
+  Avatar,
+  Button,
+  Container,
+  DropdownMenu,
+  Flex,
+  Heading,
+  HoverCard,
+  Text,
+} from "@radix-ui/themes";
 import classNames from "classnames";
-import Image from "next/image";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { IoIosArrowDown } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
 import { RxDragHandleHorizontal } from "react-icons/rx";
 import styles from "./navbar.module.css";
-import { IoClose } from "react-icons/io5";
+import { FaRegUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
   const currentPath = usePathname();
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const { data: session, status } = useSession();
 
   // Function to handle window resize
   const handleResize = () => {
@@ -62,19 +73,35 @@ const Navbar = () => {
               className={classNames({
                 "text-indigo-500 font-semibold": link.href === currentPath,
                 "hide-on-mobile": true,
-                "hover:text-indigo-300": true,
+                "hover:text-indigo-300 hover:scale-110": true,
               })}
             >
               {link.label}
             </Link>
           ))}
+          {!isMobile && (
+            <HoverCard.Root>
+              <HoverCard.Trigger>
+                <Flex align="center" className="hover:scale-110">
+                  <Text>Create </Text>
+                  <IoIosArrowDown />
+                </Flex>
+              </HoverCard.Trigger>
+              <HoverCard.Content size="3">
+                <Flex direction="column" gap="4">
+                  <Link href="/create-task">
+                    <Button color="crimson" className="hover:scale-110">
+                      New Task
+                    </Button>
+                  </Link>
+                  <Link href="/new-goal">
+                    <Button className="hover:scale-110">New Goal</Button>
+                  </Link>
+                </Flex>
+              </HoverCard.Content>
+            </HoverCard.Root>
+          )}
 
-          <Link href="/create-task" className="hide-on-mobile">
-            <Button color="crimson">New Task</Button>
-          </Link>
-          <Link href="/new-goal" className="hide-on-mobile">
-            <Button>New Goal</Button>
-          </Link>
           {isMobile && (
             <>
               <button onClick={closeMenu}>
@@ -109,11 +136,61 @@ const Navbar = () => {
               )}
             </>
           )}
+
+          {status === "unauthenticated" && (
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger>
+                <button>
+                  <FaRegUserCircle size={22} />
+                </button>
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content>
+                <Flex direction="column" gap="2" className="p-2">
+                  <Text size="2">Sign in with google</Text>
+                  <Link href="/api/auth/signout">
+                    <Button
+                      size="1"
+                      variant="outline"
+                      className="hover:scale-110"
+                    >
+                      Sign In
+                    </Button>
+                  </Link>
+                </Flex>
+              </DropdownMenu.Content>
+            </DropdownMenu.Root>
+          )}
+
+          {status === "authenticated" && (
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger>
+                <Avatar
+                  src={session.user!.image!}
+                  fallback="?"
+                  radius="full"
+                  size="2"
+                />
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content>
+                <Flex direction="column" gap="2" className="p-2">
+                  <Text size="2">{session.user?.email}</Text>
+                  <Link href="/api/auth/signout" className="hide-on-mobile">
+                    <Button
+                      size="1"
+                      variant="outline"
+                      color="crimson"
+                      className="hover:scale-110"
+                    >
+                      Sign Out
+                    </Button>
+                  </Link>
+                </Flex>
+              </DropdownMenu.Content>
+            </DropdownMenu.Root>
+          )}
         </Flex>
       </Flex>
     </Container>
   );
 };
-<Flex></Flex>;
-
 export default Navbar;

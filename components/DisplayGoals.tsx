@@ -54,7 +54,7 @@ const DisplayGoals = async ({
             {goals.map((goal) => (
               <Card
                 key={goal.id}
-                className="transition-transform duration-200 hover:scale-110"
+                className="transition-transform duration-200 hover:scale-110 border border-red-100"
               >
                 <Flex justify="between">
                   <Link

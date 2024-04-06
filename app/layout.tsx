@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { Oswald, Roboto } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/footer/Footer";
-import AuthProvider from "./auth/Provider";
+import AuthProvider from "./(auth)/Provider";
 
 const roboto = Roboto({
   subsets: ["latin"],

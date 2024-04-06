@@ -114,7 +114,6 @@ const Navbar = () => {
                       className="flex flex-row-reverse pr-5"
                       onClick={closeMenu}
                     >
-                      {/* <Image alt="close icon" src={closeIcon} width={30} /> */}
                       <IoClose size="30" />
                     </button>
                     {mobileLinks.map((link) => (
@@ -145,11 +144,11 @@ const Navbar = () => {
                 </button>
               </DropdownMenu.Trigger>
               <DropdownMenu.Content>
-                <Flex direction="column" gap="2" className="p-2">
-                  <Text size="2">Sign in with google</Text>
-                  <Link href="/api/auth/signout">
+                <Flex direction="column" gap="3" className="p-5">
+                  <Text size="3">Sign in with google</Text>
+                  <Link href="/sign-in">
                     <Button
-                      size="1"
+                      size="2"
                       variant="outline"
                       className="hover:scale-110"
                     >
@@ -174,7 +173,7 @@ const Navbar = () => {
               <DropdownMenu.Content>
                 <Flex direction="column" gap="2" className="p-2">
                   <Text size="2">{session.user?.email}</Text>
-                  <Link href="/api/auth/signout" className="hide-on-mobile">
+                  <Link href="/sign-out" className="hide-on-mobile">
                     <Button
                       size="1"
                       variant="outline"

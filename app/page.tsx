@@ -2,11 +2,13 @@ import chicken from "@/public/walking-cock.gif";
 import { Flex } from "@radix-ui/themes";
 import Image from "next/image";
 
-export default async function Home() {
+export default function Home() {
   return (
-    <Flex align="center" justify="center">
-      <Image src={chicken} alt="chicken walking" />
-    </Flex>
+    <>
+      <Flex align="center" justify="center">
+        <Image src={chicken} alt="chicken walking" />
+      </Flex>
+    </>
   );
 }
 

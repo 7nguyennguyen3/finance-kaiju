@@ -30,6 +30,9 @@ const DisplayGoals = async ({
     where: {
       status: status,
     },
+    orderBy: {
+      updatedAt: "desc",
+    },
   });
 
   return (

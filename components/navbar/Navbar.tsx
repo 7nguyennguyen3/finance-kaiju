@@ -87,16 +87,18 @@ const Navbar = () => {
                   <IoIosArrowDown />
                 </Flex>
               </HoverCard.Trigger>
-              <HoverCard.Content size="3">
+              <HoverCard.Content size="3" className="w-56">
                 <Flex direction="column" gap="4">
-                  <Link href="/create-task">
-                    <Button color="crimson" className="hover:scale-110">
-                      New Task
-                    </Button>
-                  </Link>
-                  <Link href="/new-goal">
-                    <Button className="hover:scale-110">New Goal</Button>
-                  </Link>
+                  <Button
+                    color="crimson"
+                    variant="outline"
+                    className="hover:scale-110 w-full"
+                  >
+                    <Link href="/create-task">New Task</Link>
+                  </Button>
+                  <Button className="hover:scale-110" variant="outline">
+                    <Link href="/new-goal">New Goal</Link>
+                  </Button>
                 </Flex>
               </HoverCard.Content>
             </HoverCard.Root>
@@ -143,18 +145,16 @@ const Navbar = () => {
                   <FaRegUserCircle size={22} />
                 </button>
               </DropdownMenu.Trigger>
-              <DropdownMenu.Content>
-                <Flex direction="column" gap="3" className="p-5">
-                  <Text size="3">Sign in with google</Text>
-                  <Link href="/sign-in">
-                    <Button
-                      size="2"
-                      variant="outline"
-                      className="hover:scale-110"
-                    >
-                      Sign In
-                    </Button>
-                  </Link>
+              <DropdownMenu.Content className="w-56">
+                <Flex
+                  direction="column"
+                  gap="3"
+                  className="p-2"
+                  justify="center"
+                >
+                  <Button variant="outline" className="hover:scale-110">
+                    <Link href="/sign-in">Sign In</Link>
+                  </Button>
                 </Flex>
               </DropdownMenu.Content>
             </DropdownMenu.Root>
@@ -170,19 +170,19 @@ const Navbar = () => {
                   size="2"
                 />
               </DropdownMenu.Trigger>
-              <DropdownMenu.Content>
-                <Flex direction="column" gap="2" className="p-2">
+              <DropdownMenu.Content className="w-56">
+                <Flex direction="column" gap="3" className="p-2">
                   <Text size="2">{session.user?.email}</Text>
-                  <Link href="/sign-out" className="hide-on-mobile">
-                    <Button
-                      size="1"
-                      variant="outline"
-                      color="crimson"
-                      className="hover:scale-110"
-                    >
+
+                  <Button
+                    variant="outline"
+                    color="crimson"
+                    className="hover:scale-110"
+                  >
+                    <Link href="/sign-out" className="hide-on-mobile">
                       Sign Out
-                    </Button>
-                  </Link>
+                    </Link>
+                  </Button>
                 </Flex>
               </DropdownMenu.Content>
             </DropdownMenu.Root>

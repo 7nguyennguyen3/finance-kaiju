@@ -53,8 +53,8 @@ const Navbar = () => {
   const mobileLinks = [
     { label: "Home", href: "/" },
     ...links,
-    { label: "New Goal", href: "/create-task" },
-    { label: "New Task", href: "/new-goal" },
+    { label: "New Task", href: "/create-task" },
+    { label: "New Goal", href: "/new-goal" },
   ];
 
   return (

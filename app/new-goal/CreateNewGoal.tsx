@@ -67,7 +67,9 @@ const CreateNewGoal = () => {
               <Text color="crimson">{errors.description.message}</Text>
             )}
           </div>
-          <Button type="submit">Create Goal</Button>
+          <Button variant="classic" type="submit">
+            Create Goal
+          </Button>
         </Flex>
       </form>
     </Flex>

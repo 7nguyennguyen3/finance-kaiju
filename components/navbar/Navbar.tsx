@@ -89,16 +89,19 @@ const Navbar = () => {
               </HoverCard.Trigger>
               <HoverCard.Content size="3" className="w-56">
                 <Flex direction="column" gap="4">
-                  <Button
-                    color="crimson"
-                    variant="outline"
-                    className="hover:scale-110 w-full"
-                  >
-                    <Link href="/create-task">New Task</Link>
-                  </Button>
-                  <Button className="hover:scale-110" variant="outline">
-                    <Link href="/new-goal">New Goal</Link>
-                  </Button>
+                  <Link href="/create-task">
+                    <button
+                      color="crimson"
+                      className="font-light hover:scale-110 py-1 border-red-200 border w-full text-violet-100 rounded-md"
+                    >
+                      New Task
+                    </button>
+                  </Link>
+                  <Link href="/new-goal">
+                    <button className="font-light hover:scale-110 py-1 border-violet-200 border w-full text-violet-100 rounded-md">
+                      New Goal
+                    </button>
+                  </Link>
                 </Flex>
               </HoverCard.Content>
             </HoverCard.Root>
@@ -146,15 +149,12 @@ const Navbar = () => {
                 </button>
               </DropdownMenu.Trigger>
               <DropdownMenu.Content className="w-56" align="center">
-                <Flex
-                  direction="column"
-                  gap="3"
-                  className="p-2"
-                  justify="center"
-                >
-                  <Button variant="outline" className="hover:scale-110">
-                    <Link href="/sign-in">Sign In</Link>
-                  </Button>
+                <Flex gap="3" className="p-2" justify="center">
+                  <Link href="/sign-in" className="w-full">
+                    <button className="font-light hover:scale-110 py-1 border-violet-400 border w-full text-violet-100 rounded-md">
+                      Sign In
+                    </button>
+                  </Link>
                 </Flex>
               </DropdownMenu.Content>
             </DropdownMenu.Root>
@@ -163,24 +163,24 @@ const Navbar = () => {
           {status === "authenticated" && (
             <DropdownMenu.Root>
               <DropdownMenu.Trigger>
-                <Avatar
-                  src={session.user!.image!}
-                  fallback="?"
-                  radius="full"
-                  size="2"
-                />
+                <div className="px-1">
+                  <Avatar
+                    src={session.user!.image!}
+                    fallback="?"
+                    radius="full"
+                    size="2"
+                  />
+                </div>
               </DropdownMenu.Trigger>
               <DropdownMenu.Content className="w-56" align="center">
                 <Flex direction="column" gap="3" className="p-2">
                   <Text size="2">{session.user?.email}</Text>
 
-                  <Button
-                    variant="outline"
-                    color="crimson"
-                    className="hover:scale-110"
-                  >
-                    <Link href="/sign-out">Sign Out</Link>
-                  </Button>
+                  <Link href="/sign-out">
+                    <button className="font-light hover:scale-110 py-1 border-red-200 border w-full text-violet-100 rounded-md">
+                      Sign Out
+                    </button>
+                  </Link>
                 </Flex>
               </DropdownMenu.Content>
             </DropdownMenu.Root>

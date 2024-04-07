@@ -10,8 +10,8 @@ import { goalSchema } from "../validationSchema";
 import Image from "next/image";
 
 const CreateNewGoal = () => {
-  const [eTitle, setTitle] = useState("");
-  const [eDescription, setDescription] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const router = useRouter();
 
   type GoalValidation = z.infer<typeof goalSchema>;
@@ -51,8 +51,8 @@ const CreateNewGoal = () => {
           className="w-2/3"
           onSubmit={handleSubmit(async () => {
             await axios.post("/api/goal", {
-              title: eTitle,
-              description: eDescription,
+              title: title,
+              description: description,
             });
             router.push("/goal");
           })}
@@ -63,7 +63,7 @@ const CreateNewGoal = () => {
               <input
                 {...register("title")}
                 placeholder="Title of Task"
-                value={eTitle}
+                value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className="w-full px-2 pb-7 py-3  focus:border-2 focus:border-white focus:outline-none rounded-md"
               />
@@ -77,7 +77,7 @@ const CreateNewGoal = () => {
               <textarea
                 {...register("description")}
                 placeholder="Description"
-                value={eDescription}
+                value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="w-full px-2 pb-12 py-3  focus:border-2 focus:border-white focus:outline-none rounded-md"
               />

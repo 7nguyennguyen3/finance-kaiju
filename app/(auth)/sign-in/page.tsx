@@ -1,11 +1,30 @@
 "use client";
-import { Heading, Flex, Text, Button, Separator } from "@radix-ui/themes";
+import { signInSchema } from "@/app/validationSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Heading, Flex, Text, Button, Separator, Box } from "@radix-ui/themes";
 import { signIn, useSession } from "next-auth/react";
-import React from "react";
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import Link from "next/link";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { FaEye, FaEyeSlash, FaGithub, FaGoogle } from "react-icons/fa";
+import { z } from "zod";
 
 const SignInPage = () => {
   const { status, data: session } = useSession();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [eye, setEye] = useState("password" || "text");
+
+  type CredentialValidation = z.infer<typeof signInSchema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CredentialValidation>({
+    resolver: zodResolver(signInSchema),
+  });
+
   return (
     <Flex
       direction="column"
@@ -23,26 +42,76 @@ const SignInPage = () => {
       {status === "unauthenticated" && (
         <>
           <Heading size="6">Sign In</Heading>
-          <form className="w-72">
+          <div className="w-72">
             <Flex direction="column" gap="3" justify="center">
-              <input
-                placeholder="Email"
-                type="email"
-                className="px-2 py-2 rounded-md"
-              />
-              <input
-                placeholder="Password"
-                type="password"
-                className="px-2 py-2 rounded-md my-1"
-              />
-              <button
-                type="submit"
-                className="border border-blue-200 py-2 px-5 rounded-md hover:scale-110"
+              <form
+                onSubmit={handleSubmit(async () => {
+                  signIn("credentials", {
+                    email: email.toLowerCase(),
+                    password,
+                  });
+                })}
               >
-                Sign In
-              </button>
-              <Separator size="4" color="blue" className="my-1" />
+                <Flex direction="column" gap="3" justify="center">
+                  <div className="w-full">
+                    <input
+                      {...register("email")}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Email"
+                      type="email"
+                      className="px-2 py-2 rounded-md w-full"
+                    />
+                    {errors.email && (
+                      <Box className="mt-2 ml-1">
+                        <Text color="crimson">{errors.email.message}</Text>
+                      </Box>
+                    )}
+                  </div>
+                  <div>
+                    <Flex position="relative" className="w-full">
+                      <input
+                        {...register("password")}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password"
+                        type={eye}
+                        className="px-2 py-2 rounded-md my-1 w-full"
+                      />
+                      <Box className="absolute top-1/2 right-3  p-2 transform -translate-y-1/2 scale-150">
+                        {eye === "text" && (
+                          <FaEye onClick={() => setEye("password")} />
+                        )}
+                        {eye === "password" && (
+                          <FaEyeSlash onClick={() => setEye("text")} />
+                        )}
+                      </Box>
+                    </Flex>
+                    {errors.password && (
+                      <Box className="mt-2 ml-1">
+                        <Text color="crimson">{errors.password.message}</Text>
+                      </Box>
+                    )}
+                  </div>
 
+                  <button
+                    type="submit"
+                    className="border border-blue-200 py-2 px-5 rounded-md hover:scale-110"
+                  >
+                    Sign In
+                  </button>
+                </Flex>
+              </form>
+              <Separator size="4" color="blue" className="my-1" />
+              <Text className="flex justify-center">
+                {"Don't have an account?"}
+                <Text className="ml-2">
+                  <Link href="/sign-up" className="text-blue-200 underline">
+                    Sign up here!
+                  </Link>
+                </Text>
+              </Text>
+              <Separator size="4" color="blue" className="my-1" />
               <button
                 onClick={async () => {
                   signIn("google", {
@@ -67,7 +136,7 @@ const SignInPage = () => {
                 </Flex>
               </button>
             </Flex>
-          </form>
+          </div>
         </>
       )}
     </Flex>

@@ -2,18 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
-
 @media screen and (max-width: 720px) {
   .hide-on-mobile {
     display: none;
   }
-}
-
-.radix-themes {
-  --default-font-family: var(--font-roboto);
 }

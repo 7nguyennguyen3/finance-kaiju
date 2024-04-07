@@ -4,7 +4,12 @@ import React from "react";
 
 const loading = () => {
   return (
-    <Flex justify="center" align="center" className="min-h-screen">
+    <Flex
+      justify="center"
+      align="center"
+      className="min-h-screen"
+      direction="column"
+    >
       <Image
         src="/spinner.gif"
         alt="loading spinner"

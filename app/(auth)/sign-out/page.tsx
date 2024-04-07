@@ -15,29 +15,17 @@ const SignOutPage = () => {
       direction="column"
       gap="3"
     >
-      {status === "unauthenticated" && (
-        <>
-          <Heading>You are not currently signed in.</Heading>
-          <Button>
-            <Link href="/">Return to Home</Link>
-          </Button>
-        </>
-      )}
-      {status === "authenticated" && (
-        <>
-          <Text size="4">Are you sure yosu want to sign out?</Text>
-          <button
-            className="border border-red-200 px-5 py-2 rounded-md hover:scale-110"
-            onClick={async () => {
-              await signOut({
-                callbackUrl: "https://goal-tracker-nine-iota.vercel.app",
-              });
-            }}
-          >
-            Sign Out
-          </button>
-        </>
-      )}
+      <Heading size="5" align="center">
+        You have been successfully signed out.
+      </Heading>
+      <Link href="/">
+        <button
+          className="font-light hover:scale-110 
+      py-1 border-violet-400 border w-40 text-violet-100 rounded-md"
+        >
+          Return to Home
+        </button>
+      </Link>
     </Flex>
   );
 };

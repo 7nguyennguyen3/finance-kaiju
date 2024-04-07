@@ -1,7 +1,7 @@
 "use client";
 import {
   Avatar,
-  Button,
+  Box,
   Container,
   DropdownMenu,
   Flex,
@@ -10,35 +10,20 @@ import {
   Text,
 } from "@radix-ui/themes";
 import classNames from "classnames";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { FaRegUserCircle } from "react-icons/fa";
+import { FiMenu } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
-import { RxDragHandleHorizontal } from "react-icons/rx";
 import styles from "./navbar.module.css";
-import { FaRegUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
   const currentPath = usePathname();
   const [open, setOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const { data: session, status } = useSession();
-
-  // Function to handle window resize
-  const handleResize = () => {
-    setIsMobile(window.innerWidth <= 720);
-  };
-
-  // Add event listener on component mount
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Initial check
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const closeMenu = () => {
     return setOpen(!open);
@@ -58,7 +43,7 @@ const Navbar = () => {
   ];
 
   return (
-    <Container className=" py-3 px-5 mb-20">
+    <Container className="py-3 px-5 mb-20">
       <Flex align="center" justify="between">
         <Flex>
           <Heading>
@@ -79,7 +64,7 @@ const Navbar = () => {
               {link.label}
             </Link>
           ))}
-          {!isMobile && (
+          <Box display={{ initial: "none", sm: "block" }}>
             <HoverCard.Root>
               <HoverCard.Trigger>
                 <Flex align="center" className="hover:scale-110">
@@ -87,7 +72,7 @@ const Navbar = () => {
                   <IoIosArrowDown />
                 </Flex>
               </HoverCard.Trigger>
-              <HoverCard.Content size="3" className="w-56">
+              <HoverCard.Content className="w-56">
                 <Flex direction="column" gap="4">
                   <Link href="/create-task">
                     <button
@@ -105,51 +90,57 @@ const Navbar = () => {
                 </Flex>
               </HoverCard.Content>
             </HoverCard.Root>
-          )}
+          </Box>
 
-          {isMobile && (
-            <>
-              <button onClick={closeMenu}>
-                <RxDragHandleHorizontal size="45" />
-              </button>
-              {open && (
-                <>
-                  <div className={styles.mobileLinks}>
-                    <button
-                      className="flex flex-row-reverse pr-5"
+          <Box display={{ xs: "inline", sm: "none" }}>
+            <button onClick={closeMenu}>
+              <FiMenu size={35} />
+            </button>
+            {open && (
+              <>
+                <div className={styles.mobileLinks}>
+                  <button
+                    className="flex flex-row-reverse pr-5"
+                    onClick={closeMenu}
+                  >
+                    <IoClose size="30" />
+                  </button>
+                  {mobileLinks.map((link) => (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      className={classNames({
+                        "text-indigo-500 font-semibold ":
+                          link.href === currentPath,
+                        "text-lg ": true,
+                      })}
                       onClick={closeMenu}
                     >
-                      <IoClose size="30" />
-                    </button>
-                    {mobileLinks.map((link) => (
-                      <Link
-                        key={link.label}
-                        href={link.href}
-                        className={classNames({
-                          "text-indigo-500 font-semibold ":
-                            link.href === currentPath,
-                          "text-lg ": true,
-                        })}
-                        onClick={closeMenu}
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </div>
-                </>
-              )}
-            </>
-          )}
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
+          </Box>
 
           {status === "unauthenticated" && (
             <DropdownMenu.Root>
               <DropdownMenu.Trigger>
-                <button>
-                  <FaRegUserCircle size={22} />
+                <button className="pb-2">
+                  <FaRegUserCircle size="26" />
                 </button>
               </DropdownMenu.Trigger>
               <DropdownMenu.Content className="w-56" align="center">
-                <Flex gap="3" className="p-2" justify="center">
+                <Flex
+                  gap="3"
+                  className="p-2"
+                  justify="center"
+                  direction="column"
+                >
+                  <Text size="2" align="center">
+                    Already have an account?
+                  </Text>
                   <Link href="/sign-in" className="w-full">
                     <button className="font-light hover:scale-110 py-1 border-violet-400 border w-full text-violet-100 rounded-md">
                       Sign In
@@ -174,10 +165,20 @@ const Navbar = () => {
               </DropdownMenu.Trigger>
               <DropdownMenu.Content className="w-56" align="center">
                 <Flex direction="column" gap="3" className="p-2">
-                  <Text size="2">{session.user?.email}</Text>
+                  <Text size="2" align="center">
+                    {session.user?.email}
+                  </Text>
 
                   <Link href="/sign-out">
-                    <button className="font-light hover:scale-110 py-1 border-red-200 border w-full text-violet-100 rounded-md">
+                    <button
+                      onClick={() => {
+                        signOut({
+                          callbackUrl:
+                            "https://goal-tracker-nine-iota.vercel.app/sign-out",
+                        });
+                      }}
+                      className="font-light hover:scale-110 py-1 border-red-200 border w-full text-violet-100 rounded-md"
+                    >
                       Sign Out
                     </button>
                   </Link>

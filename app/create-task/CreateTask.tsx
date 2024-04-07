@@ -47,7 +47,9 @@ const CreateTaskPage = () => {
             className="border-2 border-white rounded-md max-w-lg"
           />
         )}
-        <Heading>Fill out information to create task!</Heading>
+        <Heading size={{ initial: "5", sm: "6" }}>
+          Fill out information to create task!
+        </Heading>
         <input
           placeholder="Title of Task"
           value={title}

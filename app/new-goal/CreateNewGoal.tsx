@@ -58,7 +58,9 @@ const CreateNewGoal = () => {
           })}
         >
           <Flex direction="column" gap="5" align="center">
-            <Heading>Fill out information to create goal!</Heading>
+            <Heading size={{ initial: "5", sm: "6" }}>
+              Fill out information to create goal!
+            </Heading>
             <div className="w-full">
               <input
                 {...register("title")}

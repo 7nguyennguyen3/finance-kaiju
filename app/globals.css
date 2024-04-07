@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 767px) {
   .hide-on-mobile {
     display: none;
   }

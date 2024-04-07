@@ -145,7 +145,7 @@ const Navbar = () => {
                   <FaRegUserCircle size={22} />
                 </button>
               </DropdownMenu.Trigger>
-              <DropdownMenu.Content className="w-56">
+              <DropdownMenu.Content className="w-56" align="center">
                 <Flex
                   direction="column"
                   gap="3"
@@ -170,7 +170,7 @@ const Navbar = () => {
                   size="2"
                 />
               </DropdownMenu.Trigger>
-              <DropdownMenu.Content className="w-56">
+              <DropdownMenu.Content className="w-56" align="center">
                 <Flex direction="column" gap="3" className="p-2">
                   <Text size="2">{session.user?.email}</Text>
 

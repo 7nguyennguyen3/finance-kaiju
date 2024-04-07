@@ -179,9 +179,7 @@ const Navbar = () => {
                     color="crimson"
                     className="hover:scale-110"
                   >
-                    <Link href="/sign-out" className="hide-on-mobile">
-                      Sign Out
-                    </Link>
+                    <Link href="/sign-out">Sign Out</Link>
                   </Button>
                 </Flex>
               </DropdownMenu.Content>

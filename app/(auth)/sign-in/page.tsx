@@ -1,7 +1,15 @@
 "use client";
 import { signInSchema } from "@/app/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Heading, Flex, Text, Button, Separator, Box } from "@radix-ui/themes";
+import {
+  Heading,
+  Flex,
+  Text,
+  Button,
+  Separator,
+  Box,
+  Popover,
+} from "@radix-ui/themes";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -46,10 +54,12 @@ const SignInPage = () => {
             <Flex direction="column" gap="3" justify="center">
               <form
                 onSubmit={handleSubmit(async () => {
-                  signIn("credentials", {
-                    email: email.toLowerCase(),
-                    password,
-                  });
+                  try {
+                    signIn("credentials", {
+                      email: email.toLowerCase(),
+                      password,
+                    });
+                  } catch (error) {}
                 })}
               >
                 <Flex direction="column" gap="3" justify="center">

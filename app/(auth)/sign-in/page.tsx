@@ -1,18 +1,10 @@
 "use client";
 import { signInSchema } from "@/app/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Heading,
-  Flex,
-  Text,
-  Button,
-  Separator,
-  Box,
-  Popover,
-} from "@radix-ui/themes";
+import { Box, Flex, Heading, Separator, Text } from "@radix-ui/themes";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaGithub, FaGoogle } from "react-icons/fa";
 import { z } from "zod";

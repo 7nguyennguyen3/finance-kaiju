@@ -83,10 +83,33 @@ model VerificationToken {
 }
 
 model Credentials {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   name       String
-  email      String   @unique
+  email      String    @unique
   password   String
-  createdAt  DateTime @default(now())
-  updaptedAt DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updaptedAt DateTime  @updatedAt
+  finances   Finance[]
+}
+
+model Finance {
+  id               Int         @id @default(autoincrement())
+  category         CATEGORY
+  amount           Float
+  date             DateTime    @default(now())
+  credentialsEmail String
+  credentials      Credentials @relation(fields: [credentialsEmail], references: [email])
+}
+
+enum CATEGORY {
+  FOOD
+  ENTERTAINMENT
+  GIFT
+  TRANSPORTATION
+  UTILITIES
+  HOUSING
+  EDUCATION
+  MISCELLANEOUS
+  INCOME
+  PROFIT
 }

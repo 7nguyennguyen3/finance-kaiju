@@ -6,6 +6,7 @@ import { Oswald, Roboto } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/footer/Footer";
 import AuthProvider from "./(auth)/Provider";
+import QueryClientProvider from "./QueryClientProvider";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -26,15 +27,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AuthProvider>
-          <Theme accentColor="violet" appearance="dark">
-            <main className={roboto.className}>
-              <Navbar />
-              {children}
-              <Footer />
-            </main>
-          </Theme>
-        </AuthProvider>
+        <QueryClientProvider>
+          <AuthProvider>
+            <Theme accentColor="violet" appearance="dark">
+              <main className={roboto.className}>
+                <Navbar />
+                {children}
+                <Footer />
+              </main>
+            </Theme>
+          </AuthProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

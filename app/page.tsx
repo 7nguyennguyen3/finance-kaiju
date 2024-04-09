@@ -1,4 +1,3 @@
-import SessionAvatar from "@/components/navbar/SessionAvatar";
 import chicken from "@/public/walking-cock.gif";
 import { Flex } from "@radix-ui/themes";
 import Image from "next/image";

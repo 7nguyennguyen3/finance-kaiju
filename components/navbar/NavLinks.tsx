@@ -19,6 +19,7 @@ const mobileLinks = [
   ...links,
   { label: "New Task", href: "/create-task" },
   { label: "New Goal", href: "/new-goal" },
+  { label: "Finance", href: "/finance" },
 ];
 
 const NavLinks = () => {

@@ -1,0 +1,16 @@
+-- CreateEnum
+CREATE TYPE "CATEGORY" AS ENUM ('FOOD', 'ENTERTAINMENT', 'GIFT', 'TRANSPORTATION', 'UTILITIES', 'HOUSING', 'EDUCATION', 'MISCELLANEOUS', 'INCOME', 'PROFIT');
+
+-- CreateTable
+CREATE TABLE "Finance" (
+    "id" SERIAL NOT NULL,
+    "category" "CATEGORY" NOT NULL,
+    "amount" DOUBLE PRECISION NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "credentialsId" TEXT NOT NULL,
+
+    CONSTRAINT "Finance_pkey" PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "Finance" ADD CONSTRAINT "Finance_credentialsId_fkey" FOREIGN KEY ("credentialsId") REFERENCES "Credentials"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

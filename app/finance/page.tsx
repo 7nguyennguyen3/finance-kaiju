@@ -9,7 +9,7 @@ const FinanceTrackerPage = () => {
       align="center"
       className="min-h-screen border m-auto max-w-screen-lg"
       direction={"column"}
-      width="80%"
+      width={{ initial: "100%", md: "80%" }}
       gap="3"
       maxHeight="1080px"
     >
@@ -17,22 +17,19 @@ const FinanceTrackerPage = () => {
 
       <Flex className="border w-full p-3" justify="between">
         <Flex direction="column" gap="1">
-          <Heading>Balance: $720.19</Heading>
-          <Text>Last Transaction: $4.36 - McDonald</Text>
+          <Heading size="5">Balance: $720.19</Heading>
         </Flex>
-        <Flex direction="column" gap="2">
-          <Button>Add Expense</Button>
-          <Button>Add Income</Button>
-        </Flex>
+        <Button variant="outline" className="hover:scale-110">
+          Add Transaction
+        </Button>
       </Flex>
       <Flex className="border w-full">
         <Flex className="border w-1/2 p-3" direction="column" gap="5">
-          <Text size="5">Transaction Summary</Text>
           <ShowFinance />
         </Flex>
         <Flex className="border w-1/2" justify="center"></Flex>
       </Flex>
-      <Flex className="border" width="100%">
+      <Flex width="100%">
         <ChartTest />
       </Flex>
     </Flex>

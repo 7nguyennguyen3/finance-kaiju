@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   Flex,
   Grid,
+  Heading,
   Text,
 } from "@radix-ui/themes";
 import {
@@ -51,17 +52,21 @@ const ChartTest = () => {
   return (
     <Flex
       align="center"
-      justify="between"
-      width={{ md: "100%", lg: "90%" }}
-      gap="2"
-      className="p-5 border"
+      justify={{ initial: "center", md: "between" }}
+      width={{ initial: "100%" }}
+      gap="5"
+      className="p-5"
       direction={{ initial: "column", md: "row" }}
     >
-      <Box
+      <Flex
         width="100%"
-        height={{ initial: "200px", md: "400px" }}
-        className="border"
+        justify="center"
+        align="center"
+        maxHeight="400px"
+        direction="column"
+        gap="2"
       >
+        <Heading>Expense Chart</Heading>
         <Doughnut
           data={{
             datasets: [
@@ -76,8 +81,8 @@ const ChartTest = () => {
             ],
           }}
         />
-      </Box>
-      <Flex direction="column">
+      </Flex>
+      <Box>
         <Box display={{ initial: "none", md: "inline" }}>
           {dataSpecs.map((data) => (
             <Flex width="200px" key="data" align="center" justify="between">
@@ -89,23 +94,23 @@ const ChartTest = () => {
             </Flex>
           ))}
         </Box>
-      </Flex>
-      <Box display={{ initial: "inline", md: "none" }}>
-        {dataSpecs.map((data) => (
-          <Flex
-            width="100%"
-            key="data"
-            align="center"
-            justify="between"
-            gap="3"
-          >
-            <Text>{data.category}</Text>
-            <div
-              className={`w-10 h-5 rounded-sm mb-2`}
-              style={{ backgroundColor: data.color }}
-            />
-          </Flex>
-        ))}
+        <Box display={{ initial: "inline", md: "none" }}>
+          {dataSpecs.map((data) => (
+            <Flex
+              width="100%"
+              key="data"
+              align="center"
+              justify="between"
+              gap="3"
+            >
+              <Text>{data.category}</Text>
+              <div
+                className={`w-10 h-5 rounded-sm mb-2`}
+                style={{ backgroundColor: data.color }}
+              />
+            </Flex>
+          ))}
+        </Box>
       </Box>
     </Flex>
   );

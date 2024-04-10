@@ -14,6 +14,9 @@ export async function PUT(request: NextRequest) {
     where: {
       credentialsEmail: body.credentialsEmail,
     },
+    orderBy: {
+      date: "desc",
+    },
   });
 
   return NextResponse.json(records, { status: 200 });

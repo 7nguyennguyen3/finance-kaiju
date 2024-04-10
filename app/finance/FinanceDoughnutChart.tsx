@@ -1,5 +1,5 @@
 "use client";
-import { CATEGORY } from "@prisma/client";
+import { CATEGORY, Finance } from "@prisma/client";
 import {
   Badge,
   Box,
@@ -10,6 +10,8 @@ import {
   Heading,
   Text,
 } from "@radix-ui/themes";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -18,6 +20,7 @@ import {
   CategoryScale,
   LinearScale,
 } from "chart.js";
+import { useSession } from "next-auth/react";
 import { Doughnut, Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale);
@@ -48,15 +51,49 @@ const dataSpecs = [
   { category: "Profit", color: "rgb(255, 165, 0)" },
 ];
 
-const ChartTest = () => {
+const FinanceDoughnutChart = () => {
+  const { data: session } = useSession();
+  const userEmail = session?.user?.email;
+  const {
+    data: records,
+    error,
+    isLoading,
+  } = useQuery<Finance[]>({
+    queryKey: ["email"],
+    queryFn: () =>
+      axios
+        .put<Finance[]>("api/finance", { credentialsEmail: userEmail })
+        .then((res) => res.data),
+    staleTime: 60 * 1000, //60s
+    retry: 2,
+    enabled: !!session,
+  });
+
+  const food = records
+    ?.filter((record) => record.category === "FOOD")
+    .reduce((total, record) => total + record.amount, 0);
+
+  const entertainment = records
+    ?.filter((record) => record.category === "ENTERTAINMENT")
+    .reduce((total, record) => total + record.amount, 0);
+
+  const gift = records
+    ?.filter((record) => record.category === "GIFT")
+    .reduce((total, record) => total + record.amount, 0);
+
+  const transportation = records
+    ?.filter((record) => record.category === "TRANSPORTATION")
+    .reduce((total, record) => total + record.amount, 0);
+
   return (
     <Flex
       align="center"
-      justify={{ initial: "center", md: "between" }}
-      width={{ initial: "100%" }}
+      justify="center"
+      width={{ initial: "100%", md: "90%", xl: "60%" }}
       gap="5"
-      className="p-5"
+      className="p-5 m-auto"
       direction={{ initial: "column", md: "row" }}
+      overflow="clip"
     >
       <Flex
         width="100%"
@@ -73,7 +110,18 @@ const ChartTest = () => {
               {
                 label: "Total Amount",
 
-                data: [100, 102, 103, 104, 105, 106, 107, 108, 109, 110],
+                data: [
+                  food,
+                  entertainment,
+                  gift,
+                  transportation,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                ],
                 backgroundColor: dataSpecs.map((color) => color.color),
                 borderColor: "#fEfEfE",
                 hoverBorderWidth: 5,
@@ -94,26 +142,30 @@ const ChartTest = () => {
             </Flex>
           ))}
         </Box>
-        <Box display={{ initial: "inline", md: "none" }}>
-          {dataSpecs.map((data) => (
-            <Flex
-              width="100%"
-              key="data"
-              align="center"
-              justify="between"
-              gap="3"
-            >
-              <Text>{data.category}</Text>
-              <div
-                className={`w-10 h-5 rounded-sm mb-2`}
-                style={{ backgroundColor: data.color }}
-              />
-            </Flex>
-          ))}
+        <Box display={{ initial: "inline", md: "none" }} width="100%">
+          <Grid columns="2" gapX="5" className="mt-5">
+            {dataSpecs.map((data) => (
+              <Flex
+                width="100%"
+                key="data"
+                align="center"
+                justify="between"
+                gap="3"
+              >
+                <Text size={{ initial: "2", sm: "3" }}>{data.category}</Text>
+                <Box
+                  width="30px"
+                  height="20px"
+                  className="rounded-sm mb-2"
+                  style={{ backgroundColor: data.color }}
+                />
+              </Flex>
+            ))}
+          </Grid>
         </Box>
       </Box>
     </Flex>
   );
 };
 
-export default ChartTest;
+export default FinanceDoughnutChart;

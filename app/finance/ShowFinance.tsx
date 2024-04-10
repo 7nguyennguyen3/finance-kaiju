@@ -7,7 +7,7 @@ import {
   Card,
   Flex,
   Grid,
-  Separator,
+  Heading,
   Spinner,
   Text,
 } from "@radix-ui/themes";
@@ -16,6 +16,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import classNames from "classnames";
 
 const categoryColors: Record<CATEGORY, Color> = {
   FOOD: "sky",
@@ -63,50 +64,111 @@ const ShowFinance = () => {
 
   if (error) return null;
 
-  return (
-    <Box maxHeight="500px">
-      <Grid columns="1fr 8fr 1fr" align="center" className="py-5" width="auto">
-        <button
-          onClick={() => {
-            setCurrentPage(currentPage - 1);
-            setInit(init - 8);
-          }}
-          className=" hover:scale-110 m-auto"
-          disabled={init < 8}
-        >
-          <FaChevronLeft size="40" />
-        </button>
-        <Flex direction="column" gap="2">
-          <Flex justify="between">
-            <Text>Transaction Summary</Text>
-            <Text>
-              {currentPage}/{pageCount}
-            </Text>
-          </Flex>
+  const balance = records
+    ?.filter(
+      (record) => record.category === "INCOME" || record.category === "PROFIT"
+    )
+    .reduce((total, record) => total + record.amount, 0);
 
-          {records?.slice(init, n1).map((record) => (
-            <Card key="record">
-              <Flex justify="between">
-                <Text>${record.amount}</Text>
-                <Badge color={categoryColors[record.category]}>
-                  {record.category}
-                </Badge>
-              </Flex>
-            </Card>
-          ))}
-        </Flex>
-        <button
-          disabled={currentPage === pageCount}
-          onClick={() => {
-            setInit(init + 8);
-            setCurrentPage(currentPage + 1);
-          }}
-          className="m-auto hover:scale-110"
+  const expense = records
+    ?.filter(
+      (record) => record.category !== "INCOME" && record.category !== "PROFIT"
+    )
+    .reduce((total, record) => total + record.amount, 0);
+
+  const expenseNum = records?.filter(
+    (record) => record.category !== "INCOME" && record.category !== "PROFIT"
+  ).length;
+
+  return (
+    <Flex direction="column">
+      <Flex
+        className="p-5"
+        display={{ initial: "flex", sm: "none" }}
+        direction="column"
+      >
+        <Heading>Balance: {balance}</Heading>
+        <Text className="font-semibold" size="4">
+          Expense: {expense}
+        </Text>
+        <Text>Total Expense Transactions: {expenseNum}</Text>
+      </Flex>
+      <Grid columns={{ initial: "1", sm: "4fr 6fr" }}>
+        <Flex
+          className="p-5"
+          display={{ initial: "none", sm: "flex" }}
+          direction="column"
         >
-          <FaChevronRight size="40" />
-        </button>
+          <Heading>Balance: ${balance}</Heading>
+          <Text className="font-semibold" size="4">
+            Expense: ${expense}
+          </Text>
+          <Text size="3">Total Expense Transactions: {expenseNum}</Text>
+        </Flex>
+        <Box height="500px" className="border">
+          <Grid
+            columns="1fr 8fr 1fr"
+            align="center"
+            className="py-5"
+            width="auto"
+            justify="center"
+          >
+            <button
+              className="m-auto hover:scale-110 "
+              onClick={() => {
+                setCurrentPage(currentPage - 1);
+                setInit(init - 8);
+              }}
+              disabled={init < 8}
+            >
+              <FaChevronLeft
+                size="40"
+                className={classNames({
+                  hidden: currentPage === 1 || records?.length === 0,
+                })}
+              />
+            </button>
+            <Flex direction="column" gap="2">
+              <Flex justify="between">
+                <Text>Transaction Summary</Text>
+                <Text>
+                  {currentPage}/{pageCount}
+                </Text>
+              </Flex>
+
+              {records?.slice(init, n1).map((record) => (
+                <Card key="record">
+                  <Flex justify="between">
+                    <Text>${record.amount}</Text>
+                    <Badge color={categoryColors[record.category]}>
+                      {record.category}
+                    </Badge>
+                  </Flex>
+                </Card>
+              ))}
+            </Flex>
+            <button
+              disabled={currentPage === pageCount}
+              onClick={() => {
+                setInit(init + 8);
+                setCurrentPage(currentPage + 1);
+              }}
+              className="m-auto hover:scale-110  "
+            >
+              <FaChevronRight
+                size="40"
+                className={classNames({
+                  hidden:
+                    currentPage === pageCount ||
+                    !session ||
+                    records?.length === 0,
+                })}
+              />
+            </button>
+          </Grid>
+        </Box>
       </Grid>
-    </Box>
+    </Flex>
   );
 };
 

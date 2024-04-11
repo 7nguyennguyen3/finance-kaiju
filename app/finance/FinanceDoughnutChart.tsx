@@ -47,8 +47,6 @@ const dataSpecs = [
   { category: "Housing", color: "rgb(205, 127, 50)" },
   { category: "Education", color: "rgb(165, 42, 42)" },
   { category: "Miscellaneous", color: "rgb(255, 255, 0)" },
-  { category: "Income", color: "rgb(255, 191, 0)" },
-  { category: "Profit", color: "rgb(255, 165, 0)" },
 ];
 
 const FinanceDoughnutChart = () => {

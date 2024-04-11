@@ -48,19 +48,11 @@ const ShowFinance = () => {
       axios
         .put<Finance[]>("api/finance", { credentialsEmail: userEmail })
         .then((res) => res.data),
-    staleTime: 60 * 1000, //60s
-    retry: 2,
+    retry: 1,
     enabled: !!session,
   });
 
   const pageCount = Math.ceil(records?.length! / 8);
-
-  if (isLoading)
-    return (
-      <Flex gap="1">
-        Loading... <Spinner size="3" />
-      </Flex>
-    );
 
   if (error) return null;
 
@@ -105,13 +97,12 @@ const ShowFinance = () => {
           </Text>
           <Text size="3">Total Expense Transactions: {expenseNum}</Text>
         </Flex>
-        <Box height="500px" className="border">
+        <Box height="520px" className="border">
           <Grid
             columns="1fr 8fr 1fr"
-            align="center"
             className="py-5"
-            width="auto"
             justify="center"
+            height="100%"
           >
             <button
               className="m-auto hover:scale-110 "

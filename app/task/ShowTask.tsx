@@ -50,7 +50,9 @@ const ShowTask = async () => {
                 </div>
                 <Flex align="center" justify="between" width="100%">
                   <Text size="1" weight="medium">
-                    {new Date(task.createdAt).toLocaleDateString()}
+                    {new Date(task.createdAt).toLocaleDateString("en-US", {
+                      timeZone: "UTC",
+                    })}
                   </Text>
                   <Badge color="green">{task.status}</Badge>
                 </Flex>

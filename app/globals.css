@@ -7,3 +7,9 @@
     display: none;
   }
 }
+
+@layer base {
+  button {
+    @apply hover:scale-110;
+  }
+}

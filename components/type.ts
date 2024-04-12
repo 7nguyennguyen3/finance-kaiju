@@ -1,4 +1,6 @@
-export type Color =
+import { CATEGORY } from "@prisma/client";
+
+export type RadixUIColor =
   | "gray"
   | "gold"
   | "bronze"
@@ -25,3 +27,16 @@ export type Color =
   | "lime"
   | "mint"
   | "sky";
+
+export const categoryColors: Record<CATEGORY, RadixUIColor> = {
+  FOOD: "sky",
+  ENTERTAINMENT: "indigo",
+  GIFT: "blue",
+  TRANSPORTATION: "gray",
+  UTILITIES: "gold",
+  HOUSING: "bronze",
+  EDUCATION: "brown",
+  MISCELLANEOUS: "yellow",
+  INCOME: "amber",
+  PROFIT: "orange",
+};

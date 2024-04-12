@@ -1,35 +1,25 @@
 "use client";
-import { Color } from "@/components/type";
-import { CATEGORY, Finance } from "@prisma/client";
+import { useFinanceRecords } from "@/components/hook";
+import { categoryColors } from "@/components/type";
+import { CATEGORY } from "@prisma/client";
 import {
   Badge,
   Box,
   Card,
+  DropdownMenu,
   Flex,
   Grid,
   Heading,
-  Spinner,
   Text,
 } from "@radix-ui/themes";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import classNames from "classnames";
+import { MdOutlineFiberNew } from "react-icons/md";
+import FilterTransaction from "./FilterTransaction";
 
-const categoryColors: Record<CATEGORY, Color> = {
-  FOOD: "sky",
-  ENTERTAINMENT: "indigo",
-  GIFT: "blue",
-  TRANSPORTATION: "gray",
-  UTILITIES: "gold",
-  HOUSING: "bronze",
-  EDUCATION: "brown",
-  MISCELLANEOUS: "yellow",
-  INCOME: "amber",
-  PROFIT: "orange",
-};
+type FilterOption = CATEGORY | "ALL";
 
 const ShowFinance = () => {
   const { data: session } = useSession();
@@ -37,22 +27,15 @@ const ShowFinance = () => {
   const [init, setInit] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   let n1 = init + 8;
+  const { data: records, error } = useFinanceRecords(userEmail!);
+  const [filter, setFilter] = useState<FilterOption>("ALL");
 
-  const {
-    data: records,
-    error,
-    isLoading,
-  } = useQuery<Finance[]>({
-    queryKey: ["email"],
-    queryFn: () =>
-      axios
-        .put<Finance[]>("api/finance", { credentialsEmail: userEmail })
-        .then((res) => res.data),
-    retry: 1,
-    enabled: !!session,
-  });
+  if (!userEmail) return null;
 
   const pageCount = Math.ceil(records?.length! / 8);
+  const maxIdRecord = records?.reduce((prev, current) =>
+    prev.id > current.id ? prev : current
+  );
 
   if (error) return null;
 
@@ -75,7 +58,7 @@ const ShowFinance = () => {
   return (
     <Flex direction="column">
       <Flex
-        className="p-5"
+        className="p-5 border rounded-md"
         display={{ initial: "flex", sm: "none" }}
         direction="column"
       >
@@ -85,9 +68,9 @@ const ShowFinance = () => {
         </Text>
         <Text>Total Expense Transactions: {expenseNum}</Text>
       </Flex>
-      <Grid columns={{ initial: "1", sm: "4fr 6fr" }}>
+      <Grid columns={{ initial: "1", sm: "35fr 65fr" }}>
         <Flex
-          className="p-5"
+          className="p-5 border rounded-md"
           display={{ initial: "none", sm: "flex" }}
           direction="column"
         >
@@ -97,7 +80,7 @@ const ShowFinance = () => {
           </Text>
           <Text size="3">Total Expense Transactions: {expenseNum}</Text>
         </Flex>
-        <Box height="520px" className="border">
+        <Box height="570px" className="border rounded-md">
           <Grid
             columns="1fr 8fr 1fr"
             className="py-5"
@@ -120,23 +103,41 @@ const ShowFinance = () => {
               />
             </button>
             <Flex direction="column" gap="2">
-              <Flex justify="between">
-                <Text>Transaction Summary</Text>
+              <Text>Transaction Summary</Text>
+              <Flex justify="between" align="center">
+                <FilterTransaction setFilter={setFilter} />
                 <Text>
                   {currentPage}/{pageCount}
                 </Text>
               </Flex>
 
-              {records?.slice(init, n1).map((record) => (
-                <Card key="record">
-                  <Flex justify="between">
-                    <Text>${record.amount}</Text>
-                    <Badge color={categoryColors[record.category]}>
-                      {record.category}
-                    </Badge>
-                  </Flex>
-                </Card>
-              ))}
+              {records
+                ?.filter(
+                  (record) => filter === "ALL" || record.category === filter
+                )
+                .slice(init, n1)
+                .map((record) => (
+                  <Card
+                    variant="classic"
+                    key="record"
+                    className={classNames("hover:scale-[1.07]", {
+                      "bg-slate-900": record.id === maxIdRecord?.id,
+                    })}
+                  >
+                    <Flex justify="between" align="center">
+                      <Text>${record.amount}</Text>
+                      <Flex align="center" gap="1">
+                        <Badge color={categoryColors[record.category]}>
+                          {record.category}
+                        </Badge>
+
+                        {record.id === maxIdRecord?.id && (
+                          <MdOutlineFiberNew className="text-[35px] text-white" />
+                        )}
+                      </Flex>
+                    </Flex>
+                  </Card>
+                ))}
             </Flex>
             <button
               disabled={currentPage === pageCount}

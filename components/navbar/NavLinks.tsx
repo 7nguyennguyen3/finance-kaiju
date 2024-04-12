@@ -9,6 +9,7 @@ import styles from "./navbar.module.css";
 import { usePathname } from "next/navigation";
 
 const links = [
+  { label: "Finance", href: "/finance" },
   { label: "Current", href: "/goal" },
   { label: "Completed", href: "/completed" },
   { label: "Task List", href: "/task" },

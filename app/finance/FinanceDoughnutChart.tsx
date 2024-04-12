@@ -1,87 +1,43 @@
 "use client";
-import { CATEGORY, Finance } from "@prisma/client";
+import { useFinanceRecords } from "@/components/hook";
+import { CATEGORY } from "@prisma/client";
+import { Box, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import {
-  Badge,
-  Box,
-  Button,
-  DropdownMenu,
-  Flex,
-  Grid,
-  Heading,
-  Text,
-} from "@radix-ui/themes";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import {
-  Chart as ChartJS,
   ArcElement,
-  Tooltip,
-  Legend,
   CategoryScale,
+  Chart as ChartJS,
+  Legend,
   LinearScale,
+  Tooltip,
 } from "chart.js";
 import { useSession } from "next-auth/react";
-import { Doughnut, Pie } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale);
 
-const categoryColors: Record<CATEGORY, string> = {
-  FOOD: "rgb(135, 206, 235)", // sky
-  ENTERTAINMENT: "rgb(75, 0, 130)", // indigo
-  GIFT: "rgb(0, 0, 255)", // blue
-  TRANSPORTATION: "rgb(128, 128, 128)", // gray
-  UTILITIES: "rgb(255, 215, 0)", // gold
-  HOUSING: "rgb(205, 127, 50)", // bronze
-  EDUCATION: "rgb(165, 42, 42)", // brown
-  MISCELLANEOUS: "rgb(255, 255, 0)", // yellow
-  INCOME: "rgb(255, 191, 0)", // amber
-  PROFIT: "rgb(255, 165, 0)", // orange
-};
-
-const dataSpecs = [
-  { category: "Food", color: "rgb(135, 206, 235)" },
-  { category: "Entertainment", color: "rgb(75, 0, 130)" },
-  { category: "Gift", color: "rgb(0, 0, 255)" },
-  { category: "Transportation", color: "rgb(128, 128, 128)" },
-  { category: "Utilities", color: "rgb(255, 215, 0)" },
-  { category: "Housing", color: "rgb(205, 127, 50)" },
-  { category: "Education", color: "rgb(165, 42, 42)" },
-  { category: "Miscellaneous", color: "rgb(255, 255, 0)" },
+const chartDataSpecs: { category: CATEGORY; color: string }[] = [
+  { category: "FOOD", color: "rgb(135, 206, 235)" },
+  { category: "ENTERTAINMENT", color: "rgb(75, 0, 130)" },
+  { category: "GIFT", color: "rgb(0, 0, 255)" },
+  { category: "TRANSPORTATION", color: "rgb(128, 128, 128)" },
+  { category: "UTILITIES", color: "rgb(255, 215, 0)" },
+  { category: "HOUSING", color: "rgb(205, 127, 50)" },
+  { category: "EDUCATION", color: "rgb(165, 42, 42)" },
+  { category: "MISCELLANEOUS", color: "rgb(255, 255, 0)" },
 ];
 
 const FinanceDoughnutChart = () => {
   const { data: session } = useSession();
   const userEmail = session?.user?.email;
-  const {
-    data: records,
-    error,
-    isLoading,
-  } = useQuery<Finance[]>({
-    queryKey: ["email"],
-    queryFn: () =>
-      axios
-        .put<Finance[]>("api/finance", { credentialsEmail: userEmail })
-        .then((res) => res.data),
-    staleTime: 60 * 1000, //60s
-    retry: 2,
-    enabled: !!session,
+  const { data: records } = useFinanceRecords(userEmail!);
+
+  if (!userEmail) return null;
+
+  const chartData = chartDataSpecs.map((spec) => {
+    return records
+      ?.filter((record) => record.category === spec.category)
+      .reduce((total, record) => total + record.amount, 0);
   });
-
-  const food = records
-    ?.filter((record) => record.category === "FOOD")
-    .reduce((total, record) => total + record.amount, 0);
-
-  const entertainment = records
-    ?.filter((record) => record.category === "ENTERTAINMENT")
-    .reduce((total, record) => total + record.amount, 0);
-
-  const gift = records
-    ?.filter((record) => record.category === "GIFT")
-    .reduce((total, record) => total + record.amount, 0);
-
-  const transportation = records
-    ?.filter((record) => record.category === "TRANSPORTATION")
-    .reduce((total, record) => total + record.amount, 0);
 
   return (
     <Flex
@@ -107,20 +63,8 @@ const FinanceDoughnutChart = () => {
             datasets: [
               {
                 label: "Total Amount",
-
-                data: [
-                  food,
-                  entertainment,
-                  gift,
-                  transportation,
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                ],
-                backgroundColor: dataSpecs.map((color) => color.color),
+                data: chartData,
+                backgroundColor: chartDataSpecs.map((color) => color.color),
                 borderColor: "#fEfEfE",
                 hoverBorderWidth: 5,
               },
@@ -130,9 +74,12 @@ const FinanceDoughnutChart = () => {
       </Flex>
       <Box>
         <Box display={{ initial: "none", md: "inline" }}>
-          {dataSpecs.map((data) => (
+          {chartDataSpecs.map((data) => (
             <Flex width="200px" key="data" align="center" justify="between">
-              <Text>{data.category}</Text>
+              <Text>
+                {/* Capitalize Only First Letter */}
+                {data.category.charAt(0) + data.category.toLowerCase().slice(1)}
+              </Text>
               <div
                 className={`w-10 h-5 rounded-sm mb-2`}
                 style={{ backgroundColor: data.color }}
@@ -142,7 +89,7 @@ const FinanceDoughnutChart = () => {
         </Box>
         <Box display={{ initial: "inline", md: "none" }} width="100%">
           <Grid columns="2" gapX="5" className="mt-5">
-            {dataSpecs.map((data) => (
+            {chartDataSpecs.map((data) => (
               <Flex
                 width="100%"
                 key="data"
@@ -150,7 +97,11 @@ const FinanceDoughnutChart = () => {
                 justify="between"
                 gap="3"
               >
-                <Text size={{ initial: "2", sm: "3" }}>{data.category}</Text>
+                <Text size={{ initial: "2", sm: "3" }}>
+                  {/* Capitalize Only First Letter */}
+                  {data.category.charAt(0) +
+                    data.category.toLowerCase().slice(1)}
+                </Text>
                 <Box
                   width="30px"
                   height="20px"

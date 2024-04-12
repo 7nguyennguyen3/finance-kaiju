@@ -104,6 +104,20 @@ const SignInPage = () => {
                   </button>
                 </Flex>
               </form>
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    signIn("credentials", {
+                      email: "chopper@gmail.com",
+                      password: 123123123,
+                    });
+                  } catch (error) {}
+                }}
+                className="border border-blue-200 py-2 px-5 rounded-md hover:scale-110"
+              >
+                Click Here for Demo
+              </button>
               <Separator size="4" color="blue" className="my-1" />
               <Text className="flex justify-center">
                 {"Don't have an account?"}

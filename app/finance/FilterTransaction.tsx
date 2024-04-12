@@ -1,5 +1,5 @@
 import { CATEGORY } from "@prisma/client";
-import { Flex, Popover } from "@radix-ui/themes";
+import { Text, Flex, Popover } from "@radix-ui/themes";
 import { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
@@ -13,7 +13,7 @@ const FilterTransaction = ({ setFilter }: any) => {
       <Popover.Trigger>
         <Flex
           onClick={() => setOpenPopover(!openPopover)}
-          className="px-3 rounded-md border self-start hover:scale-110"
+          className="px-3 rounded-md border border-slate-300 self-start hover:scale-110"
           align="center"
           gap="2"
         >
@@ -23,19 +23,23 @@ const FilterTransaction = ({ setFilter }: any) => {
         </Flex>
       </Popover.Trigger>
       <Popover.Content align="center">
-        <select
-          className="p-3 rounded-md bg-transparent border 
-                  border-blue-200 focus:outline-none focus:border-2"
-          onChange={(e) =>
-            setFilter(e.target.value.toUpperCase() as FilterOption)
-          }
-        >
-          {["ALL", ...Object.values(CATEGORY)].map((category) => (
-            <option key={category} className="bg-black hover:text-red-200">
-              {category.charAt(0) + category.toLocaleLowerCase().slice(1)}
-            </option>
-          ))}
-        </select>
+        <Popover.Close>
+          <Flex direction="column">
+            {["ALL", ...Object.values(CATEGORY)].map((category) => (
+              <Flex
+                onClick={() => {
+                  setFilter(category as FilterOption);
+                  setOpenPopover(false);
+                }}
+                key={category}
+                direction="column"
+                className="border border-slate-300 mb-[6px] rounded-md px-3 py-[2px] hover:bg-slate-500"
+              >
+                {category.charAt(0) + category.toLocaleLowerCase().slice(1)}
+              </Flex>
+            ))}
+          </Flex>
+        </Popover.Close>
       </Popover.Content>
     </Popover.Root>
   );

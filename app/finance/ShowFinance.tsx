@@ -14,7 +14,7 @@ import {
 } from "@radix-ui/themes";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdOutlineFiberNew } from "react-icons/md";
 import FilterTransaction from "./FilterTransaction";
@@ -30,26 +30,38 @@ const ShowFinance = () => {
   const { data: records, error } = useFinanceRecords(userEmail!);
   const [filter, setFilter] = useState<FilterOption>("ALL");
 
+  useEffect(() => {
+    setInit(0);
+    setCurrentPage(1);
+  }, [filter]);
+
   if (!userEmail) return null;
 
-  const pageCount = Math.ceil(records?.length! / 8);
+  const filteredRecords = records?.filter(
+    (record) => filter === "ALL" || record.category === filter
+  );
+  const pageCount = Math.ceil(filteredRecords?.length! / 8);
   const maxIdRecord = records?.reduce((prev, current) =>
     prev.id > current.id ? prev : current
   );
 
   if (error) return null;
 
-  const balance = records
-    ?.filter(
-      (record) => record.category === "INCOME" || record.category === "PROFIT"
-    )
-    .reduce((total, record) => total + record.amount, 0);
+  const deposit =
+    records
+      ?.filter(
+        (record) => record.category === "INCOME" || record.category === "PROFIT"
+      )
+      .reduce((total, record) => total + record.amount, 0) || 0;
 
-  const expense = records
-    ?.filter(
-      (record) => record.category !== "INCOME" && record.category !== "PROFIT"
-    )
-    .reduce((total, record) => total + record.amount, 0);
+  const expense =
+    records
+      ?.filter(
+        (record) => record.category !== "INCOME" && record.category !== "PROFIT"
+      )
+      .reduce((total, record) => total + record.amount, 0) || 0;
+
+  const balance = deposit - expense;
 
   const expenseNum = records?.filter(
     (record) => record.category !== "INCOME" && record.category !== "PROFIT"
@@ -62,9 +74,12 @@ const ShowFinance = () => {
         display={{ initial: "flex", sm: "none" }}
         direction="column"
       >
-        <Heading>Balance: {balance}</Heading>
+        <Heading>Balance: ${balance}</Heading>
         <Text className="font-semibold" size="4">
-          Expense: {expense}
+          Deposit: ${deposit}
+        </Text>
+        <Text className="font-semibold" size="4">
+          Expense: ${expense}
         </Text>
         <Text>Total Expense Transactions: {expenseNum}</Text>
       </Flex>
@@ -75,6 +90,9 @@ const ShowFinance = () => {
           direction="column"
         >
           <Heading>Balance: ${balance}</Heading>
+          <Text className="font-semibold" size="4">
+            Deposit: ${deposit}
+          </Text>
           <Text className="font-semibold" size="4">
             Expense: ${expense}
           </Text>
@@ -98,16 +116,20 @@ const ShowFinance = () => {
               <FaChevronLeft
                 size="40"
                 className={classNames({
-                  hidden: currentPage === 1 || records?.length === 0,
+                  hidden:
+                    pageCount === 1 ||
+                    currentPage === 1 ||
+                    records?.length === 0,
                 })}
               />
             </button>
             <Flex direction="column" gap="2">
               <Text>Transaction Summary</Text>
               <Flex justify="between" align="center">
-                <FilterTransaction setFilter={setFilter} />
+                <FilterTransaction filter={filter} setFilter={setFilter} />
                 <Text>
-                  {currentPage}/{pageCount}
+                  {pageCount === 1 ? 1 : currentPage}/
+                  {pageCount === 0 ? 1 : pageCount}
                 </Text>
               </Flex>
 
@@ -115,12 +137,12 @@ const ShowFinance = () => {
                 ?.filter(
                   (record) => filter === "ALL" || record.category === filter
                 )
-                .slice(init, n1)
+                .slice(pageCount === 1 ? 0 : init, n1)
                 .map((record) => (
                   <Card
                     variant="classic"
                     key="record"
-                    className={classNames("hover:scale-[1.07]", {
+                    className={classNames("hover:scale-105 overflow-clip", {
                       "bg-slate-900": record.id === maxIdRecord?.id,
                     })}
                   >
@@ -132,7 +154,7 @@ const ShowFinance = () => {
                         </Badge>
 
                         {record.id === maxIdRecord?.id && (
-                          <MdOutlineFiberNew className="text-[35px] text-white" />
+                          <MdOutlineFiberNew className="text-[30px]" />
                         )}
                       </Flex>
                     </Flex>
@@ -151,7 +173,7 @@ const ShowFinance = () => {
                 size="40"
                 className={classNames({
                   hidden:
-                    currentPage === pageCount ||
+                    currentPage >= pageCount ||
                     !session ||
                     records?.length === 0,
                 })}

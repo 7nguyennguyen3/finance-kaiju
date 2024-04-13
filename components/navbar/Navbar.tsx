@@ -1,6 +1,5 @@
 import { Container, Flex, Heading } from "@radix-ui/themes";
 import Link from "next/link";
-import CreateNew from "./CreateNew";
 import SessionAvatar from "./SessionAvatar";
 import NavLinks from "./NavLinks";
 
@@ -15,7 +14,6 @@ const Navbar = () => {
         </Flex>
         <Flex gap="5" align="center" justify="center">
           <NavLinks />
-          <CreateNew />
           <SessionAvatar />
         </Flex>
       </Flex>

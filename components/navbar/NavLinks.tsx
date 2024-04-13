@@ -11,15 +11,11 @@ import { usePathname } from "next/navigation";
 const links = [
   { label: "Finance", href: "/finance" },
   { label: "Goal", href: "/goal" },
-  { label: "Task List", href: "/task" },
+  { label: "Task", href: "/task" },
+  { label: "New Task", href: "/create-task" },
 ];
 
-const mobileLinks = [
-  { label: "Home", href: "/" },
-  ...links,
-  { label: "New Task", href: "/create-task" },
-  { label: "New Goal", href: "/new-goal" },
-];
+const mobileLinks = [{ label: "Home", href: "/" }, ...links];
 
 const NavLinks = () => {
   const [open, setOpen] = useState(false);

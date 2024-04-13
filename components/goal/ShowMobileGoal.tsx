@@ -6,8 +6,10 @@ import {
   Card,
   Flex,
   Grid,
+  Heading,
   Link,
   Separator,
+  Switch,
   Text,
 } from "@radix-ui/themes";
 import axios from "axios";
@@ -49,14 +51,15 @@ const updateGoal = ({ goal, router, status }: any) => {
 
 const ShowMobileGoal = ({ goals, completedGoals, borderColor }: any) => {
   const [current, setCurrent] = useState("current");
+  const [advancedView, setAdvancedView] = useState(false);
   const router = useRouter();
 
-  const latestGoal = (goalsRecord: GOAL[]) => {
-    return goalsRecord.reduce((latest, goal) => {
+  const latestGoal = (goals: GOAL[]) => {
+    return goals.reduce((latest, goal) => {
       return new Date(goal.createdAt) > new Date(latest.createdAt)
         ? goal
         : latest;
-    }, goalsRecord[0]);
+    }, goals[0]);
   };
 
   const mapping = ({ goalsRecord, color }: Props) =>
@@ -159,27 +162,43 @@ const ShowMobileGoal = ({ goals, completedGoals, borderColor }: any) => {
           justify="between"
           className="w-full"
           maxWidth="90%"
-          direction={{ initial: "column", xs: "row" }}
+          direction={{ initial: "column", md: "row" }}
           gap="3"
         >
           <GoalCategorySwap current={current} setCurrent={setCurrent} />
-          <CreateNewGoal />
+          <Flex gap="3" justify="between">
+            <Flex align="center" gap="2">
+              <Text>Advanced View</Text>
+              <Switch
+                color="blue"
+                onClick={() => {
+                  setAdvancedView(!advancedView);
+                }}
+              />
+            </Flex>
+
+            <CreateNewGoal />
+          </Flex>
         </Flex>
 
         {/* Mapping of Goals */}
         <Flex direction="column" align="center" justify="center">
-          <Grid columns={{ initial: "1", md: "2" }} gap="5">
-            {current === "current" &&
-              mapping({
-                color: "crimson",
-                goalsRecord: goals,
-              })}
-            {current === "completed" &&
-              mapping({
-                color: "grass",
-                goalsRecord: completedGoals,
-              })}
-          </Grid>
+          {!advancedView && (
+            <Grid columns={{ initial: "1", md: "2" }} gap="5">
+              {current === "current" &&
+                mapping({
+                  color: "crimson",
+                  goalsRecord: goals,
+                })}
+              {current === "completed" &&
+                mapping({
+                  color: "grass",
+                  goalsRecord: completedGoals,
+                })}
+            </Grid>
+          )}
+
+          {advancedView && <Heading>Currently Being Worked On</Heading>}
         </Flex>
       </Flex>
     </>

@@ -3,6 +3,7 @@ import { GOAL } from "@prisma/client";
 import {
   Badge,
   Blockquote,
+  Box,
   Card,
   Flex,
   Grid,
@@ -64,9 +65,9 @@ const ShowMobileGoal = ({ goals, completedGoals, borderColor }: any) => {
 
   const mapping = ({ goalsRecord, color }: Props) =>
     goalsRecord.map((goal) => (
-      <Card
+      <Box
         key={goal.id}
-        className={classNames("mx-2 relative", {
+        className={classNames("mx-2 relative w-full p-5 rounded-xl", {
           "border border-blue-400": goal.status === "INCOMPLETE",
           "border border-emerald-200": goal.status === "COMPLETE",
           "bg-slate-950": goal.id === latestGoal(goalsRecord).id,
@@ -131,7 +132,7 @@ const ShowMobileGoal = ({ goals, completedGoals, borderColor }: any) => {
             />
           )}
         </Flex>
-      </Card>
+      </Box>
     ));
 
   return (
@@ -161,7 +162,7 @@ const ShowMobileGoal = ({ goals, completedGoals, borderColor }: any) => {
         <Flex
           justify="between"
           className="w-full"
-          maxWidth="90%"
+          maxWidth={{ xs: "430px" }}
           direction={{ initial: "column", md: "row" }}
           gap="3"
         >

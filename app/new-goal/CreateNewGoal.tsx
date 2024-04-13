@@ -67,7 +67,7 @@ const CreateNewGoal = () => {
                 placeholder="Title of Task"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-2 pb-7 py-3  focus:border-2 focus:border-white focus:outline-none rounded-md"
+                className="input-form"
               />
               {errors.title && (
                 <Box className="mt-2">
@@ -77,11 +77,12 @@ const CreateNewGoal = () => {
             </div>
             <div className="w-full">
               <textarea
+                rows={5}
                 {...register("description")}
                 placeholder="Description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-2 pb-12 py-3  focus:border-2 focus:border-white focus:outline-none rounded-md"
+                className="input-form"
               />
               {errors.description && (
                 <Text color="crimson">{errors.description.message}</Text>

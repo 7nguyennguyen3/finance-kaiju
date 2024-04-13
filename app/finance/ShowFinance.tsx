@@ -2,16 +2,7 @@
 import { useFinanceRecords } from "@/components/hook";
 import { categoryColors } from "@/components/type";
 import { CATEGORY } from "@prisma/client";
-import {
-  Badge,
-  Box,
-  Card,
-  DropdownMenu,
-  Flex,
-  Grid,
-  Heading,
-  Text,
-} from "@radix-ui/themes";
+import { Badge, Box, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -41,8 +32,9 @@ const ShowFinance = () => {
     (record) => filter === "ALL" || record.category === filter
   );
   const pageCount = Math.ceil(filteredRecords?.length! / 8);
-  const maxIdRecord = records?.reduce((prev, current) =>
-    prev.id > current.id ? prev : current
+  const maxIdRecord = records?.reduce(
+    (prev, current) => (prev.id > current.id ? prev : current),
+    records[0]
   );
 
   if (error) return null;

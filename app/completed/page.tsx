@@ -9,12 +9,7 @@ const CompletedGoalPage = () => {
       className="min-h-screen"
       direction="column"
     >
-      <DisplayGoals
-        color="green"
-        status="COMPLETE"
-        goalTitle="Completed"
-        headingColor="green"
-      />
+      <DisplayGoals />
     </Flex>
   );
 };

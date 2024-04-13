@@ -1,5 +1,5 @@
 "use client";
-import { Button, Flex, Heading } from "@radix-ui/themes";
+import { Box, Button, Container, Flex, Heading } from "@radix-ui/themes";
 import axios from "axios";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 import { useRouter } from "next/navigation";
@@ -18,52 +18,16 @@ const CreateTaskPage = () => {
   const router = useRouter();
 
   return (
-    <>
+    <Container className="border">
       <Flex
         direction="column"
         gap="5"
         align="center"
-        className="min-h-screen m-auto "
+        className="min-h-screen m-auto border"
         justify="center"
         maxWidth={{ initial: "100%", md: "720px" }}
       >
         {!publicId && (
-          <Flex
-            justify="center"
-            align="center"
-            className="border border-red-200"
-            width="66%"
-            height="300px"
-          >
-            Please upload an image
-          </Flex>
-        )}
-        {publicId && (
-          <CldImage
-            src={publicId}
-            width={512}
-            height={240}
-            alt="uploaded image"
-            className="border-2 border-white rounded-md max-w-lg"
-          />
-        )}
-        <Heading size={{ initial: "5", sm: "6" }}>
-          Fill out information to create task!
-        </Heading>
-        <input
-          placeholder="Title of Task"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-2/3 px-2 pb-7 py-3  focus:border-2 focus:border-white focus:outline-none rounded-md"
-        />
-        <textarea
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-2/3 px-2 pb-12  py-3 focus:border-2 focus:border-white focus:outline-none rounded-md"
-        />
-
-        <Flex justify="between" width="66%">
           <CldUploadWidget
             uploadPreset="p1mv73w6"
             onUpload={(result) => {
@@ -74,11 +38,71 @@ const CreateTaskPage = () => {
             }}
           >
             {({ open }) => (
-              <Button onClick={() => open()}>Upload Images</Button>
+              <Flex
+                justify="center"
+                align="center"
+                className="border border-red-200"
+                width="300px"
+                height="300px"
+                onClick={() => open()}
+              >
+                Please upload an image.
+              </Flex>
+            )}
+          </CldUploadWidget>
+        )}
+        {publicId && (
+          <CldImage
+            src={publicId}
+            height={300}
+            width={300}
+            alt="uploaded image"
+            className="border-2 border-white rounded-md max-w-lg"
+          />
+        )}
+        <Heading size={{ initial: "4", xs: "5", sm: "6" }}>
+          Fill out information to create task!
+        </Heading>
+        <Box width={{ initial: "90%", xs: "60%", md: "60%" }}>
+          <input
+            placeholder="Title of Task"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="input-form"
+          />
+        </Box>
+        <Box width={{ initial: "90%", xs: "60%" }}>
+          <textarea
+            rows={5}
+            placeholder="Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="input-form"
+          />
+        </Box>
+
+        <Flex
+          justify="between"
+          width={{ initial: "90%", xs: "60%", md: "60%" }}
+        >
+          <CldUploadWidget
+            uploadPreset="p1mv73w6"
+            onUpload={(result) => {
+              const info = result.info as CloudinaryResult;
+              console.log(info.secure_url);
+              setUrl(info.secure_url);
+              setPublicId(info.public_id);
+            }}
+          >
+            {({ open }) => (
+              <Button variant="classic" onClick={() => open()}>
+                Upload Image
+              </Button>
             )}
           </CldUploadWidget>
 
           <Button
+            variant="classic"
             disabled={!publicId}
             color="crimson"
             onClick={async () => {
@@ -100,7 +124,7 @@ const CreateTaskPage = () => {
           </Button>
         </Flex>
       </Flex>
-    </>
+    </Container>
   );
 };
 

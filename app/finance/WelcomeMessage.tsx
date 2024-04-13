@@ -1,6 +1,6 @@
 "use client";
 import { CATEGORY, Finance } from "@prisma/client";
-import { Button, Flex, Heading, Popover } from "@radix-ui/themes";
+import { Button, Flex, Heading, Popover, Spinner } from "@radix-ui/themes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import axios from "axios";
@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 const WelcomeMessage = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState("FOOD");
@@ -36,7 +36,7 @@ const WelcomeMessage = () => {
     },
   });
 
-  if (!userEmail)
+  if (status === "unauthenticated")
     return (
       <>
         <Heading>Please sign in to access the finance app.</Heading>
@@ -45,6 +45,14 @@ const WelcomeMessage = () => {
             Sign In
           </button>
         </Link>
+      </>
+    );
+
+  if (status === "loading")
+    return (
+      <>
+        <Heading>Loading...</Heading>
+        <Spinner />
       </>
     );
 
@@ -109,9 +117,8 @@ const WelcomeMessage = () => {
                       type="submit"
                       disabled={amount === 0 || isLoading}
                       className={classNames({
-                        "border border-violet-400 rounded-md py-2": true,
-                        "hover:scale-110": amount !== 0,
-                        "opacity-50 cursor-not-allowed":
+                        "btn-form border-violet-400": true,
+                        "opacity-50 cursor-not-allowed hover:scale-100":
                           amount === 0 || isLoading,
                       })}
                     >

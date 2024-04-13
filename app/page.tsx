@@ -18,7 +18,7 @@ export default function Home() {
                 email: "chopper@gmail.com",
                 password: 123123123,
                 callbackUrl:
-                  "https://goal-tracker-nine-iota.vercel.app/finance",
+                  "https://goal-tracker-nine-iota.vercel.app/sign-in",
               });
             } catch (error) {}
           }}

@@ -1,34 +1,27 @@
 import prisma from "@/prisma/client";
 import {
-  Badge,
-  Blockquote,
-  Box,
-  Card,
+  Container,
   Flex,
   Grid,
-  Heading,
-  Separator,
+  SegmentedControl,
   Text,
 } from "@radix-ui/themes";
-import Link from "next/link";
-import { IoEnterOutline } from "react-icons/io5";
+import GoalScrollArea from "./goal/GoalScrollArea";
+import ShowMobileGoal from "./goal/ShowMobileGoal";
 
-interface Props {
-  status: "COMPLETE" | "INCOMPLETE";
-  color: "crimson" | "green";
-  goalTitle: "Current" | "Completed";
-  headingColor: "indigo" | "green";
-}
-
-const DisplayGoals = async ({
-  status,
-  color,
-  goalTitle,
-  headingColor,
-}: Props) => {
+const DisplayGoals = async () => {
   const goals = await prisma.gOAL.findMany({
     where: {
-      status: status,
+      status: "INCOMPLETE",
+    },
+    orderBy: {
+      updatedAt: "desc",
+    },
+  });
+
+  const completedGoals = await prisma.gOAL.findMany({
+    where: {
+      status: "COMPLETE",
     },
     orderBy: {
       updatedAt: "desc",
@@ -36,60 +29,37 @@ const DisplayGoals = async ({
   });
 
   return (
-    <>
-      <Heading color={headingColor} className="m-5">
-        {`${goalTitle} Goals`}
-      </Heading>
-
-      <Box
-        maxWidth={{
-          initial: "360px",
-          xs: "460px",
-          sm: "540px",
-          md: "820px",
-          xl: "1280px",
-        }}
-        width={{ initial: "90%", xs: "95%" }}
-        mb="5"
+    <Container width="1080px" className="border">
+      <Flex
+        align="center"
+        justify="center"
+        className="min-h-screen"
+        direction="column"
+        display={{ initial: "none", md: "flex" }}
       >
-        <Flex direction="column">
-          <Grid columns={{ sm: "1", md: "2", xl: "3" }} gap="6">
-            {goals.map((goal) => (
-              <Card
-                key={goal.id}
-                className="transition-transform duration-200 hover:scale-110 border border-red-100"
-              >
-                <Flex justify="between">
-                  <Link
-                    href={`/goal/${goal.id}`}
-                    className="hover:text-indigo-500"
-                  >
-                    <Flex align="center" gap="2">
-                      <Text className="font-semibold">{goal.title}</Text>
-                      <IoEnterOutline />
-                    </Flex>
-                  </Link>
-                  <Badge color={color}>{goal.status}</Badge>
-                </Flex>
-                <Separator my="2" size="4" />
-                <Blockquote className="font-normal p-3">
-                  {goal.description}
-                </Blockquote>
-                <Text
-                  size="2"
-                  className="flex flex-row-reverse"
-                  color="violet"
-                  weight="light"
-                  highContrast
-                >
-                  {new Date(goal.createdAt).toLocaleDateString()}
-                </Text>
-              </Card>
-            ))}
-          </Grid>
-        </Flex>
-      </Box>
-    </>
+        <Grid
+          columns={{ initial: "1", xs: "1", md: "2" }}
+          gap="5"
+          p="5"
+          className="border border-slate-500 rounded-md"
+        >
+          <GoalScrollArea title="Current" goals={goals} color="crimson" />
+          <GoalScrollArea
+            title="Completed"
+            goals={completedGoals}
+            color="green"
+          />
+        </Grid>
+      </Flex>
+      <Flex
+        align="center"
+        className="min-h-screen"
+        direction="column"
+        display={{ initial: "flex", xs: "flex", md: "none" }}
+      >
+        <ShowMobileGoal goals={goals} completedGoals={completedGoals} />
+      </Flex>
+    </Container>
   );
 };
 

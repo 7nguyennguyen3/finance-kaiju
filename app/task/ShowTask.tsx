@@ -10,35 +10,29 @@ const ShowTask = async () => {
   });
 
   return (
-    <Flex
-      direction="row"
-      align="center"
-      justify="center"
-      className="min-h-screen mb-20"
-    >
+    <Flex direction="row" align="center" justify="center">
       <Box
         maxWidth={{
-          initial: "360px",
-          xs: "460px",
+          xs: "480px",
           sm: "540px",
-          md: "820px",
+          md: "1080px",
         }}
-        width={{ initial: "90%", xs: "95%" }}
         mb="5"
+        px={{ xs: "5" }}
       >
         <Grid columns={{ sm: "1", md: "2" }} gap="7">
           {tasks.map((task) => (
             <Card
               key={task.id}
               variant="surface"
-              className="transition-transform duration-200 hover:scale-105 my-5 border border-red-100"
+              className="transition-transform duration-200 hover:scale-105 m-2 border border-red-100"
             >
               <Flex justify="center" direction="column" align="center" gap="5">
                 <div
                   style={{
                     position: "relative",
                     width: "90%",
-                    height: "320px",
+                    height: "400px",
                   }}
                 >
                   <Image

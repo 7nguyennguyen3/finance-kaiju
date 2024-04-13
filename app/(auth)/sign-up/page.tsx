@@ -15,7 +15,7 @@ const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [eye, setEye] = useState("password" || "text");
-  const router = useRouter();
+  const [signUpError, setSignUpError] = useState(false);
 
   type CredentialValidation = z.infer<typeof credentialSchema>;
 
@@ -39,12 +39,21 @@ const SignUpPage = () => {
       <form
         className="w-72"
         onSubmit={handleSubmit(async () => {
-          await axios.post("/api/credential", {
-            name,
-            email: email.toLowerCase(),
-            password,
-          });
-          router.push("/sign-in");
+          try {
+            setSignUpError(false);
+            await axios.post("/api/credential", {
+              name,
+              email: email.toLowerCase(),
+              password,
+            });
+            signIn("credentials", {
+              email: email.toLowerCase(),
+              password: password,
+              callbackUrl: "https://goal-tracker-nine-iota.vercel.app/sign-in",
+            });
+          } catch (error) {
+            setSignUpError(true);
+          }
         })}
       >
         <Flex direction="column" gap="3" justify="center">
@@ -101,10 +110,10 @@ const SignUpPage = () => {
               </Box>
             )}
           </div>
-          <button
-            type="submit"
-            className="border border-blue-200 py-2 px-5 mt-2 rounded-md hover:scale-110"
-          >
+          {signUpError && (
+            <Text color="crimson">This email has ben registered.</Text>
+          )}
+          <button type="submit" className="btn-form border-blue-200">
             Sign Up
           </button>
           <Separator size="4" color="blue" className="my-1" />
@@ -115,17 +124,14 @@ const SignUpPage = () => {
               });
             }}
             type="button"
-            className="border border-red-200 py-2 px-5 rounded-md hover:scale-110"
+            className="btn-form border-red-200"
           >
             <Flex align="center" gap="2" justify="center">
               <Text>Sign in with Google</Text>
               <FaGoogle size="18" className="text-red-400" />
             </Flex>
           </button>
-          <button
-            type="button"
-            className="border border-violet-200 py-2 px-5 rounded-md hover:scale-110"
-          >
+          <button type="button" className="btn-form border-violet-200">
             <Flex align="center" gap="2" justify="center">
               <Text>Sign in with GitHub</Text>
               <FaGithub size="18" className="text-violet-400" />

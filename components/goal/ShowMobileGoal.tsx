@@ -162,24 +162,26 @@ const ShowMobileGoal = ({ goals, completedGoals, borderColor }: any) => {
         <Flex
           justify="between"
           className="w-full"
-          maxWidth={{ xs: "430px" }}
+          maxWidth={{ xs: "430px", md: "920px" }}
           direction={{ initial: "column", md: "row" }}
           gap="3"
         >
           <GoalCategorySwap current={current} setCurrent={setCurrent} />
-          <Flex gap="3" justify="between">
-            <Flex align="center" gap="2">
-              <Text>Advanced View</Text>
-              <Switch
-                color="blue"
-                onClick={() => {
-                  setAdvancedView(!advancedView);
-                }}
-              />
-            </Flex>
+          <div>
+            <Flex gap="3" justify="between">
+              <Flex align="center" gap="2">
+                <Text>Advanced View</Text>
+                <Switch
+                  color="blue"
+                  onClick={() => {
+                    setAdvancedView(!advancedView);
+                  }}
+                />
+              </Flex>
 
-            <CreateNewGoal />
-          </Flex>
+              <CreateNewGoal />
+            </Flex>
+          </div>
         </Flex>
 
         {/* Mapping of Goals */}

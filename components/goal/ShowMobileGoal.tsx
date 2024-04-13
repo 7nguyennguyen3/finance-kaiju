@@ -12,6 +12,7 @@ import {
   Text,
 } from "@radix-ui/themes";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoIosCheckmark, IoIosClose } from "react-icons/io";
 import { IoEnterOutline } from "react-icons/io5";
@@ -21,17 +22,13 @@ interface Props {
   color: "crimson" | "grass";
 }
 
-const ShowMobileGoal = ({ goals, completedGoals }: any) => {
+const ShowMobileGoal = ({ goals, completedGoals, borderColor }: any) => {
   const [current, setCurrent] = useState("current");
+  const router = useRouter();
 
   const mapping = ({ goalsRecord, color }: Props) =>
     goalsRecord.map((goal) => (
-      <Card
-        key={goal.id}
-        className="mx-2 
-            w-full
-             border border-red-100"
-      >
+      <Card key={goal.id} className={`mx-2 border border-blue-400`}>
         <Flex justify="between">
           <Link href={`/goal/${goal.id}`} className="hover:text-indigo-500">
             <Flex align="center" gap="2">
@@ -55,9 +52,27 @@ const ShowMobileGoal = ({ goals, completedGoals }: any) => {
             {new Date(goal.createdAt).toLocaleDateString()}
           </Text>
           {goal.status === "COMPLETE" ? (
-            <IoIosClose className="text-[40px] hover:scale-150" />
+            <IoIosClose
+              onClick={() => {
+                axios.patch("api/goal", {
+                  id: goal.id,
+                  status: "INCOMPLETE",
+                });
+                router.refresh();
+              }}
+              className="text-[40px] hover:scale-150"
+            />
           ) : (
-            <IoIosCheckmark className="text-[40px] hover:scale-150" />
+            <IoIosCheckmark
+              onClick={() => {
+                axios.patch("api/goal", {
+                  id: goal.id,
+                  status: "COMPLETE",
+                });
+                router.refresh();
+              }}
+              className="text-[40px] hover:scale-150"
+            />
           )}
         </Flex>
       </Card>
@@ -65,7 +80,7 @@ const ShowMobileGoal = ({ goals, completedGoals }: any) => {
 
   return (
     <Flex align="center" direction="column" className="min-h-screen" gap="5">
-      <SegmentedControl.Root defaultValue="current" size="3" className="mt-5">
+      <SegmentedControl.Root defaultValue={current} size="3" className="mt-5">
         <SegmentedControl.Item
           onClick={() => setCurrent("current")}
           value="current"
@@ -82,9 +97,15 @@ const ShowMobileGoal = ({ goals, completedGoals }: any) => {
       <Flex direction="column" align="center" justify="center" maxWidth="90%">
         <Grid columns={{ initial: "1", md: "2" }} gap="5">
           {current === "current" &&
-            mapping({ color: "crimson", goalsRecord: goals })}
+            mapping({
+              color: "crimson",
+              goalsRecord: goals,
+            })}
           {current === "completed" &&
-            mapping({ color: "grass", goalsRecord: completedGoals })}
+            mapping({
+              color: "grass",
+              goalsRecord: completedGoals,
+            })}
         </Grid>
       </Flex>
     </Flex>

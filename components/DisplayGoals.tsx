@@ -23,9 +23,7 @@ const DisplayGoals = async () => {
 
   return (
     <Container>
-      <Flex align="center" className="min-h-screen" direction="column">
-        <ShowMobileGoal goals={goals} completedGoals={completedGoals} />
-      </Flex>
+      <ShowMobileGoal goals={goals} completedGoals={completedGoals} />
     </Container>
   );
 };

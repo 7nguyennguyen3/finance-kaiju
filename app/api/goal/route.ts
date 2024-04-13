@@ -26,3 +26,21 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(createdGoal, { status: 201 });
 }
+
+export async function PATCH(request: NextRequest) {
+  const body: GOAL = await request.json();
+
+  const updatedGoal = await prisma.gOAL.update({
+    where: {
+      id: body.id,
+    },
+    data: {
+      status: body.status,
+    },
+  });
+
+  return NextResponse.json(
+    { message: "Updated successfully!" },
+    { status: 200 }
+  );
+}

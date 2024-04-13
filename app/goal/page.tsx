@@ -1,4 +1,3 @@
-import { Flex } from "@radix-ui/themes";
 import DisplayGoals from "../../components/DisplayGoals";
 
 const CurrentGoalPage = () => {

@@ -1,12 +1,5 @@
 import prisma from "@/prisma/client";
-import {
-  Container,
-  Flex,
-  Grid,
-  SegmentedControl,
-  Text,
-} from "@radix-ui/themes";
-import GoalScrollArea from "./goal/GoalScrollArea";
+import { Container, Flex } from "@radix-ui/themes";
 import ShowMobileGoal from "./goal/ShowMobileGoal";
 
 const DisplayGoals = async () => {
@@ -29,34 +22,8 @@ const DisplayGoals = async () => {
   });
 
   return (
-    <Container width="1080px" className="border">
-      <Flex
-        align="center"
-        justify="center"
-        className="min-h-screen"
-        direction="column"
-        display={{ initial: "none", md: "flex" }}
-      >
-        <Grid
-          columns={{ initial: "1", xs: "1", md: "2" }}
-          gap="5"
-          p="5"
-          className="border border-slate-500 rounded-md"
-        >
-          <GoalScrollArea title="Current" goals={goals} color="crimson" />
-          <GoalScrollArea
-            title="Completed"
-            goals={completedGoals}
-            color="green"
-          />
-        </Grid>
-      </Flex>
-      <Flex
-        align="center"
-        className="min-h-screen"
-        direction="column"
-        display={{ initial: "flex", xs: "flex", md: "none" }}
-      >
+    <Container>
+      <Flex align="center" className="min-h-screen" direction="column">
         <ShowMobileGoal goals={goals} completedGoals={completedGoals} />
       </Flex>
     </Container>

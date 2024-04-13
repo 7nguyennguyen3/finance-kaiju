@@ -10,8 +10,7 @@ import { usePathname } from "next/navigation";
 
 const links = [
   { label: "Finance", href: "/finance" },
-  { label: "Current", href: "/goal" },
-  { label: "Completed", href: "/completed" },
+  { label: "Goal", href: "/goal" },
   { label: "Task List", href: "/task" },
 ];
 
@@ -20,7 +19,6 @@ const mobileLinks = [
   ...links,
   { label: "New Task", href: "/create-task" },
   { label: "New Goal", href: "/new-goal" },
-  { label: "Finance", href: "/finance" },
 ];
 
 const NavLinks = () => {

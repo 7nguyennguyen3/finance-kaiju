@@ -24,7 +24,7 @@ const GoalScrollArea = async ({ title, goals, color }: Props) => {
       scrollbars="vertical"
       size="3"
       type="always"
-      style={{ height: "720px", width: "40vw" }}
+      style={{ height: "720px", maxWidth: "40vw" }}
       className="pt-10 pb-5 pr-10 rounded-md"
     >
       <Heading align="center" size="5" className="mb-3">

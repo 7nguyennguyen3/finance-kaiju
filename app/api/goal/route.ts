@@ -44,3 +44,18 @@ export async function PATCH(request: NextRequest) {
     { status: 200 }
   );
 }
+
+export async function DELETE(request: NextRequest) {
+  const body: GOAL = await request.json();
+
+  await prisma.gOAL.delete({
+    where: {
+      id: body.id,
+    },
+  });
+
+  return NextResponse.json(
+    { message: "Goal has been deleted" },
+    { status: 200 }
+  );
+}

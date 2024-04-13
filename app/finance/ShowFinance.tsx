@@ -2,7 +2,16 @@
 import { useFinanceRecords } from "@/components/hook";
 import { categoryColors } from "@/components/type";
 import { CATEGORY } from "@prisma/client";
-import { Badge, Box, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
+import {
+  Badge,
+  Box,
+  Card,
+  Flex,
+  Grid,
+  Heading,
+  Spinner,
+  Text,
+} from "@radix-ui/themes";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -13,7 +22,7 @@ import FilterTransaction from "./FilterTransaction";
 type FilterOption = CATEGORY | "ALL";
 
 const ShowFinance = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const userEmail = session?.user?.email;
   const [init, setInit] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,6 +36,13 @@ const ShowFinance = () => {
   }, [filter]);
 
   if (!userEmail) return null;
+
+  if (status === "loading")
+    return (
+      <Text>
+        Loading... <Spinner />
+      </Text>
+    );
 
   const filteredRecords = records?.filter(
     (record) => filter === "ALL" || record.category === filter

@@ -1,4 +1,4 @@
-import { Flex } from "@radix-ui/themes";
+import { Flex, Spinner, Text } from "@radix-ui/themes";
 import Image from "next/image";
 import React from "react";
 

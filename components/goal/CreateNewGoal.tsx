@@ -1,11 +1,12 @@
 import { goalSchema } from "@/app/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Flex, Heading, Popover, Text } from "@radix-ui/themes";
+import { Box, DropdownMenu, Flex, Heading, Text } from "@radix-ui/themes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { GoGoal } from "react-icons/go";
+import { PiPlant } from "react-icons/pi";
 import { z } from "zod";
 
 type GoalValidation = z.infer<typeof goalSchema>;
@@ -36,16 +37,16 @@ const CreateNewGoal = ({ goalToast }: any) => {
 
   return (
     <Flex>
-      <Popover.Root>
-        <Popover.Trigger>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger>
           <button className="text-[34px] ml-auto hover:scale-110">
             <GoGoal />
           </button>
-        </Popover.Trigger>
-        <Popover.Content align="center" width="270px">
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content align="center" className="w-[280px] px-2 py-1">
           <form onSubmit={handleSubmit(() => createMutation.mutate())}>
             <Flex direction="column" gap="3" align="center">
-              <Heading size="3" align="center">
+              <Heading size="3" align="center" color="blue">
                 Create New Goal!
               </Heading>
               <div className="w-full">
@@ -75,13 +76,19 @@ const CreateNewGoal = ({ goalToast }: any) => {
                   <Text color="crimson">{errors.description.message}</Text>
                 )}
               </div>
-              <Button variant="outline" type="submit">
-                Create Goal
-              </Button>
+              <button
+                className="btn-form border-blue-400 w-[95%]"
+                type="submit"
+              >
+                <Flex align="center" justify="center" gap="2">
+                  Create Goal
+                  <PiPlant />
+                </Flex>
+              </button>
             </Flex>
           </form>
-        </Popover.Content>
-      </Popover.Root>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
     </Flex>
   );
 };

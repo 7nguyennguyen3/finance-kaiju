@@ -1,24 +1,38 @@
 import { goalSchema } from "@/app/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Popover, Heading, Box, Button, Flex, Text } from "@radix-ui/themes";
+import { Box, Button, Flex, Heading, Popover, Text } from "@radix-ui/themes";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { GoGoal } from "react-icons/go";
 import { z } from "zod";
 
 type GoalValidation = z.infer<typeof goalSchema>;
 
-const CreateNewGoal = () => {
+const CreateNewGoal = ({ goalToast }: any) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<GoalValidation>({ resolver: zodResolver(goalSchema) });
+
+  const queryClient = useQueryClient();
+  const createMutation = useMutation({
+    mutationFn: () => {
+      return axios.post("/api/goal", {
+        title: title,
+        description: description,
+      });
+    },
+    onSuccess: () => {
+      goalToast("⭐ Goal Created!");
+      queryClient.invalidateQueries();
+    },
+  });
 
   return (
     <Flex>
@@ -29,15 +43,7 @@ const CreateNewGoal = () => {
           </button>
         </Popover.Trigger>
         <Popover.Content align="center" width="270px">
-          <form
-            onSubmit={handleSubmit(async () => {
-              await axios.post("/api/goal", {
-                title: title,
-                description: description,
-              });
-              router.refresh();
-            })}
-          >
+          <form onSubmit={handleSubmit(() => createMutation.mutate())}>
             <Flex direction="column" gap="3" align="center">
               <Heading size="3" align="center">
                 Create New Goal!

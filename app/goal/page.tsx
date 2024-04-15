@@ -1,7 +1,7 @@
-import DisplayGoals from "../../components/DisplayGoals";
+import ShowMobileGoal from "@/components/goal/ShowMobileGoal";
 
 const CurrentGoalPage = () => {
-  return <DisplayGoals />;
+  return <ShowMobileGoal />;
 };
 
 export const dynamic = "force-dynamic";

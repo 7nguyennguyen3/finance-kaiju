@@ -18,12 +18,12 @@ const CreateTaskPage = () => {
   const router = useRouter();
 
   return (
-    <Container className="border">
+    <Container>
       <Flex
         direction="column"
         gap="5"
         align="center"
-        className="min-h-screen m-auto border"
+        className="min-h-screen m-auto"
         justify="center"
         maxWidth={{ initial: "100%", md: "720px" }}
       >

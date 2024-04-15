@@ -31,7 +31,7 @@ const WelcomeMessage = () => {
         .post<Finance>("api/finance", newRecord)
         .then((response) => response.data);
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries();
     },
   });

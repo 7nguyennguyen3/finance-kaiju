@@ -7,7 +7,7 @@ const loading = () => {
     <Flex
       justify="center"
       align="center"
-      className="min-h-screen"
+      className="m-auto h-screen"
       direction="column"
     >
       <Image

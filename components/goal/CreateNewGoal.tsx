@@ -40,7 +40,7 @@ const CreateNewGoal = ({ goalToast }: any) => {
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
           <button className="text-[34px] ml-auto hover:scale-110">
-            <GoGoal />
+            <GoGoal className="text-blue-400" />
           </button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content align="center" className="w-[280px] px-2 py-1">

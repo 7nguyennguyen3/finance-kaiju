@@ -1,11 +1,12 @@
+import ChatBot from "@/components/ChatBot";
+import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/Navbar";
 import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import type { Metadata } from "next";
-import { Oswald, Roboto } from "next/font/google";
-import "./globals.css";
-import Footer from "@/components/footer/Footer";
+import { Roboto } from "next/font/google";
 import AuthProvider from "./(auth)/Provider";
+import "./globals.css";
 import QueryClientProvider from "./QueryClientProvider";
 
 const roboto = Roboto({
@@ -33,6 +34,7 @@ export default function RootLayout({
               <main className={roboto.className}>
                 <Navbar />
                 {children}
+                <ChatBot />
                 <Footer />
               </main>
             </Theme>

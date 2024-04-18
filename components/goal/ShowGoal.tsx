@@ -10,7 +10,7 @@ import GoalCard from "./GoalCard";
 import GoalCategorySwap from "./GoalCategorySwap";
 import { notFound } from "next/navigation";
 
-const ShowMobileGoal = () => {
+const ShowGoal = () => {
   const [current, setCurrent] = useState("current");
   const [advancedView, setAdvancedView] = useState(false);
 
@@ -71,8 +71,8 @@ const ShowMobileGoal = () => {
         {/* Top Section Category Swap & Advanced View & Create Goal */}
         <Flex
           justify="between"
-          className="w-full"
-          maxWidth={{ xs: "430px", md: "920px" }}
+          className="w-full mx-auto"
+          maxWidth={{ xs: "420px", md: "920px" }}
           direction={{ initial: "column", md: "row" }}
           gap="3"
         >
@@ -94,7 +94,12 @@ const ShowMobileGoal = () => {
           </div>
         </Flex>
         {/* Mapping of Goals */}
-        <Flex direction="column" align="center" justify="center">
+        <Flex
+          direction="column"
+          align="center"
+          justify="center"
+          className="w-full"
+        >
           {!advancedView && (
             <Grid columns={{ initial: "1", md: "2" }} gap="5">
               {goalsToDisplay?.map((goal) => (
@@ -114,4 +119,4 @@ const ShowMobileGoal = () => {
   );
 };
 
-export default ShowMobileGoal;
+export default ShowGoal;

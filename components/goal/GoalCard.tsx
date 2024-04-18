@@ -44,7 +44,7 @@ const GoalCard = ({ goal, color, goalToast }: any) => {
   return (
     <Box
       key={goal.id}
-      className={classNames("mx-2 relative w-full p-5 rounded-xl", {
+      className={classNames("relative w-full p-5 rounded-xl", {
         "border border-blue-400": goal.status === "INCOMPLETE",
         "border border-emerald-200": goal.status === "COMPLETE",
       })}

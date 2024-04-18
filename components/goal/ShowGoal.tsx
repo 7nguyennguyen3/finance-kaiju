@@ -64,7 +64,7 @@ const ShowGoal = () => {
       <Flex
         align="center"
         direction="column"
-        className="min-h-screen mx-auto border"
+        className="min-h-screen mx-auto"
         maxWidth={{ initial: "400px", md: "920px" }}
         width={{ initial: "90%", xs: "100%" }}
         gap="5"

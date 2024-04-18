@@ -9,6 +9,7 @@ import styles from "./navbar.module.css";
 import { usePathname } from "next/navigation";
 
 const links = [
+  { label: "Chatbot", href: "/chatbot" },
   { label: "Finance", href: "/finance" },
   { label: "Goal", href: "/goal" },
   { label: "Task", href: "/task" },

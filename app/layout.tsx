@@ -1,4 +1,3 @@
-import ChatBot from "@/components/ChatBot";
 import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/Navbar";
 import { Theme } from "@radix-ui/themes";
@@ -34,7 +33,6 @@ export default function RootLayout({
               <main className={roboto.className}>
                 <Navbar />
                 {children}
-                <ChatBot />
                 <Footer />
               </main>
             </Theme>

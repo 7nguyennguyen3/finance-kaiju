@@ -26,7 +26,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/chatbot/page.jsx"
+    "app/chatbot/page.tsx"
   ],
   "exclude": ["node_modules"]
 }

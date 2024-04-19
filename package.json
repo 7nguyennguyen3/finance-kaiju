@@ -20,6 +20,7 @@
     "chart.js": "^4.4.2",
     "cheerio": "^1.0.0-rc.12",
     "classnames": "^2.5.1",
+    "delay": "^6.0.0",
     "flowise-embed-react": "^1.0.2",
     "langchain": "^0.1.33",
     "next": "14.1.4",

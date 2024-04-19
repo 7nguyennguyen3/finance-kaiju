@@ -22,4 +22,8 @@
   .input-form {
     @apply w-full px-2 pb-7 py-3  focus:border-2 focus:border-white focus:outline-none rounded-md;
   }
+
+  .chat-message {
+    @apply rounded-[20px] p-4 max-w-[70%] my-2 text-sm relative;
+  }
 }

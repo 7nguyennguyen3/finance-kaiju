@@ -1,14 +1,13 @@
 "use client";
 import { Container, Flex, Heading } from "@radix-ui/themes";
 import Link from "next/link";
-import SessionAvatar from "./SessionAvatar";
-import NavLinks from "./NavLinks";
 import { useMediaQuery } from "react-responsive";
-import ChatBot from "../ChatBot";
+import NavLinks from "./NavLinks";
+import SessionAvatar from "./SessionAvatar";
 
 const Navbar = () => {
   const isMobile = useMediaQuery({
-    query: "(min-width: 768px)",
+    query: "(min-width: 520px)",
   });
   return (
     <Container className="py-3 px-5 mb-20">
@@ -23,7 +22,6 @@ const Navbar = () => {
           <SessionAvatar />
         </Flex>
       </Flex>
-      {isMobile && <ChatBot />}
     </Container>
   );
 };

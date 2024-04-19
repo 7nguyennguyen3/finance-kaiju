@@ -1,22 +1,26 @@
 "use client";
-import { Container, Heading, Box } from "@radix-ui/themes";
+import { Container, Heading, Box, Flex } from "@radix-ui/themes";
 import { FullPageChat } from "flowise-embed-react";
 
 const Chatbot = () => {
   return (
     <Container>
-      <Box display={{ initial: "none", sm: "initial" }}>
+      <Flex
+        display={{ initial: "none", sm: "flex" }}
+        className="min-h-screen"
+        justify="center"
+        align="center"
+      >
         <Heading align="center">
           This page is not available on laptop and larger devices
         </Heading>
-      </Box>
-      <Box
-        className="mb-[-80px] mt-[-60px] border-2 border-blue-400 m-auto rounded-md py-3"
-        maxWidth="80%"
-        display={{ sm: "" }}
+      </Flex>
+      <Flex
+        className="mb-[-80px] mt-[-60px] py-3 min-h-screen"
+        display={{ sm: "none" }}
       >
         <FullPageChat
-          className="h-80"
+          className="border-2 border-slate-600 max-w-[400px] max-h-[90vh] rounded-md mx-auto"
           chatflowid="c49b9f05-6716-4008-be59-d4a567931b35"
           apiHost="https://flowise-7kb5.onrender.com"
           theme={{
@@ -50,14 +54,14 @@ const Chatbot = () => {
               },
               textInput: {
                 placeholder: "Type your question",
-                backgroundColor: "#000000",
-                textColor: "#ffffff",
+                backgroundColor: "#fff",
+                textColor: "#000",
                 sendButtonColor: "#3B81F6",
               },
             },
           }}
         />
-      </Box>
+      </Flex>
     </Container>
   );
 };

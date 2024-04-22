@@ -3,11 +3,6 @@ import prisma from "@/prisma/client";
 import { GOAL } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const goals = await prisma.gOAL.findMany();
-  return NextResponse.json(goals);
-}
-
 export async function PUT(request: NextRequest) {
   const body = await request.json();
 

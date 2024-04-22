@@ -1,5 +1,5 @@
 "use client";
-import { Avatar, Container, Flex } from "@radix-ui/themes";
+import { Avatar, Container, Flex, Spinner, Text } from "@radix-ui/themes";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { FcAssistant } from "react-icons/fc";
@@ -32,13 +32,13 @@ const TestingPage = () => {
     <Container className="mt-[-40px]">
       <Flex
         align="center"
-        className="mx-auto relative p-5 overflow-y-scroll "
+        className="mx-auto relative p-5 overflow-y-scroll"
         direction={"column"}
-        width={{ initial: "90%", md: "70%" }}
-        height={{ initial: "500px", xs: "700px" }}
+        width={{ initial: "95%", md: "70%" }}
+        height={{ initial: "500px", xs: "800px" }}
         gap="5"
       >
-        <text className="rounded-[20px] p-5 my-2 self-start text-sm max-w-[60%] relative bg-white text-black">
+        <text className="rounded-[20px] p-5 my-2 self-start text-sm max-w-[90%] sm:max-w-[70%] relative bg-white text-black">
           Hello! How can I assist you?
           <FcAssistant className="absolute bottom-[-10px] left-[-10px] text-[30px]" />
         </text>
@@ -63,29 +63,37 @@ const TestingPage = () => {
               ) : (
                 <FcAssistant className="absolute bottom-[-10px] left-[-10px] text-[30px]" />
               )}
+              {isLoading && !isUserMessage && (
+                <Text>
+                  Formulating a response...
+                  <Spinner />
+                </Text>
+              )}
             </text>
           );
         })}
         <div ref={bottomRef} />
       </Flex>
       <Flex
-        width={{ initial: "90%", md: "70%" }}
+        width={{ initial: "95%", md: "70%" }}
         className="bottom-0 mt-5 mx-auto mb-[-60px]"
         align="center"
         gap="3"
       >
-        <input
+        <textarea
           value={userMessage}
           onChange={(e) => setUserMessage(e.target.value)}
           placeholder="Type your question here!"
-          className="px-3 py-4 rounded-2xl w-[90%]"
+          className="p-3 rounded-2xl w-[90%] bg-transparent border"
+          rows={2}
         />
         <button
           onClick={async () => {
             setMessage((prev) => [...prev, userMessage]);
             setUserMessage("");
             await delay(1000);
-            setMessage((prev) => [...prev, "Formulating a response"]);
+            setMessage((prev) => [...prev, ""]);
+            setIsLoading(true);
             try {
               const data = await axios
                 .post("/api/chatbot", requestData)
@@ -97,8 +105,10 @@ const TestingPage = () => {
                 newMessages[newMessages.length - 1] = data.text;
                 return newMessages;
               });
+              setIsLoading(false);
             } catch (error) {
               console.log(error);
+              setIsLoading(false);
             }
           }}
         >

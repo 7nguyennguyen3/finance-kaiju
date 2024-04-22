@@ -1,6 +1,8 @@
 "use client";
 import Loading from "@/app/loading";
 import { Flex, Grid, Heading, Switch, Text } from "@radix-ui/themes";
+import { useSession } from "next-auth/react";
+import { notFound } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,8 +10,6 @@ import { useGoalRecords } from "../hook";
 import CreateNewGoal from "./CreateNewGoal";
 import GoalCard from "./GoalCard";
 import GoalCategorySwap from "./GoalCategorySwap";
-import { notFound } from "next/navigation";
-import { useSession } from "next-auth/react";
 
 const ShowGoal = () => {
   const [current, setCurrent] = useState("current");
@@ -18,8 +18,7 @@ const ShowGoal = () => {
   const userEmail = session?.user?.email;
   const { data: goals, isLoading, isError } = useGoalRecords(userEmail!);
 
-  if (isLoading) return <Loading />;
-
+  if (isLoading || !goals) return <Loading />;
   if (isError) notFound();
 
   const notifyGoalupdated = (message: string) =>

@@ -18,6 +18,7 @@ const CreateNewGoal = ({ goalToast }: any) => {
   const [description, setDescription] = useState("");
   const userEmail = session?.user?.email;
 
+  const isCredentialsUser = !session?.user?.image;
   const {
     register,
     handleSubmit,
@@ -38,10 +39,6 @@ const CreateNewGoal = ({ goalToast }: any) => {
       queryClient.invalidateQueries();
     },
   });
-
-  if (!session) return null;
-
-  const isCredentialsUser = !session.user?.image;
 
   const emailData = isCredentialsUser
     ? { credentialsEmail: userEmail }

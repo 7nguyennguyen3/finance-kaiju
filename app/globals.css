@@ -24,6 +24,6 @@
   }
 
   .chat-message {
-    @apply rounded-[20px] p-4 max-w-[70%] my-2 text-sm relative;
+    @apply rounded-[20px] p-4 max-w-[90%] sm:max-w-[70%] my-2 text-sm relative;
   }
 }

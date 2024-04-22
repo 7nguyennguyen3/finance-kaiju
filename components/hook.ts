@@ -27,6 +27,7 @@ export const useGoalRecords = (userEmail: string) => {
         })
         .then((res) => res.data),
     retry: 3,
-    staleTime: 1000 * 60 * 30, // 30 minutes,
+    staleTime: 1000 * 60 * 30, // 30 minutes
+    enabled: !!userEmail,
   });
 };

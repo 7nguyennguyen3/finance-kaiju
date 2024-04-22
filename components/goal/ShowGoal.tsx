@@ -1,6 +1,14 @@
 "use client";
 import Loading from "@/app/loading";
-import { Flex, Grid, Heading, Switch, Text } from "@radix-ui/themes";
+import {
+  Flex,
+  Grid,
+  Heading,
+  Link,
+  Spinner,
+  Switch,
+  Text,
+} from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
 import { notFound } from "next/navigation";
 import { useState } from "react";
@@ -10,16 +18,15 @@ import { useGoalRecords } from "../hook";
 import CreateNewGoal from "./CreateNewGoal";
 import GoalCard from "./GoalCard";
 import GoalCategorySwap from "./GoalCategorySwap";
+import FlexBar from "../FlexBar";
+import UnauthorizedAccess from "../UnauthorizedAccess";
 
 const ShowGoal = () => {
   const [current, setCurrent] = useState("current");
   const [advancedView, setAdvancedView] = useState(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const userEmail = session?.user?.email;
-  const { data: goals, isLoading, isError } = useGoalRecords(userEmail!);
-
-  if (isLoading || !goals) return <Loading />;
-  if (isError) notFound();
+  const { data: goals } = useGoalRecords(userEmail!);
 
   const notifyGoalupdated = (message: string) =>
     toast(`${message}`, {
@@ -47,6 +54,11 @@ const ShowGoal = () => {
     );
   const goalsToDisplay =
     current === "current" ? incompleteGoals : completedGoals;
+
+  if (status === "unauthenticated")
+    return (
+      <UnauthorizedAccess title="Please sign in to access the goal app." />
+    );
 
   return (
     <>

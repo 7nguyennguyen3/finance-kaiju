@@ -1,4 +1,5 @@
 "use client";
+import UnauthorizedAccess from "@/components/UnauthorizedAccess";
 import { CATEGORY, Finance } from "@prisma/client";
 import { Button, Flex, Heading, Popover, Spinner } from "@radix-ui/themes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -42,23 +43,9 @@ const WelcomeMessage = () => {
 
   if (status === "unauthenticated")
     return (
-      <>
-        <Heading>Please sign in to access the finance app.</Heading>
-        <Link href="/sign-in">
-          <button className="w-40 h-14 border-red-200 border rounded-md">
-            Sign In
-          </button>
-        </Link>
-      </>
+      <UnauthorizedAccess title="Please sign in to access the finance app." />
     );
 
-  if (status === "loading")
-    return (
-      <>
-        <Heading>Loading...</Heading>
-        <Spinner />
-      </>
-    );
   if (!session) return null;
 
   const isCredentialsUser = !session.user?.image;

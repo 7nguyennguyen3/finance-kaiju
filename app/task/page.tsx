@@ -1,10 +1,15 @@
 import { Container } from "@radix-ui/themes";
 import ShowTask from "./ShowTask";
+import FlexBar from "@/components/FlexBar";
+import CreateTask from "./CreateTask";
 
 const DailyTaskPage = () => {
   return (
     <Container>
-      <ShowTask />
+      <FlexBar gap="3">
+        <CreateTask />
+        <ShowTask />
+      </FlexBar>
     </Container>
   );
 };

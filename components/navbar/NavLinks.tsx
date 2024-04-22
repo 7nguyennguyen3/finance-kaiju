@@ -13,7 +13,6 @@ const links = [
   { label: "Finance", href: "/finance" },
   { label: "Goal", href: "/goal" },
   { label: "Task", href: "/task" },
-  { label: "New Task", href: "/create-task" },
 ];
 
 const mobileLinks = [{ label: "Home", href: "/" }, ...links];

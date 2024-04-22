@@ -9,12 +9,14 @@ import CreateNewGoal from "./CreateNewGoal";
 import GoalCard from "./GoalCard";
 import GoalCategorySwap from "./GoalCategorySwap";
 import { notFound } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const ShowGoal = () => {
   const [current, setCurrent] = useState("current");
   const [advancedView, setAdvancedView] = useState(false);
-
-  const { data: goals, isLoading, isError } = useGoalRecords();
+  const { data: session } = useSession();
+  const userEmail = session?.user?.email;
+  const { data: goals, isLoading, isError } = useGoalRecords(userEmail!);
 
   if (isLoading) return <Loading />;
 
@@ -102,7 +104,7 @@ const ShowGoal = () => {
           className="w-full"
         >
           {!advancedView && (
-            <Grid columns={{ initial: "1", md: "2" }} gap="5">
+            <Grid columns={{ initial: "1", md: "2" }} gap="5" width="100%">
               {goalsToDisplay?.map((goal) => (
                 <GoalCard
                   key={goal.id}

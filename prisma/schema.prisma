@@ -14,12 +14,16 @@ datasource db {
 }
 
 model GOAL {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  status      STATUS   @default(INCOMPLETE)
+  id               Int          @id @default(autoincrement())
+  title            String
+  description      String
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  status           STATUS       @default(INCOMPLETE)
+  userEmail        String?
+  user             User?        @relation("UserToGoal", fields: [userEmail], references: [email])
+  credentialsEmail String?
+  credentials      Credentials? @relation("CredentialsToGoal", fields: [credentialsEmail], references: [email])
 }
 
 enum STATUS {
@@ -72,6 +76,8 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  finances      Finance[] @relation("UserToFinance")
+  GOAL          GOAL[]    @relation("UserToGoal")
 }
 
 model VerificationToken {
@@ -89,16 +95,19 @@ model Credentials {
   password   String
   createdAt  DateTime  @default(now())
   updaptedAt DateTime  @updatedAt
-  finances   Finance[]
+  finances   Finance[] @relation("CredentialsToFinance")
+  GOAL       GOAL[]    @relation("CredentialsToGoal")
 }
 
 model Finance {
-  id               Int         @id @default(autoincrement())
+  id               Int          @id @default(autoincrement())
   category         CATEGORY
   amount           Float
-  date             DateTime    @default(now())
-  credentialsEmail String
-  credentials      Credentials @relation(fields: [credentialsEmail], references: [email])
+  date             DateTime     @default(now())
+  userEmail        String?
+  user             User?        @relation("UserToFinance", fields: [userEmail], references: [email])
+  credentialsEmail String?
+  credentials      Credentials? @relation("CredentialsToFinance", fields: [credentialsEmail], references: [email])
 }
 
 enum CATEGORY {

@@ -63,7 +63,7 @@ const FinanceDoughnutChart = () => {
             datasets: [
               {
                 label: "Total Amount",
-                data: chartData,
+                data: records && records.length === 0 ? [5, 5, 5] : chartData,
                 backgroundColor: chartDataSpecs.map((color) => color.color),
                 borderColor: "#fEfEfE",
                 hoverBorderWidth: 5,

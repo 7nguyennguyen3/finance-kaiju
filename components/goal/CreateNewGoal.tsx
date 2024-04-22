@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, DropdownMenu, Flex, Heading, Text } from "@radix-ui/themes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { GoGoal } from "react-icons/go";
@@ -12,8 +13,10 @@ import { z } from "zod";
 type GoalValidation = z.infer<typeof goalSchema>;
 
 const CreateNewGoal = ({ goalToast }: any) => {
+  const { data: session } = useSession();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const userEmail = session?.user?.email;
 
   const {
     register,
@@ -27,6 +30,7 @@ const CreateNewGoal = ({ goalToast }: any) => {
       return axios.post("/api/goal", {
         title: title,
         description: description,
+        ...emailData,
       });
     },
     onSuccess: () => {
@@ -34,6 +38,14 @@ const CreateNewGoal = ({ goalToast }: any) => {
       queryClient.invalidateQueries();
     },
   });
+
+  if (!session) return null;
+
+  const isCredentialsUser = !session.user?.image;
+
+  const emailData = isCredentialsUser
+    ? { credentialsEmail: userEmail }
+    : { userEmail: userEmail };
 
   return (
     <Flex>

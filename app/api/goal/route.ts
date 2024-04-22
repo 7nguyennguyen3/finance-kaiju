@@ -8,6 +8,21 @@ export async function GET(request: NextRequest) {
   return NextResponse.json(goals);
 }
 
+export async function PUT(request: NextRequest) {
+  const body = await request.json();
+
+  const goals = await prisma.gOAL.findMany({
+    where: {
+      OR: [{ userEmail: body.email }, { credentialsEmail: body.email }],
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return NextResponse.json(goals, { status: 200 });
+}
+
 export async function POST(request: NextRequest) {
   const body: GOAL = await request.json();
   const validation = goalSchema.safeParse(body);
@@ -21,6 +36,8 @@ export async function POST(request: NextRequest) {
     data: {
       title,
       description,
+      ...(body.userEmail && { userEmail: body.userEmail }),
+      ...(body.credentialsEmail && { credentialsEmail: body.credentialsEmail }),
     },
   });
 

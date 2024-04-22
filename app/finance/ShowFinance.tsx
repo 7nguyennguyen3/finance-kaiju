@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdOutlineFiberNew } from "react-icons/md";
 import FilterTransaction from "./FilterTransaction";
+import DisplayWhenNoRecord from "./DisplayWhenNoRecord";
 
 type FilterOption = CATEGORY | "ALL";
 
@@ -29,6 +30,7 @@ const ShowFinance = () => {
   let n1 = init + 8;
   const { data: records, error } = useFinanceRecords(userEmail!);
   const [filter, setFilter] = useState<FilterOption>("ALL");
+  const [showDiv, setShowDiv] = useState(false);
 
   useEffect(() => {
     setInit(0);
@@ -75,37 +77,36 @@ const ShowFinance = () => {
     (record) => record.category !== "INCOME" && record.category !== "PROFIT"
   ).length;
 
-  return (
-    <Flex direction="column">
+  const FinanceInfo = ({ display }: any) => {
+    const noRecords = records && records.length === 0;
+
+    return (
       <Flex
         className="p-5 border rounded-md"
-        display={{ initial: "flex", sm: "none" }}
+        display={display}
         direction="column"
       >
-        <Heading>Balance: ${balance}</Heading>
+        <Heading>{noRecords ? "Balance: $-15" : `Balance: ${balance}`}</Heading>
         <Text className="font-semibold" size="4">
           Deposit: ${deposit}
         </Text>
         <Text className="font-semibold" size="4">
-          Expense: ${expense}
+          {noRecords ? "Expense: $15" : `Expense: ${expense}`}
         </Text>
-        <Text>Total Expense Transactions: {expenseNum}</Text>
+        <Text>
+          {noRecords
+            ? "Total Expense Transaction: 3"
+            : `Balance: ${expenseNum}`}
+        </Text>
       </Flex>
+    );
+  };
+
+  return (
+    <Flex direction="column">
+      <FinanceInfo display={{ initial: "flex", sm: "none" }} />
       <Grid columns={{ initial: "1", sm: "35fr 65fr" }}>
-        <Flex
-          className="p-5 border rounded-md"
-          display={{ initial: "none", sm: "flex" }}
-          direction="column"
-        >
-          <Heading>Balance: ${balance}</Heading>
-          <Text className="font-semibold" size="4">
-            Deposit: ${deposit}
-          </Text>
-          <Text className="font-semibold" size="4">
-            Expense: ${expense}
-          </Text>
-          <Text size="3">Total Expense Transactions: {expenseNum}</Text>
-        </Flex>
+        <FinanceInfo display={{ initial: "none", sm: "flex" }} />
         <Box height="570px" className="border rounded-md">
           <Grid
             columns="1fr 8fr 1fr"
@@ -140,7 +141,12 @@ const ShowFinance = () => {
                   {pageCount === 0 ? 1 : pageCount}
                 </Text>
               </Flex>
-
+              <DisplayWhenNoRecord records={records} />
+              {records?.length === 0 && (
+                <Heading align="center" color="indigo">
+                  Add a record to remove test data!
+                </Heading>
+              )}
               {records
                 ?.filter(
                   (record) => filter === "ALL" || record.category === filter
@@ -148,6 +154,9 @@ const ShowFinance = () => {
                 .slice(pageCount === 1 ? 0 : init, n1)
                 .map((record) => (
                   <Card
+                    onClick={() => {
+                      setShowDiv(!showDiv);
+                    }}
                     variant="classic"
                     key="record"
                     className={classNames("hover:scale-105 overflow-clip", {

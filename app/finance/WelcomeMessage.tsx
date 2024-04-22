@@ -22,6 +22,7 @@ const WelcomeMessage = () => {
       amount: number;
       category: string;
       credentialsEmail: string | null | undefined;
+      userEmail: string;
     },
     unknown,
     unknown
@@ -30,6 +31,9 @@ const WelcomeMessage = () => {
       return axios
         .post<Finance>("api/finance", newRecord)
         .then((response) => response.data);
+    },
+    onError: (error) => {
+      console.log(error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries();
@@ -55,6 +59,9 @@ const WelcomeMessage = () => {
         <Spinner />
       </>
     );
+  if (!session) return null;
+
+  const isCredentialsUser = !session.user?.image;
 
   return (
     <Flex justify="between" className="w-full py-1">
@@ -73,10 +80,13 @@ const WelcomeMessage = () => {
                   try {
                     event.preventDefault();
                     setIsLoading(true);
+                    const emailData = isCredentialsUser
+                      ? { credentialsEmail: userEmail }
+                      : { userEmail: userEmail };
                     mutation.mutate({
                       amount: amount,
                       category: category,
-                      credentialsEmail: userEmail,
+                      ...emailData,
                     });
                     setIsLoading(false);
                   } catch (error) {

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { FcAssistant } from "react-icons/fc";
 import { IoSend } from "react-icons/io5";
 import delay from "delay";
+import ReactMarkdown from "react-markdown";
 
 const TestingPage = () => {
   const [message, setMessage] = useState<string[]>([]);
@@ -31,9 +32,9 @@ const TestingPage = () => {
     <Container className="mt-[-40px]">
       <Flex
         align="center"
-        className="mx-auto relative p-5 overflow-y-scroll"
+        className="mx-auto relative p-5 overflow-y-scroll "
         direction={"column"}
-        width={{ initial: "90%", md: "60%" }}
+        width={{ initial: "90%", md: "70%" }}
         height={{ initial: "500px", xs: "700px" }}
         gap="5"
       >
@@ -49,7 +50,7 @@ const TestingPage = () => {
 
           return (
             <text className={className} key={index}>
-              {message}
+              <ReactMarkdown>{message}</ReactMarkdown>
               {isUserMessage ? (
                 <Avatar
                   color="blue"
@@ -68,7 +69,7 @@ const TestingPage = () => {
         <div ref={bottomRef} />
       </Flex>
       <Flex
-        width={{ initial: "90%", md: "60%" }}
+        width={{ initial: "90%", md: "70%" }}
         className="bottom-0 mt-5 mx-auto mb-[-60px]"
         align="center"
         gap="3"

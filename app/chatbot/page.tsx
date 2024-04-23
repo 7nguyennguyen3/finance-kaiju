@@ -56,9 +56,10 @@ const TestingPage = () => {
         <Flex
           align="center"
           justify="center"
-          className="h-screen"
+          className="h-screen relative mx-auto"
           direction="column"
           gap="3"
+          maxWidth="1000px"
         >
           <button
             className="border p-5 rounded-md w-[200px]"
@@ -80,12 +81,15 @@ const TestingPage = () => {
       {menu && (
         <div className="absolute h-screen w-screen z-20 bg-black top-0">
           <Flex
-            className="border h-screen p-5 pl-10"
+            className="h-screen relative mx-auto p-5"
             direction="column"
+            align="center"
+            justify="center"
             gap="7"
+            maxWidth="1000px"
           >
             <button
-              className="self-end hover:scale-110"
+              className="absolute top-5 right-5 hover:scale-110"
               onClick={() => openMenu(false)}
             >
               <IoClose size="30" />
@@ -111,7 +115,7 @@ const TestingPage = () => {
             direction="column"
             align="center"
             justify="center"
-            className=" m-auto min-h-screen py-14 border relative"
+            className="m-auto min-h-screen relative"
             maxWidth="1000px"
           >
             <button

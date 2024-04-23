@@ -20,6 +20,7 @@ import classNames from "classnames";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { IoClose } from "react-icons/io5";
 
 interface CloudinaryResult {
   public_id: string;
@@ -48,7 +49,7 @@ const CreateTask = () => {
       <button
         disabled={isAuthorized}
         onClick={() => openTask(!task)}
-        className="self-end"
+        className="self-end mr-[60px]"
         hidden={isAuthorized}
       >
         <Flex
@@ -66,13 +67,12 @@ const CreateTask = () => {
         <div className="bg-black w-screen h-screen fixed top-0 left-0 z-10">
           <Container>
             <FlexBar className="h-screen relative" gap="3">
-              <Heading
+              <button
                 className="absolute top-5 right-5 hover:scale-110"
-                size="7"
                 onClick={() => openTask(false)}
               >
-                X
-              </Heading>
+                <IoClose size="30" />
+              </button>
               <Heading align="center" color="blue">
                 Create New Task!
               </Heading>

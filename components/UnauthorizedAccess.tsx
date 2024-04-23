@@ -7,7 +7,7 @@ import { signIn } from "next-auth/react";
 const UnauthorizedAccess = ({ title }: { title: string }) => {
   return (
     <FlexBar className="h-screen" gap="3">
-      <Heading>{title}</Heading>
+      <Heading align="center">{title}</Heading>
       <Link href="/sign-in">
         <button className="w-40 h-14 border-red-200 border rounded-md text-white">
           Sign In

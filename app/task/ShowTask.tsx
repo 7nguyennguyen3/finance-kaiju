@@ -25,7 +25,7 @@ const ShowTask = async () => {
             <Card
               key={task.id}
               variant="surface"
-              className="transition-transform duration-200 hover:scale-105 m-2 border border-red-100"
+              className="transition-transform duration-200 hover:scale-105 m-2 border border-red-100 max-w-[90%] mx-auto"
             >
               <Flex justify="center" direction="column" align="center" gap="5">
                 <div

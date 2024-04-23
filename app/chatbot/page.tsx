@@ -52,11 +52,11 @@ const TestingPage = () => {
 
   return (
     <>
-      <div className="absolute h-screen w-screen z-10 bg-black bottom-0">
+      <div className="absolute h-[100vh] w-screen z-10 bg-black top-0">
         <Flex
           align="center"
           justify="center"
-          className="h-screen relative mx-auto"
+          className="min-h-screen relative mx-auto"
           direction="column"
           gap="3"
           maxWidth="1000px"

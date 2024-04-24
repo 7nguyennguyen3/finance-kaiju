@@ -126,7 +126,7 @@ const TestingPage = () => {
             </button>
             <Flex
               align="center"
-              className="m-auto h-screen relative p-5 overflow-y-scroll"
+              className="m-auto h-screen mt-[40px] relative p-5 overflow-y-scroll border"
               direction={"column"}
               width={{ initial: "95%", md: "70%" }}
               maxHeight="80vh"

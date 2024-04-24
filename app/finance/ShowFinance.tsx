@@ -114,7 +114,7 @@ const ShowFinance = () => {
         <Text>
           {noRecords
             ? "Total Expense Transaction: 3"
-            : `Balance: ${expenseNum}`}
+            : `Total Expense Transaction: ${expenseNum}`}
         </Text>
       </Flex>
     );

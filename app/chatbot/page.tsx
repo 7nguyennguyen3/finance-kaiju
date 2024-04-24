@@ -119,7 +119,7 @@ const TestingPage = () => {
             maxWidth="1000px"
           >
             <button
-              className="absolute top-5 right-5 hover:scale-110"
+              className="sticky self-end top-5 right-5 hover:scale-110"
               onClick={() => openChat(false)}
             >
               <IoClose size="30" />

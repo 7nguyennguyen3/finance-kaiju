@@ -57,7 +57,7 @@ const UpdateRecord = ({ setShowDiv, patchRecord, updateToast }: Props) => {
       >
         <IoClose size={30} />
       </button>
-      <Flex direction="column" gap="3">
+      <Flex direction="column" gap="3" className="w-[90%]">
         <Text>Previous Amount: ${patchRecord.amount}</Text>
         <Text>Previous Category: {patchRecord.category}</Text>
         <input

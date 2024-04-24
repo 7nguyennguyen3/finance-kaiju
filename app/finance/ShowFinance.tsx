@@ -23,6 +23,7 @@ import UpdateRecord from "./UpdateRecord";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loading from "../loading";
 
 type FilterOption = CATEGORY | "ALL";
 
@@ -32,8 +33,10 @@ const ShowFinance = () => {
   const [init, setInit] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   let n1 = init + 8;
-  const { data: records, error } = useFinanceRecords(userEmail!);
+  const { data: records, error, isLoading } = useFinanceRecords(userEmail!);
+
   const [filter, setFilter] = useState<FilterOption>("ALL");
+  const [selectedMonth, setSelectedMonth] = useState("All");
 
   const [showDiv, setShowDiv] = useState(false);
   const [patchRecord, setPatchRecord] = useState<Finance>();
@@ -45,12 +48,7 @@ const ShowFinance = () => {
 
   if (!userEmail) return null;
 
-  if (status === "loading")
-    return (
-      <Text>
-        Loading... <Spinner />
-      </Text>
-    );
+  isLoading && <Loading />;
 
   const notifyGoalupdated = (message: string) =>
     toast(`${message}`, {
@@ -78,7 +76,12 @@ const ShowFinance = () => {
   const deposit =
     records
       ?.filter(
-        (record) => record.category === "INCOME" || record.category === "PROFIT"
+        (record) =>
+          record.category === "INCOME" ||
+          (record.category === "PROFIT" &&
+            new Date(record.date).toLocaleString("default", {
+              month: "long",
+            }) === "January")
       )
       .reduce((total, record) => total + record.amount, 0) || 0;
 
@@ -153,7 +156,12 @@ const ShowFinance = () => {
             <Flex direction="column" gap="2" className="relative">
               <Text>Transaction Summary</Text>
               <Flex justify="between" align="center">
-                <FilterTransaction filter={filter} setFilter={setFilter} />
+                <FilterTransaction
+                  setFilter={setFilter}
+                  filter={filter}
+                  setSelectedMonth={setSelectedMonth}
+                  selectedMonth={selectedMonth}
+                />
                 <Text>
                   {pageCount === 1 ? 1 : currentPage}/
                   {pageCount === 0 ? 1 : pageCount}
@@ -167,7 +175,13 @@ const ShowFinance = () => {
               )}
               {records
                 ?.filter(
-                  (record) => filter === "ALL" || record.category === filter
+                  (record) =>
+                    (filter === "ALL" || record.category === filter) &&
+                    (selectedMonth === "All" ||
+                      selectedMonth ===
+                        new Date(record.date).toLocaleString("default", {
+                          month: "long",
+                        }))
                 )
                 .slice(pageCount === 1 ? 0 : init, n1)
                 .map((record) => (
@@ -175,9 +189,14 @@ const ShowFinance = () => {
                     onClick={() => {
                       setShowDiv(true);
                       setPatchRecord(record);
+                      console.log(
+                        new Date(record.date).toLocaleString("default", {
+                          month: "long",
+                        })
+                      );
                     }}
                     variant="classic"
-                    key="record"
+                    key={record.id}
                     className={classNames(
                       "hover:scale-105 overflow-clip relative hover:border",
                       {

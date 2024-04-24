@@ -109,7 +109,7 @@ const TestingPage = () => {
         </div>
       )}
       {chat && (
-        <div className="absolute h-screen w-screen z-20 bg-black top-0">
+        <div className="absolute h-screen w-screen z-20 bg-black top-0 ">
           <Flex
             direction="column"
             align="center"
@@ -118,7 +118,7 @@ const TestingPage = () => {
             maxWidth="1000px"
           >
             <button
-              className="sticky self-end top-5 right-5 hover:scale-110"
+              className="sticky top-5 self-end mr-5 right hover:scale-110"
               onClick={() => openChat(false)}
             >
               <IoClose size="30" />

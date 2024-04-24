@@ -1,7 +1,14 @@
 "use client";
 import UnauthorizedAccess from "@/components/UnauthorizedAccess";
 import { CATEGORY, Finance } from "@prisma/client";
-import { Button, Flex, Heading, Popover, Spinner } from "@radix-ui/themes";
+import {
+  Button,
+  DropdownMenu,
+  Flex,
+  Heading,
+  Popover,
+  Spinner,
+} from "@radix-ui/themes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import axios from "axios";
@@ -14,7 +21,7 @@ const WelcomeMessage = () => {
   const { data: session, status } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState(0);
-  const [category, setCategory] = useState("FOOD");
+  const [category, setCategory] = useState("");
   const userEmail = session?.user?.email;
   const queryClient = useQueryClient();
   const mutation = useMutation<
@@ -93,30 +100,38 @@ const WelcomeMessage = () => {
                     className="hover:scale-110 p-3 rounded-md bg-transparent border 
                   border-violet-200 focus:outline-none focus:border-2"
                   />
+                  <Popover.Root>
+                    <Popover.Trigger>
+                      <button className="btn-form border-blue-400">
+                        {category === "" ? "Select Category" : category}
+                      </button>
+                    </Popover.Trigger>
+                    <Popover.Content>
+                      {[...Object.values(CATEGORY)].map((category) => (
+                        <Popover.Close key={category}>
+                          <Flex
+                            onClick={() => {
+                              setCategory(category);
+                            }}
+                            direction="column"
+                            className="border border-slate-300 mb-[6px] rounded-md px-3 py-[2px] hover:bg-slate-500"
+                          >
+                            {category.charAt(0) +
+                              category.toLocaleLowerCase().slice(1)}
+                          </Flex>
+                        </Popover.Close>
+                      ))}
+                    </Popover.Content>
+                  </Popover.Root>
 
-                  <select
-                    onChange={(e) => setCategory(e.target.value.toUpperCase())}
-                    className="p-3 rounded-md bg-transparent border 
-                  border-blue-200 focus:outline-none focus:border-2"
-                  >
-                    {Object.values(CATEGORY).map((category) => (
-                      <option
-                        key={category}
-                        className="bg-black hover:text-red-200"
-                      >
-                        {category.charAt(0) +
-                          category.toLocaleLowerCase().slice(1)}
-                      </option>
-                    ))}
-                  </select>
                   <Popover.Close>
                     <button
                       type="submit"
-                      disabled={amount === 0 || isLoading}
+                      disabled={amount === 0 || isLoading || category === ""}
                       className={classNames({
                         "btn-form border-violet-400": true,
                         "opacity-50 cursor-not-allowed hover:scale-100":
-                          amount === 0 || isLoading,
+                          amount === 0 || isLoading || category === "",
                       })}
                     >
                       Submit

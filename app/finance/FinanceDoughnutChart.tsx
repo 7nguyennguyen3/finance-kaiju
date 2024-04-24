@@ -75,7 +75,12 @@ const FinanceDoughnutChart = () => {
       <Box>
         <Box display={{ initial: "none", md: "inline" }}>
           {chartDataSpecs.map((data) => (
-            <Flex width="200px" key="data" align="center" justify="between">
+            <Flex
+              width="200px"
+              key={data.category}
+              align="center"
+              justify="between"
+            >
               <Text>
                 {/* Capitalize Only First Letter */}
                 {data.category.charAt(0) + data.category.toLowerCase().slice(1)}
@@ -92,7 +97,7 @@ const FinanceDoughnutChart = () => {
             {chartDataSpecs.map((data) => (
               <Flex
                 width="100%"
-                key="data"
+                key={data.category}
                 align="center"
                 justify="between"
                 gap="3"

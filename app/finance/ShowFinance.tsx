@@ -1,7 +1,7 @@
 "use client";
 import { useFinanceRecords } from "@/components/hook";
 import { categoryColors } from "@/components/type";
-import { CATEGORY } from "@prisma/client";
+import { CATEGORY, Finance } from "@prisma/client";
 import {
   Badge,
   Box,
@@ -17,8 +17,12 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdOutlineFiberNew } from "react-icons/md";
-import FilterTransaction from "./FilterTransaction";
 import DisplayWhenNoRecord from "./DisplayWhenNoRecord";
+import FilterTransaction from "./FilterTransaction";
+import UpdateRecord from "./UpdateRecord";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type FilterOption = CATEGORY | "ALL";
 
@@ -30,7 +34,9 @@ const ShowFinance = () => {
   let n1 = init + 8;
   const { data: records, error } = useFinanceRecords(userEmail!);
   const [filter, setFilter] = useState<FilterOption>("ALL");
+
   const [showDiv, setShowDiv] = useState(false);
+  const [patchRecord, setPatchRecord] = useState<Finance>();
 
   useEffect(() => {
     setInit(0);
@@ -45,6 +51,18 @@ const ShowFinance = () => {
         Loading... <Spinner />
       </Text>
     );
+
+  const notifyGoalupdated = (message: string) =>
+    toast(`${message}`, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
 
   const filteredRecords = records?.filter(
     (record) => filter === "ALL" || record.category === filter
@@ -115,7 +133,7 @@ const ShowFinance = () => {
             height="100%"
           >
             <button
-              className="m-auto hover:scale-110 "
+              className="m-auto hover:scale-110"
               onClick={() => {
                 setCurrentPage(currentPage - 1);
                 setInit(init - 8);
@@ -132,7 +150,7 @@ const ShowFinance = () => {
                 })}
               />
             </button>
-            <Flex direction="column" gap="2">
+            <Flex direction="column" gap="2" className="relative">
               <Text>Transaction Summary</Text>
               <Flex justify="between" align="center">
                 <FilterTransaction filter={filter} setFilter={setFilter} />
@@ -155,13 +173,17 @@ const ShowFinance = () => {
                 .map((record) => (
                   <Card
                     onClick={() => {
-                      setShowDiv(!showDiv);
+                      setShowDiv(true);
+                      setPatchRecord(record);
                     }}
                     variant="classic"
                     key="record"
-                    className={classNames("hover:scale-105 overflow-clip", {
-                      "bg-slate-900": record.id === maxIdRecord?.id,
-                    })}
+                    className={classNames(
+                      "hover:scale-105 overflow-clip relative hover:border",
+                      {
+                        "bg-slate-900": record.id === maxIdRecord?.id,
+                      }
+                    )}
                   >
                     <Flex justify="between" align="center">
                       <Text>${record.amount}</Text>
@@ -177,6 +199,13 @@ const ShowFinance = () => {
                     </Flex>
                   </Card>
                 ))}
+              {showDiv && (
+                <UpdateRecord
+                  patchRecord={patchRecord}
+                  setShowDiv={setShowDiv}
+                  updateToast={notifyGoalupdated}
+                />
+              )}
             </Flex>
             <button
               disabled={currentPage === pageCount}

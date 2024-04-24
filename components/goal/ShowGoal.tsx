@@ -1,25 +1,14 @@
 "use client";
-import Loading from "@/app/loading";
-import {
-  Flex,
-  Grid,
-  Heading,
-  Link,
-  Spinner,
-  Switch,
-  Text,
-} from "@radix-ui/themes";
+import { Flex, Grid, Heading, Switch, Text } from "@radix-ui/themes";
 import { useSession } from "next-auth/react";
-import { notFound } from "next/navigation";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useGoalRecords } from "../hook";
+import UnauthorizedAccess from "../UnauthorizedAccess";
 import CreateNewGoal from "./CreateNewGoal";
 import GoalCard from "./GoalCard";
 import GoalCategorySwap from "./GoalCategorySwap";
-import FlexBar from "../FlexBar";
-import UnauthorizedAccess from "../UnauthorizedAccess";
 
 const ShowGoal = () => {
   const [current, setCurrent] = useState("current");

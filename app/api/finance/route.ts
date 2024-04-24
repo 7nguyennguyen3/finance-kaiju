@@ -29,6 +29,36 @@ export async function POST(request: NextRequest) {
   );
 }
 
+export async function DELETE(request: NextRequest) {
+  const body = await request.json();
+
+  await prisma.finance.delete({
+    where: {
+      id: body.id,
+    },
+  });
+
+  return NextResponse.json(
+    { message: "Record has been successfully deleted." },
+    { status: 201 }
+  );
+}
+export async function PATCH(request: NextRequest) {
+  const body = await request.json();
+
+  await prisma.finance.update({
+    where: {
+      id: body.id,
+    },
+    data: {
+      amount: body.amount,
+      category: body.category,
+    },
+  });
+
+  return NextResponse.json({ message: "Record has been updated!" });
+}
+
 export async function PUT(request: NextRequest) {
   const body = await request.json();
 

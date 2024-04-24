@@ -139,8 +139,8 @@ const TestingPage = () => {
               {messages.map((message, index) => {
                 const isUserMessage = index % 2 === 0;
                 const className = isUserMessage
-                  ? "chat-message self-end bg-blue-600"
-                  : "chat-message self-start bg-white text-black";
+                  ? "chat-message self-end bg-blue-600 z-[-1]"
+                  : "chat-message self-start bg-white text-black z-[-1]";
 
                 return (
                   <text className={className} key={index}>

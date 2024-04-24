@@ -59,7 +59,7 @@ const NavLinks = () => {
                   href={link.href}
                   className={classNames({
                     "text-indigo-500 font-semibold ": link.href === currentPath,
-                    "text-lg ": true,
+                    "text-lg max-w-[100px]": true,
                   })}
                   onClick={closeMenu}
                 >

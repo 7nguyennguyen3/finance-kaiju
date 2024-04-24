@@ -1,12 +1,13 @@
 import {
-  Box,
   Container,
   Flex,
   Heading,
+  Link,
   Separator,
   Text,
 } from "@radix-ui/themes";
-import React from "react";
+import Image from "next/image";
+import logo from "@/public/logo-no-background.png";
 import {
   FaFacebook,
   FaInstagram,
@@ -25,7 +26,9 @@ const Footer = () => {
       >
         <Flex justify="between">
           <Flex direction="column" gap="3" className="mr-10">
-            <Heading>Logo</Heading>
+            <Link href="/" className="hover:scale-110">
+              <Image src={logo} alt="Logo Icon" width={140} />
+            </Link>
             <Text size="2">Copyright © 2024</Text>
             <Text size="2">All rights reserved</Text>
             <Flex gap="2">

@@ -1,11 +1,12 @@
 "use client";
-import FlexBar from "@/components/FlexBar";
 import UnauthorizedAccess from "@/components/UnauthorizedAccess";
-import { Avatar, Container, Flex, Heading } from "@radix-ui/themes";
+import logo from "@/public/logo-no-background.png";
+import { Avatar, Flex } from "@radix-ui/themes";
 import axios from "axios";
 import classNames from "classnames";
 import delay from "delay";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -67,8 +68,8 @@ const TestingPage = () => {
           >
             Open Chatbot
           </button>
-          <Link href="/" className="top-5 left-5 absolute">
-            <Heading>Logo</Heading>
+          <Link href="/" className="hover:scale-110 top-5 left-5 absolute">
+            <Image src={logo} alt="Logo Icon" width={100} />
           </Link>
           <button
             className="absolute top-5 right-5"
@@ -83,13 +84,11 @@ const TestingPage = () => {
           <Flex
             className="h-screen relative mx-auto p-5"
             direction="column"
-            align="center"
-            justify="center"
             gap="7"
             maxWidth="1000px"
           >
             <button
-              className="absolute top-5 right-5 hover:scale-110"
+              className="self-end top-5 right-5 hover:scale-110"
               onClick={() => openMenu(false)}
             >
               <IoClose size="30" />
@@ -99,8 +98,8 @@ const TestingPage = () => {
                 key={link.label}
                 href={link.href}
                 className={classNames({
-                  "text-indigo-500 font-semibold ": link.href === currentPath,
-                  "text-xl": true,
+                  "text-indigo-500 font-semibold": link.href === currentPath,
+                  "text-lg ml-5 max-w-[100px]": true,
                 })}
               >
                 {link.label}
@@ -126,7 +125,7 @@ const TestingPage = () => {
             </button>
             <Flex
               align="center"
-              className="m-auto h-screen mt-[40px] relative p-5 overflow-y-scroll border"
+              className="m-auto h-screen mt-[40px] relative p-5 overflow-y-scroll"
               direction={"column"}
               width={{ initial: "95%", md: "70%" }}
               maxHeight="80vh"

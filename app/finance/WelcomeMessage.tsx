@@ -1,21 +1,28 @@
 "use client";
 import UnauthorizedAccess from "@/components/UnauthorizedAccess";
 import { CATEGORY, Finance } from "@prisma/client";
-import {
-  Button,
-  DropdownMenu,
-  Flex,
-  Heading,
-  Popover,
-  Spinner,
-} from "@radix-ui/themes";
+import { Button, Flex, Heading, Popover } from "@radix-ui/themes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import axios from "axios";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useState } from "react";
+
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const notifyRecordAdded = (message: string) =>
+  toast(`${message}`, {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+  });
 
 const WelcomeMessage = () => {
   const { data: session, status } = useSession();
@@ -44,6 +51,7 @@ const WelcomeMessage = () => {
       console.log(error);
     },
     onSuccess: () => {
+      notifyRecordAdded("🌱 Record Created");
       queryClient.invalidateQueries();
     },
   });

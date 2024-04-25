@@ -2,16 +2,7 @@
 import { useFinanceRecords } from "@/components/hook";
 import { categoryColors } from "@/components/type";
 import { CATEGORY, Finance } from "@prisma/client";
-import {
-  Badge,
-  Box,
-  Card,
-  Flex,
-  Grid,
-  Heading,
-  Spinner,
-  Text,
-} from "@radix-ui/themes";
+import { Badge, Box, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -21,7 +12,7 @@ import DisplayWhenNoRecord from "./DisplayWhenNoRecord";
 import FilterTransaction from "./FilterTransaction";
 import UpdateRecord from "./UpdateRecord";
 
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "../loading";
 
@@ -103,7 +94,7 @@ const ShowFinance = () => {
 
     return (
       <Flex
-        className="p-5 border rounded-md"
+        className="p-5 border-2 rounded-md"
         display={display}
         direction="column"
       >
@@ -128,7 +119,7 @@ const ShowFinance = () => {
       <FinanceInfo display={{ initial: "flex", sm: "none" }} />
       <Grid columns={{ initial: "1", sm: "35fr 65fr" }}>
         <FinanceInfo display={{ initial: "none", sm: "flex" }} />
-        <Box height="570px" className="border rounded-md">
+        <Box height="570px" className="border-2 rounded-md">
           <Grid
             columns="1fr 8fr 1fr"
             className="py-5"

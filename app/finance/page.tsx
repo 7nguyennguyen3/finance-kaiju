@@ -2,11 +2,23 @@ import { Box, Container, Flex, Heading } from "@radix-ui/themes";
 import FinanceDoughnutChart from "./FinanceDoughnutChart";
 import ShowFinance from "./ShowFinance";
 import WelcomeMessage from "./WelcomeMessage";
-import Link from "next/link";
+import { ToastContainer } from "react-toastify";
 
 const FinanceTrackerPage = () => {
   return (
     <Container className="px-5">
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <Flex
         justify="center"
         align="center"

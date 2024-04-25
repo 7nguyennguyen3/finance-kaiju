@@ -1,8 +1,8 @@
-import { Box, Container, Flex, Heading } from "@radix-ui/themes";
+import { Box, Container, Flex } from "@radix-ui/themes";
+import { ToastContainer } from "react-toastify";
 import FinanceDoughnutChart from "./FinanceDoughnutChart";
 import ShowFinance from "./ShowFinance";
 import WelcomeMessage from "./WelcomeMessage";
-import { ToastContainer } from "react-toastify";
 
 const FinanceTrackerPage = () => {
   return (

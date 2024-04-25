@@ -74,16 +74,18 @@ const ShowFinance = () => {
               month: "long",
             }) === "January")
       )
-      .reduce((total, record) => total + record.amount, 0) || 0;
+      .reduce((total, record) => total + record.amount, 0)
+      .toFixed(2) || "0.00";
 
   const expense =
     records
       ?.filter(
         (record) => record.category !== "INCOME" && record.category !== "PROFIT"
       )
-      .reduce((total, record) => total + record.amount, 0) || 0;
+      .reduce((total, record) => total + record.amount, 0)
+      .toFixed(2) || "0.00";
 
-  const balance = deposit - expense;
+  const balance = (parseFloat(deposit) - parseFloat(expense)).toFixed(2);
 
   const expenseNum = records?.filter(
     (record) => record.category !== "INCOME" && record.category !== "PROFIT"

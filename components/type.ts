@@ -40,3 +40,18 @@ export const categoryColors: Record<CATEGORY, RadixUIColor> = {
   INCOME: "amber",
   PROFIT: "orange",
 };
+
+export const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];

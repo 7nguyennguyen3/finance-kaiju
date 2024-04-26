@@ -1,8 +1,17 @@
 import { Finance } from "@prisma/client";
 import { create } from "zustand";
 
-// Define your store
+type State = {
+  finances: Finance[];
+  addFinance: (finance: Finance) => void;
+  balance: number;
+  deposit: number;
+  expenseNum: number;
+};
+
 export const useStore = create((set) => ({
-  updatedRecord: [],
-  setUpdatedRecord: (records: Finance) => set({ updatedRecord: records }),
+  finances: [],
+  balance: 0,
+  deposit: 0,
+  expenseNum: 0,
 }));

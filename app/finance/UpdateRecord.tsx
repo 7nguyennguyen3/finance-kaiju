@@ -48,7 +48,7 @@ const UpdateRecord = ({ setShowDiv, patchRecord, updateToast }: Props) => {
       direction="column"
       align="center"
       justify="center"
-      className="absolute mx-auto max-w-[300px] max-h-[400px] h-[90vh] w-[90vw] 
+      className="absolute mx-auto max-w-[400px] max-h-[400px] h-[90vh] w-[90vw] 
       bottom-0 right-0 bg-black border"
     >
       <button
@@ -57,9 +57,11 @@ const UpdateRecord = ({ setShowDiv, patchRecord, updateToast }: Props) => {
       >
         <IoClose size={30} />
       </button>
-      <Flex direction="column" gap="3" className="w-[90%]">
-        <Text>Previous Amount: ${patchRecord.amount}</Text>
-        <Text>Previous Category: {patchRecord.category}</Text>
+      <Flex direction="column" gap="3" className="w-[80%]">
+        <Flex direction="column" className="mb-5">
+          <Text>Previous Amount: ${patchRecord.amount}</Text>
+          <Text>Previous Category: {patchRecord.category}</Text>
+        </Flex>
         <input
           onChange={(e) => setAmount(parseFloat(e.target.value))}
           type="number"

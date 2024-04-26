@@ -1,6 +1,6 @@
 "use client";
 import { useFinanceRecords } from "@/components/hook";
-import { categoryColors } from "@/components/type";
+import { categoryColors, months } from "@/components/type";
 import { CATEGORY, Finance } from "@prisma/client";
 import { Badge, Box, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import classNames from "classnames";
@@ -12,11 +12,14 @@ import DisplayWhenNoRecord from "./DisplayWhenNoRecord";
 import FilterTransaction from "./FilterTransaction";
 import UpdateRecord from "./UpdateRecord";
 
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "../loading";
 
 type FilterOption = CATEGORY | "ALL";
+
+const currentMonthIndex = new Date().getMonth();
+const currentMonthName = months[currentMonthIndex];
 
 const ShowFinance = () => {
   const { data: session, status } = useSession();
@@ -27,7 +30,7 @@ const ShowFinance = () => {
   const { data: records, error, isLoading } = useFinanceRecords(userEmail!);
 
   const [filter, setFilter] = useState<FilterOption>("ALL");
-  const [selectedMonth, setSelectedMonth] = useState("All");
+  const [selectedMonth, setSelectedMonth] = useState(currentMonthName);
 
   const [showDiv, setShowDiv] = useState(false);
   const [patchRecord, setPatchRecord] = useState<Finance>();
@@ -39,7 +42,7 @@ const ShowFinance = () => {
 
   if (!userEmail) return null;
 
-  isLoading && <Loading />;
+  isLoading || (status === "loading" && <Loading />);
 
   const notifyGoalupdated = (message: string) =>
     toast(`${message}`, {
@@ -68,11 +71,11 @@ const ShowFinance = () => {
     records
       ?.filter(
         (record) =>
-          record.category === "INCOME" ||
-          (record.category === "PROFIT" &&
+          (record.category === "INCOME" || record.category === "PROFIT") &&
+          (selectedMonth === "All" ||
             new Date(record.date).toLocaleString("default", {
               month: "long",
-            }) === "January")
+            }) === selectedMonth)
       )
       .reduce((total, record) => total + record.amount, 0)
       .toFixed(2) || "0.00";
@@ -80,7 +83,13 @@ const ShowFinance = () => {
   const expense =
     records
       ?.filter(
-        (record) => record.category !== "INCOME" && record.category !== "PROFIT"
+        (record) =>
+          record.category !== "INCOME" &&
+          record.category !== "PROFIT" &&
+          (selectedMonth === "All" ||
+            new Date(record.date).toLocaleString("default", {
+              month: "long",
+            }) === selectedMonth)
       )
       .reduce((total, record) => total + record.amount, 0)
       .toFixed(2) || "0.00";
@@ -99,12 +108,18 @@ const ShowFinance = () => {
         className="p-5 border-2 rounded-md"
         display={display}
         direction="column"
+        gap="2"
       >
-        <Heading>{noRecords ? "Balance: $-15" : `Balance: ${balance}`}</Heading>
-        <Text className="font-semibold" size="4">
+        <Heading color="blue">
+          {selectedMonth === "All" ? "2024" : selectedMonth} Financial Overview
+        </Heading>
+        <Heading size="6" color={balance < "0" ? "red" : "gray"}>
+          {noRecords ? "Balance: $-15" : `Balance: ${balance}`}
+        </Heading>
+        <Text className="font-semibold" size="4" color="grass">
           Deposit: ${deposit}
         </Text>
-        <Text className="font-semibold" size="4">
+        <Text className="font-semibold" size="4" color="crimson">
           {noRecords ? "Expense: $15" : `Expense: ${expense}`}
         </Text>
         <Text>
@@ -124,7 +139,7 @@ const ShowFinance = () => {
         <Box height="570px" className="border-2 rounded-md">
           <Grid
             columns="1fr 8fr 1fr"
-            className="py-5"
+            className="py-5 relative"
             justify="center"
             height="100%"
           >
@@ -146,7 +161,7 @@ const ShowFinance = () => {
                 })}
               />
             </button>
-            <Flex direction="column" gap="2" className="relative">
+            <Flex direction="column" gap="2">
               <Text>Transaction Summary</Text>
               <Flex justify="between" align="center">
                 <FilterTransaction

@@ -131,7 +131,10 @@ const TestingPage = () => {
               maxHeight="80vh"
               gap="5"
             >
-              <text className="rounded-[20px] p-5 my-2 self-start text-sm max-w-[90%] sm:max-w-[70%] relative bg-white text-black">
+              <text
+                className="rounded-[20px] p-5 my-2 self-start text-sm 
+              max-w-[90%] sm:max-w-[70%] relative bg-white text-black"
+              >
                 Hello! How can I assist you?
                 <FcAssistant className="absolute bottom-[-10px] left-[-10px] text-[30px]" />
               </text>

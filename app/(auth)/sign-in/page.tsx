@@ -157,7 +157,8 @@ const SignInPage = () => {
                 <button
                   onClick={async () => {
                     signIn("google", {
-                      callbackUrl: "https://goal-tracker-nine-iota.vercel.app",
+                      callbackUrl:
+                        "https://goal-tracker-nine-iota.vercel.app/sign-in",
                     });
                   }}
                   type="button"

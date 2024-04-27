@@ -24,7 +24,7 @@ const mobileLinks = [
   { label: "Sign Out", href: "/sign-out" },
 ];
 
-const TestingPage = () => {
+const ChatBotPage = () => {
   const [messages, setMessage] = useState<string[]>([]);
   const [userMessage, setUserMessage] = useState("");
   const [sessionId, setSessionId] = useState("");
@@ -210,4 +210,4 @@ const TestingPage = () => {
   );
 };
 
-export default TestingPage;
+export default ChatBotPage;

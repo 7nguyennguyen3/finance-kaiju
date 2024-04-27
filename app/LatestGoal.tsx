@@ -11,13 +11,14 @@ interface Props {
   notifyGoalupdated: any;
 }
 
-const dummyGoals = [
+export const dummyGoals = [
   {
     id: 1,
     title: "Dummy Goal",
     description:
       "You currently don't have any goal, please add a goal to remove dummy goals",
     status: "INCOMPLETE",
+    updatedAt: new Date(),
   },
   {
     id: 2,
@@ -25,13 +26,15 @@ const dummyGoals = [
     description:
       "You currently don't have any goal, please add a goal to remove dummy goals",
     status: "INCOMPLETE",
+    updatedAt: new Date(),
   },
   {
     id: 3,
     title: "Dummy Goal",
     description:
       "You currently don't have any goal, please add a goal to remove dummy goals",
-    status: "INCOMPLETE",
+    status: "COMPLETE",
+    updatedAt: new Date(),
   },
 ];
 
@@ -64,15 +67,15 @@ const LatestGoal = ({ userEmail, notifyGoalupdated }: Props) => {
 
           <GoalCategorySwap current={current} setCurrent={setCurrent} />
         </Flex>
-        {goals &&
-          goals!.length <= 0 &&
-          dummyGoals.map((goal) => (
-            <GoalCard
-              key={goal.id}
-              goal={goal}
-              color={goal.status === "COMPLETE" ? "grass" : "crimson"}
-            />
-          ))}
+        {(goals && goals!.length <= 0) ||
+          (userEmail === undefined &&
+            dummyGoals.map((goal) => (
+              <GoalCard
+                key={goal.id}
+                goal={goal}
+                color={goal.status === "COMPLETE" ? "grass" : "crimson"}
+              />
+            )))}
         {goals
           ?.filter(
             (goal) =>

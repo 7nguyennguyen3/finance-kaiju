@@ -45,10 +45,12 @@ const SignInPage = () => {
         {status === "authenticated" && (
           <>
             <Heading>Welcome back, {session.user!.name}!</Heading>
-            <Text>
-              We are glad to see you again! What would you like to explore
-              today?
-            </Text>
+            <Box maxWidth="400px">
+              <Text>
+                We are glad to see you again! What would you like to explore
+                today?
+              </Text>
+            </Box>
             <Link href="/finance">
               <button className="btn-form border-lime-200 w-[180px]">
                 Explore Finance

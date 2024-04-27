@@ -88,7 +88,7 @@ const TestingPage = () => {
             maxWidth="1000px"
           >
             <button
-              className="self-end top-5 right-5 hover:scale-110"
+              className="self-end top-5 right-5 hover:scale-110 z-30"
               onClick={() => openMenu(false)}
             >
               <IoClose size="30" />

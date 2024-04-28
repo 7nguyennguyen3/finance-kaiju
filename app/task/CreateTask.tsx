@@ -107,7 +107,7 @@ const CreateTask = () => {
                   height={300}
                   width={300}
                   alt="uploaded image"
-                  className="border-2 border-white rounded-md max-w-lg"
+                  className="border-2 border-white rounded-md max-w-[300px] max-h-[300px]"
                 />
               )}
               <form

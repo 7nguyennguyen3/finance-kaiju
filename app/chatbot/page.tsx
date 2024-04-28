@@ -118,7 +118,7 @@ const ChatBotPage = () => {
             maxWidth="1000px"
           >
             <button
-              className="sticky top-5 self-end mr-5 right hover:scale-110"
+              className="sticky top-5 self-end mr-5 right hover:scale-110 z-50"
               onClick={() => openChat(false)}
             >
               <IoClose size="30" />

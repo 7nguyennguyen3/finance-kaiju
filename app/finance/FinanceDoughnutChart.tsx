@@ -55,7 +55,7 @@ const FinanceDoughnutChart = () => {
         direction="column"
         gap="2"
       >
-        <Heading>Expense Chart</Heading>
+        <Heading>{userEmail === undefined ? "" : "Expense Chart"}</Heading>
         <Doughnut
           data={{
             datasets: [

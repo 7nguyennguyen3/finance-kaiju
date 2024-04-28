@@ -13,6 +13,18 @@ import { FcAssistant } from "react-icons/fc";
 import ReactMarkdown from "react-markdown";
 import FinanceDoughnutChart from "./finance/FinanceDoughnutChart";
 
+import {
+  ArcElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  Tooltip,
+} from "chart.js";
+import { Doughnut, Pie } from "react-chartjs-2";
+
+ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale);
+
 const UnauthenticatedUserDisplay = () => {
   const [slideShow, setSlideShow] = useState(1);
 
@@ -34,18 +46,9 @@ const UnauthenticatedUserDisplay = () => {
         <Heading>Preview of our Features </Heading>
         <FaArrowDown size={25} className="text-blue-400" />
       </Flex>
-      <Grid gap="3" columns="5fr 90fr 5fr" className="border w-full p-5">
-        <button
-          onClick={() => setSlideShow(slideShow - 1)}
-          className={classNames("m-auto", {
-            "opacity-10 cursor-not-allowed": slideShow === 1,
-          })}
-          disabled={slideShow === 1}
-        >
-          <FaChevronCircleLeft size={30} />
-        </button>
+      <Flex gap="3" className="border w-full p-5" direction="column">
         <Flex
-          className="w-full h-[600px] m-auto overflow-y-scroll"
+          className="w-full h-[700px] m-auto overflow-y-scroll"
           direction="column"
           gap="3"
         >
@@ -67,7 +70,37 @@ const UnauthenticatedUserDisplay = () => {
               ))}
             </Grid>
           )}
-          {slideShow === 2 && <FinanceDoughnutChart />}
+          {slideShow === 2 && (
+            <Flex
+              justify="center"
+              align="center"
+              className="max-w-[400px] max-h-[500px] w-[100vw] m-auto"
+              direction="column"
+              gap="3"
+            >
+              <Heading>Expense Chart</Heading>
+              <Doughnut
+                className="mx-auto"
+                data={{
+                  labels: ["Food", "Entertainment", "Gift"],
+                  datasets: [
+                    {
+                      label: "Total Amount",
+                      data: [100, 100, 100],
+                      backgroundColor: [
+                        "rgb(135, 206, 235)",
+                        "rgb(75, 0, 130)",
+                        "rgb(0, 0, 255)",
+                      ],
+                      borderColor: "#fEfEfE",
+                      hoverBorderWidth: 5,
+                    },
+                  ],
+                }}
+              />
+            </Flex>
+          )}
+
           {slideShow === 3 && (
             <Flex className="w-full p-5" direction="column">
               {dummyMessages.map((message, index) => {
@@ -97,16 +130,27 @@ const UnauthenticatedUserDisplay = () => {
             </Flex>
           )}
         </Flex>
-        <button
-          disabled={slideShow === 3}
-          onClick={() => setSlideShow(slideShow + 1)}
-          className={classNames("m-auto", {
-            "opacity-10 cursor-not-allowed": slideShow === 3,
-          })}
-        >
-          <FaChevronCircleRight size={30} />
-        </button>
-      </Grid>
+        <Flex align="center" justify="center" gap="3">
+          <button
+            onClick={() => setSlideShow(slideShow - 1)}
+            className={classNames({
+              "opacity-10 cursor-not-allowed": slideShow === 1,
+            })}
+            disabled={slideShow === 1}
+          >
+            <FaChevronCircleLeft size={30} />
+          </button>
+          <button
+            disabled={slideShow === 3}
+            onClick={() => setSlideShow(slideShow + 1)}
+            className={classNames({
+              "opacity-10 cursor-not-allowed": slideShow === 3,
+            })}
+          >
+            <FaChevronCircleRight size={30} />
+          </button>
+        </Flex>
+      </Flex>
     </Flex>
   );
 };

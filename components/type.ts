@@ -80,13 +80,6 @@ export const homepageDummyGoals = [
     updatedAt: new Date(),
   },
   {
-    id: 3,
-    title: "Travel to a new Country",
-    description: "Travel to a new country once every year or two.",
-    status: "COMPLETE",
-    updatedAt: new Date(),
-  },
-  {
     id: 4,
     title: "Learn to swim",
     description: "Able to float on water and swim at least 1 lap.",

@@ -74,7 +74,7 @@ const UnauthenticatedUserDisplay = () => {
             <Flex
               justify="center"
               align="center"
-              className="max-w-[400px] max-h-[500px] w-[100vw] m-auto"
+              className="w-full h-full overflow-scroll m-auto"
               direction="column"
               gap="3"
             >
@@ -82,7 +82,6 @@ const UnauthenticatedUserDisplay = () => {
               <Doughnut
                 className="mx-auto"
                 data={{
-                  labels: ["Food", "Entertainment", "Gift"],
                   datasets: [
                     {
                       label: "Total Amount",
@@ -98,6 +97,23 @@ const UnauthenticatedUserDisplay = () => {
                   ],
                 }}
               />
+              <Grid columns="2" gap="2" align="center" mt="3">
+                <Text size="4">Food</Text>
+                <div
+                  className="w-[40px] h-[20px] rounded-md ml-auto"
+                  style={{ background: "rgb(135, 206, 235)" }}
+                />{" "}
+                <Text size="4">Entertainment</Text>
+                <div
+                  className="w-[40px] h-[20px] rounded-md ml-auto"
+                  style={{ background: "rgb(75, 0, 130)" }}
+                />{" "}
+                <Text size="4">Gift</Text>
+                <div
+                  className="w-[40px] h-[20px] rounded-md ml-auto"
+                  style={{ background: "rgb(0, 0, 255)" }}
+                />
+              </Grid>
             </Flex>
           )}
 
@@ -106,8 +122,8 @@ const UnauthenticatedUserDisplay = () => {
               {dummyMessages.map((message, index) => {
                 const isBotMessage = index % 2 !== 0;
                 const className = isBotMessage
-                  ? "chat-message self-end bg-blue-600 z-[-1]"
-                  : "chat-message self-start bg-white text-black z-[-1]";
+                  ? "rounded-[20px] p-4 max-w-[90%] sm:max-w-[80%] my-2 text-[13px] relative self-end bg-blue-600 z-[-1]"
+                  : "rounded-[20px] p-4 max-w-[90%] sm:max-w-[80%] my-2 text-[13px] relative self-start bg-white text-black z-[-1]";
 
                 return (
                   <text className={className} key={index}>

@@ -8,7 +8,7 @@ const SignOutPage = () => {
   const { status } = useSession();
 
   return (
-    <FlexBar gap="3" className="h-screen">
+    <FlexBar gap="3" className="h-screen max-w-[400px]">
       {status === "unauthenticated" ? (
         <>
           <Heading align="center">

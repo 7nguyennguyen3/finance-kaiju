@@ -31,6 +31,8 @@ const FinanceDoughnutChart = () => {
   const userEmail = session?.user?.email;
   const { data: records } = useFinanceRecords(userEmail!);
 
+  if (!userEmail) return null;
+
   const chartData = chartDataSpecs.map((spec) => {
     return records
       ?.filter((record) => record.category === spec.category)

@@ -11,7 +11,6 @@ import {
 } from "react-icons/fa";
 import { FcAssistant } from "react-icons/fc";
 import ReactMarkdown from "react-markdown";
-import FinanceDoughnutChart from "./finance/FinanceDoughnutChart";
 
 import {
   ArcElement,
@@ -21,7 +20,7 @@ import {
   LinearScale,
   Tooltip,
 } from "chart.js";
-import { Doughnut, Pie } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale);
 
@@ -29,8 +28,12 @@ const UnauthenticatedUserDisplay = () => {
   const [slideShow, setSlideShow] = useState(1);
 
   return (
-    <Flex className="p-5" direction="column" gap="5">
-      <Flex className="border max-w-[400px] p-5" direction="column" gap="5">
+    <Flex className="p-3" direction="column" gap="5">
+      <Flex
+        className="border rounded-lg max-w-[400px] p-5"
+        direction="column"
+        gap="5"
+      >
         <text className="text-7xl font-bold">The Finance Kaiju</text>
         <Text size="5">
           Set goals, track financial transactions, and explore a variety of
@@ -46,12 +49,12 @@ const UnauthenticatedUserDisplay = () => {
         <Heading>Preview of our Features </Heading>
         <FaArrowDown size={25} className="text-blue-400" />
       </Flex>
-      <Flex gap="3" className="border w-full p-5" direction="column">
-        <Flex
-          className="w-full h-[700px] m-auto overflow-y-scroll"
-          direction="column"
-          gap="3"
-        >
+      <Flex
+        gap="3"
+        className="border rounded-lg w-full overflow-y-scroll p-5"
+        direction="column"
+      >
+        <Flex className="w-full h-[700px] m-auto" direction="column" gap="3">
           <Heading color="indigo">
             {slideShow === 1
               ? "Goal App"
@@ -74,7 +77,7 @@ const UnauthenticatedUserDisplay = () => {
             <Flex
               justify="center"
               align="center"
-              className="w-full h-full overflow-scroll m-auto"
+              className="w-full h-full m-auto"
               direction="column"
               gap="3"
             >
@@ -118,7 +121,7 @@ const UnauthenticatedUserDisplay = () => {
           )}
 
           {slideShow === 3 && (
-            <Flex className="w-full p-5" direction="column">
+            <Flex className="w-full p-3" direction="column">
               {dummyMessages.map((message, index) => {
                 const isBotMessage = index % 2 !== 0;
                 const className = isBotMessage

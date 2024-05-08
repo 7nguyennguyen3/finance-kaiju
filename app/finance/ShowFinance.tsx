@@ -15,6 +15,7 @@ import UpdateRecord from "./UpdateRecord";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "../loading";
+import FinanceDoughnutChart from "./FinanceDoughnutChart";
 
 type FilterOption = CATEGORY | "ALL";
 
@@ -57,7 +58,11 @@ const ShowFinance = () => {
     });
 
   const filteredRecords = records?.filter(
-    (record) => filter === "ALL" || record.category === filter
+    (record) =>
+      (filter === "ALL" || record.category === filter) &&
+      (selectedMonth === "All" ||
+        new Date(record.date).toLocaleString("default", { month: "long" }) ===
+          selectedMonth)
   );
   const pageCount = Math.ceil(filteredRecords?.length! / 8);
   const maxIdRecord = records?.reduce(
@@ -100,6 +105,20 @@ const ShowFinance = () => {
     (record) => record.category !== "INCOME" && record.category !== "PROFIT"
   ).length;
 
+  const highExpenseRecord = records
+    ?.filter(
+      (record) =>
+        record.category !== "INCOME" &&
+        record.category !== "PROFIT" &&
+        (selectedMonth === "All" ||
+          new Date(record.date).toLocaleString("default", { month: "long" }) ===
+            selectedMonth)
+    )
+    .reduce(
+      (max, record) => (record.amount > max.amount ? record : max),
+      records[0]
+    );
+
   const FinanceInfo = ({ display }: any) => {
     const noRecords = records && records.length === 0;
 
@@ -110,9 +129,9 @@ const ShowFinance = () => {
         direction="column"
         gap="2"
       >
-        <Heading color="blue">
+        <text className="blue-sky-gradient text-3xl font-extrabold">
           {selectedMonth === "All" ? "2024" : selectedMonth} Financial Overview
-        </Heading>
+        </text>
         <Heading size="6" color={balance < "0" ? "red" : "gray"}>
           {noRecords ? "Balance: $-15" : `Balance: ${balance}`}
         </Heading>
@@ -127,6 +146,11 @@ const ShowFinance = () => {
             ? "Total Expense Transaction: 3"
             : `Total Expense Transaction: ${expenseNum}`}
         </Text>
+        <text className="red-orange-gradient font-semibold">
+          {noRecords
+            ? "Highest Expense: $15"
+            : `Highest Expense Transaction: ${highExpenseRecord?.amount.toFixed(2)}`}
+        </text>
       </Flex>
     );
   };
@@ -255,6 +279,9 @@ const ShowFinance = () => {
           </Grid>
         </Box>
       </Grid>
+      <Flex width="100%">
+        <FinanceDoughnutChart filteredRecords={filteredRecords} />
+      </Flex>
     </Flex>
   );
 };

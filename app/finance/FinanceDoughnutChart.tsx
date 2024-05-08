@@ -26,7 +26,11 @@ const chartDataSpecs: { category: CATEGORY; color: string }[] = [
   { category: "MISCELLANEOUS", color: "rgb(255, 255, 0)" },
 ];
 
-const FinanceDoughnutChart = () => {
+const FinanceDoughnutChart = ({
+  filteredRecords,
+}: {
+  filteredRecords: any;
+}) => {
   const { data: session } = useSession();
   const userEmail = session?.user?.email;
   const { data: records } = useFinanceRecords(userEmail!);
@@ -34,9 +38,11 @@ const FinanceDoughnutChart = () => {
   if (!userEmail) return null;
 
   const chartData = chartDataSpecs.map((spec) => {
-    return records
-      ?.filter((record) => record.category === spec.category)
-      .reduce((total, record) => total + record.amount, 0);
+    return filteredRecords
+      ? filteredRecords
+          .filter((record: any) => record.category === spec.category)
+          .reduce((total: any, record: any) => total + record.amount, 0)
+      : 0;
   });
 
   return (
@@ -48,6 +54,7 @@ const FinanceDoughnutChart = () => {
       className="p-5 m-auto"
       direction={{ initial: "column", md: "row" }}
       overflow="clip"
+      mt="5"
     >
       <Flex
         width="100%"
@@ -55,9 +62,10 @@ const FinanceDoughnutChart = () => {
         align="center"
         maxHeight="400px"
         direction="column"
-        gap="2"
       >
-        <Heading>{userEmail === undefined ? "" : "Expense Chart"}</Heading>
+        <text className="font-extrabold text-3xl red-orange-gradient">
+          {userEmail === undefined ? "" : "Expense Chart"}
+        </text>
         <Doughnut
           data={{
             datasets: [
@@ -69,7 +77,7 @@ const FinanceDoughnutChart = () => {
                     : chartData,
                 backgroundColor: chartDataSpecs.map((color) => color.color),
                 borderColor: "#fEfEfE",
-                hoverBorderWidth: 5,
+                hoverBorderWidth: 3,
               },
             ],
           }}

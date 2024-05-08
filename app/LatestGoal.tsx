@@ -44,8 +44,8 @@ const LatestGoal = ({ userEmail, notifyGoalupdated }: Props) => {
 
   return (
     <Box
-      className="border border-gray-400 rounded-md overflow-y-scroll"
-      height={{ initial: "300px", xs: "400px", sm: "600px" }}
+      className="border-green-pop-out rounded-lg overflow-y-scroll"
+      height={{ initial: "500px", sm: "600px" }}
     >
       <Flex gap="5" direction="column" className="p-5">
         <Flex

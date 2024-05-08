@@ -1,6 +1,7 @@
 import { useFinanceRecords } from "@/components/hook";
 import Loading from "./loading";
 import { Flex, Heading, Text } from "@radix-ui/themes";
+import Link from "next/link";
 
 interface Props {
   userEmail: any;
@@ -54,11 +55,13 @@ const FinanceSummary = ({ userEmail, selectedMonth }: Props) => {
     <Flex
       justify="center"
       align="center"
-      className="border rounded-md border-gray-400"
+      className="border-blue-pop-out rounded-lg"
       height={{ initial: "100%", xs: "400px", sm: "600px" }}
     >
       <Flex gap="5" direction="column" className="p-5" align="center">
-        <Heading color="blue">{selectedMonth} Summary</Heading>
+        <text className="blue-sky-gradient font-bold text-3xl">
+          {selectedMonth} Summary
+        </text>
         <Heading color={balance < "0" ? "red" : "gray"}>
           Balance: ${balance}
         </Heading>
@@ -68,9 +71,11 @@ const FinanceSummary = ({ userEmail, selectedMonth }: Props) => {
           Highest Expense: $
           {!highExpenseRecord ? "0.00" : highExpenseRecord?.amount}
         </Text>
-        <button className="p-5 border border-blue-400 rounded-md">
-          Go to Finance
-        </button>
+        <Link href="/finance">
+          <button className="p-5 border border-blue-400 rounded-md">
+            Go to Finance
+          </button>
+        </Link>
       </Flex>
     </Flex>
   );

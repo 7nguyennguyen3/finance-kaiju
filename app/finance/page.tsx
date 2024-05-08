@@ -1,6 +1,5 @@
 import { Box, Container, Flex } from "@radix-ui/themes";
 import { ToastContainer } from "react-toastify";
-import FinanceDoughnutChart from "./FinanceDoughnutChart";
 import ShowFinance from "./ShowFinance";
 import WelcomeMessage from "./WelcomeMessage";
 
@@ -30,9 +29,6 @@ const FinanceTrackerPage = () => {
         <Box className="w-full">
           <ShowFinance />
         </Box>
-        <Flex width="100%">
-          <FinanceDoughnutChart />
-        </Flex>
       </Flex>
     </Container>
   );

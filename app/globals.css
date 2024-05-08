@@ -26,4 +26,23 @@
   .chat-message {
     @apply rounded-[20px] p-4 max-w-[90%] sm:max-w-[70%] my-2 text-sm relative;
   }
+  .blue-sky-gradient {
+    @apply bg-gradient-to-r from-blue-500 to-sky-500 bg-clip-text text-transparent;
+  }
+
+  .red-orange-gradient {
+    @apply bg-gradient-to-r from-red-500 to-yellow-500 bg-clip-text text-transparent;
+  }
+
+  .green-sky-gradient {
+    @apply bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent;
+  }
+
+  .border-blue-pop-out {
+    @apply border border-t-4 border-l-4 border-t-sky-500 border-l-sky-500 border-blue-500;
+  }
+
+  .border-green-pop-out {
+    @apply border border-b-4 border-r-4 border-b-teal-500 border-r-teal-500 border-teal-500;
+  }
 }

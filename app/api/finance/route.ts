@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 type FinanceData = {
   amount: number;
   category: CATEGORY;
+  description?: string;
   userEmail?: string;
   credentialsEmail?: string;
 };
@@ -15,6 +16,7 @@ export async function POST(request: NextRequest) {
   const data: FinanceData = {
     amount: body.amount,
     category: body.category,
+    description: body.description,
     ...(body.userEmail && { userEmail: body.userEmail }),
     ...(body.credentialsEmail && { credentialsEmail: body.credentialsEmail }),
   };
@@ -53,6 +55,7 @@ export async function PATCH(request: NextRequest) {
     data: {
       amount: body.amount,
       category: body.category,
+      description: body.description,
     },
   });
 

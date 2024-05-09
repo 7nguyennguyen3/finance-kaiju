@@ -103,6 +103,7 @@ model Finance {
   id               Int          @id @default(autoincrement())
   category         CATEGORY
   amount           Float
+  description      String?
   date             DateTime     @default(now())
   userEmail        String?
   user             User?        @relation("UserToFinance", fields: [userEmail], references: [email])

@@ -230,9 +230,9 @@ const ShowFinance = () => {
                     variant="classic"
                     key={record.id}
                     className={classNames(
-                      "hover:scale-105 overflow-clip border-r-2 bg-gradient-to-r from-gray-900 to-gray-600 relative hover:border",
+                      "hover:scale-105 hover:cursor-pointer overflow-clip border-r-2 bg-gradient-to-r from-gray-900 to-gray-600 relative hover:border",
                       {
-                        "bg-gradient-to-r from-gray-900 to-blue-600":
+                        "bg-gradient-to-r from-gray-900 to-blue-700":
                           record.id === maxIdRecord?.id,
                       }
                     )}

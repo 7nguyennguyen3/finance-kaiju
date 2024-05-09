@@ -13,8 +13,9 @@ interface Props {
 }
 
 const UpdateRecord = ({ setShowDiv, patchRecord, updateToast }: Props) => {
-  const [category, setCategory] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [category, setCategory] = useState(patchRecord.category);
+  const [amount, setAmount] = useState(patchRecord.amount);
+  const [description, setDescription] = useState(patchRecord.description);
   const [isLoading, setIsLoading] = useState(false);
 
   const queryClient = useQueryClient();
@@ -24,6 +25,7 @@ const UpdateRecord = ({ setShowDiv, patchRecord, updateToast }: Props) => {
         id: patchRecord.id,
         amount,
         category,
+        description,
       });
     },
     onSuccess: () => {
@@ -48,8 +50,8 @@ const UpdateRecord = ({ setShowDiv, patchRecord, updateToast }: Props) => {
       direction="column"
       align="center"
       justify="center"
-      className="absolute mx-auto max-w-[400px] max-h-[400px] h-[90vh] w-[90vw] 
-      bottom-0 right-0 bg-black border"
+      className="absolute mx-auto max-w-[400px] max-h-[600px] h-[90vh] w-[90vw] 
+      bottom-0 right-0 bg-black border overflow-y-scroll"
     >
       <button
         className="top-5 right-5 absolute"
@@ -58,20 +60,27 @@ const UpdateRecord = ({ setShowDiv, patchRecord, updateToast }: Props) => {
         <IoClose size={30} />
       </button>
       <Flex direction="column" gap="3" className="w-[80%]">
-        <Flex direction="column" className="mb-5">
-          <Text>Previous Amount: ${patchRecord.amount}</Text>
-          <Text>Previous Category: {patchRecord.category}</Text>
+        <Flex direction="column" className="mb-3 gap-2">
+          <label htmlFor="amount">Previous Amount:</label>
+          <input
+            id="amount"
+            onChange={(e) => setAmount(parseFloat(e.target.value))}
+            type="number"
+            min="0"
+            step="0.01"
+            value={amount}
+            className="hover:scale-110 p-3 rounded-md bg-transparent border 
+border-violet-200 focus:outline-none focus:border-2"
+          />
+          <label htmlFor="description">Previous Description:</label>
+          <textarea
+            id="description"
+            onChange={(e) => setDescription(e.target.value)}
+            value={description}
+            className="hover:scale-110 p-3 rounded-md bg-transparent border 
+border-violet-200 focus:outline-none focus:border-2"
+          />
         </Flex>
-        <input
-          onChange={(e) => setAmount(parseFloat(e.target.value))}
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="New Amount"
-          className="hover:scale-110 p-3 rounded-md bg-transparent border 
-  border-violet-200 focus:outline-none focus:border-2"
-        />
-
         <Popover.Root>
           <Popover.Trigger>
             <Flex
@@ -102,6 +111,7 @@ const UpdateRecord = ({ setShowDiv, patchRecord, updateToast }: Props) => {
             </Popover.Close>
           </Popover.Content>
         </Popover.Root>
+
         <button
           type="button"
           disabled={amount === 0 || isLoading || category === ""}

@@ -29,6 +29,7 @@ const WelcomeMessage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
   const userEmail = session?.user?.email;
   const queryClient = useQueryClient();
   const mutation = useMutation<
@@ -36,6 +37,7 @@ const WelcomeMessage = () => {
     {
       amount: number;
       category: string;
+      description?: string;
       credentialsEmail: string | null | undefined;
       userEmail: string;
     },
@@ -88,6 +90,7 @@ const WelcomeMessage = () => {
                     mutation.mutate({
                       amount: amount,
                       category: category,
+                      description: description,
                       ...emailData,
                     });
                     setIsLoading(false);
@@ -107,6 +110,13 @@ const WelcomeMessage = () => {
                     placeholder="Amount"
                     className="hover:scale-110 p-3 rounded-md bg-transparent border 
                   border-violet-200 focus:outline-none focus:border-2"
+                  />
+                  <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Description (optional)"
+                    className="hover:scale-110 p-3 rounded-md bg-transparent border 
+    border-violet-200 focus:outline-none focus:border-2"
                   />
                   <Popover.Root>
                     <Popover.Trigger>

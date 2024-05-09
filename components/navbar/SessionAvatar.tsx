@@ -1,8 +1,7 @@
 "use client";
-import { DropdownMenu, Flex, Avatar, Text, Box } from "@radix-ui/themes";
+import { Avatar, Box, DropdownMenu, Flex, Text } from "@radix-ui/themes";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import React from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 
 const SessionAvatar = () => {
@@ -40,7 +39,7 @@ const SessionAvatar = () => {
           <DropdownMenu.Trigger>
             <Box pb={{ initial: "2", sm: "0" }}>
               <Avatar
-                src={session.user!.image!}
+                src={session.user?.image || ""}
                 fallback="?"
                 radius="full"
                 size="2"

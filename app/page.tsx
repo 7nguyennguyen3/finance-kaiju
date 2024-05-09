@@ -22,8 +22,6 @@ export default function Home() {
   const { data: session, status } = useSession();
   const userEmail = session?.user?.email;
 
-  status === "loading" && <Loading />;
-
   const notifyGoalupdated = (message: string) =>
     toast(`${message}`, {
       position: "bottom-right",

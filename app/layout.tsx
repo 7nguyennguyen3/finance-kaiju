@@ -15,8 +15,9 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Goal Tracker",
-  description: "An app to track your goals",
+  title: "The Finance Kaiju",
+  description:
+    "An app to track your goals, finance, and talk to a friendly chatbot!",
 };
 
 export default function RootLayout({

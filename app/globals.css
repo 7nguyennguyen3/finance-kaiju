@@ -24,7 +24,7 @@
   }
 
   .chat-message {
-    @apply rounded-[20px] p-4 max-w-[90%] sm:max-w-[70%] my-2 text-sm relative;
+    @apply rounded-[20px] p-4 max-w-[90%] sm:max-w-[70%] my-2 text-sm relative cursor-pointer;
   }
   .blue-sky-gradient {
     @apply bg-gradient-to-r from-blue-500 to-sky-500 bg-clip-text text-transparent;
@@ -45,4 +45,15 @@
   .border-green-pop-out {
     @apply border border-b-4 border-r-4 border-b-teal-500 border-r-teal-500 border-teal-500;
   }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

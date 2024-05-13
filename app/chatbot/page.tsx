@@ -33,6 +33,7 @@ const ChatBotPage = () => {
   const [chat, openChat] = useState(true);
   const [menu, openMenu] = useState(false);
   const currentPath = usePathname();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -125,7 +126,7 @@ const ChatBotPage = () => {
             </button>
             <Flex
               align="center"
-              className="m-auto h-screen mt-[40px] relative p-5 overflow-y-scroll"
+              className="m-auto h-screen mt-[40px] relative p-5 overflow-y-scroll cursor-all-scroll hide-scrollbar"
               direction={"column"}
               width={{ initial: "95%", md: "70%" }}
               maxHeight="80vh"
@@ -141,7 +142,7 @@ const ChatBotPage = () => {
               {messages.map((message, index) => {
                 const isUserMessage = index % 2 === 0;
                 const className = isUserMessage
-                  ? "chat-message self-end bg-blue-600 z-[-1]"
+                  ? "chat-message self-end bg-blue-600 z-[-1] cursor-pointer"
                   : "chat-message self-start bg-white text-black z-[-1]";
 
                 return (
@@ -171,15 +172,14 @@ const ChatBotPage = () => {
               justify="center"
               gap="3"
             >
-              <textarea
-                value={userMessage}
-                onChange={(e) => setUserMessage(e.target.value)}
-                placeholder="Type your question here!"
-                className="p-3 rounded-2xl w-[90%] bg-transparent border"
-                rows={2}
-              />
-              <button
-                onClick={async () => {
+              <form
+                className="w-full flex items-center gap-2"
+                onSubmit={async (e) => {
+                  if (isLoading) {
+                    return;
+                  }
+                  e.preventDefault();
+                  setIsLoading(true);
                   setMessage((prev) => [...prev, userMessage]);
                   setUserMessage("");
                   await delay(800);
@@ -195,13 +195,23 @@ const ChatBotPage = () => {
                       newMessages[newMessages.length - 1] = data.text;
                       return newMessages;
                     });
+                    setIsLoading(false);
                   } catch (error) {
                     console.log(error);
+                    setIsLoading(false);
                   }
                 }}
               >
-                <IoSend className="text-[20px] text-blue-300" />
-              </button>
+                <input
+                  value={userMessage}
+                  onChange={(e) => setUserMessage(e.target.value)}
+                  placeholder="Type your question here!"
+                  className="p-3 rounded-2xl w-[90%] bg-transparent border h-[60px]"
+                />
+                <button disabled={isLoading}>
+                  <IoSend className="text-[20px] text-blue-300" />
+                </button>
+              </form>
             </Flex>
           </Flex>
         </div>

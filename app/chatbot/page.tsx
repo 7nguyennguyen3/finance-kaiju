@@ -73,7 +73,7 @@ const ChatBotPage = () => {
             href="/"
             className="hover:scale-110 top-5 left-5 absolute bg-white rounded-xl p-2"
           >
-            <Image src={logo} alt="Logo Icon" width={60} />
+            <Image src={logo} alt="Logo Icon" width={60} height={28} />
           </Link>
           <button
             className="absolute top-5 right-5"

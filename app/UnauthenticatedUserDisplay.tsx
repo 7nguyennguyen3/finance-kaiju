@@ -30,7 +30,7 @@ const UnauthenticatedUserDisplay = () => {
   return (
     <Flex className="p-3" direction="column" gap="5">
       <Flex
-        className="border rounded-lg max-w-[400px] p-5"
+        className="border-pop-out rounded-lg max-w-[400px] p-5 "
         direction="column"
         gap="5"
       >
@@ -51,7 +51,7 @@ const UnauthenticatedUserDisplay = () => {
       </Flex>
       <Flex
         gap="3"
-        className="border rounded-lg w-full overflow-y-scroll p-5"
+        className="border rounded-lg w-full overflow-y-auto p-5"
         direction="column"
       >
         <Flex className="w-full h-[700px] m-auto" direction="column" gap="3">

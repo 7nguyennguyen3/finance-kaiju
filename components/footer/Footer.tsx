@@ -30,7 +30,7 @@ const Footer = () => {
                 src="/kaiju-logo.png"
                 alt="Logo Icon"
                 width={100}
-                height={100}
+                height={30}
                 className="bg-white rounded-xl p-2"
               />
             </Link>

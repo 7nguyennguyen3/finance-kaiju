@@ -45,6 +45,10 @@
   .border-green-pop-out {
     @apply border border-b-4 border-r-4 border-b-teal-500 border-r-teal-500 border-teal-500;
   }
+
+  .border-pop-out {
+    @apply border border-b-4 border-r-4;
+  }
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

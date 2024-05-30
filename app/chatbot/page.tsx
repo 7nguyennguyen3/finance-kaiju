@@ -1,6 +1,6 @@
 "use client";
 import UnauthorizedAccess from "@/components/UnauthorizedAccess";
-import logo from "@/public/logo-no-background.png";
+import logo from "@/public/kaiju-logo.png";
 import { Avatar, Flex } from "@radix-ui/themes";
 import axios from "axios";
 import classNames from "classnames";
@@ -69,8 +69,11 @@ const ChatBotPage = () => {
           >
             Open Chatbot
           </button>
-          <Link href="/" className="hover:scale-110 top-5 left-5 absolute">
-            <Image src={logo} alt="Logo Icon" width={100} />
+          <Link
+            href="/"
+            className="hover:scale-110 top-5 left-5 absolute bg-white rounded-xl p-2"
+          >
+            <Image src={logo} alt="Logo Icon" width={60} />
           </Link>
           <button
             className="absolute top-5 right-5"

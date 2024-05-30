@@ -1,8 +1,8 @@
 import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/Navbar";
+import { constructMetadata } from "@/components/utils";
 import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import AuthProvider from "./(auth)/Provider";
 import "./globals.css";
@@ -14,11 +14,7 @@ const roboto = Roboto({
   variable: "--font-roboto",
 });
 
-export const metadata: Metadata = {
-  title: "The Finance Kaiju",
-  description:
-    "An app to track your goals, finance, and talk to a friendly chatbot!",
-};
+export const metadata = constructMetadata();
 
 export default function RootLayout({
   children,

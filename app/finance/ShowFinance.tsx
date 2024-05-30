@@ -129,9 +129,9 @@ const ShowFinance = () => {
         direction="column"
         gap="2"
       >
-        <text className="blue-sky-gradient text-3xl font-extrabold">
+        <p className="blue-sky-gradient text-3xl font-extrabold">
           {selectedMonth === "All" ? "2024" : selectedMonth} Financial Overview
-        </text>
+        </p>
         <Heading size="6" color={balance < "0" ? "red" : "gray"}>
           {noRecords ? "Balance: $-15" : `Balance: ${balance}`}
         </Heading>
@@ -146,11 +146,11 @@ const ShowFinance = () => {
             ? "Total Expense Transaction: 3"
             : `Total Expense Transaction: ${expenseNum}`}
         </Text>
-        <text className="red-orange-gradient font-semibold">
+        <p className="red-orange-gradient font-semibold">
           {noRecords
             ? "Highest Expense: $15"
             : `Highest Expense Transaction: ${highExpenseRecord?.amount.toFixed(2)}`}
-        </text>
+        </p>
       </Flex>
     );
   };

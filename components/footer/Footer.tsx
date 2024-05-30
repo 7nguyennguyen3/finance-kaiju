@@ -7,7 +7,6 @@ import {
   Text,
 } from "@radix-ui/themes";
 import Image from "next/image";
-import logo from "@/public/logo-no-background.png";
 import {
   FaFacebook,
   FaInstagram,
@@ -27,7 +26,13 @@ const Footer = () => {
         <Flex justify="between">
           <Flex direction="column" gap="3" className="mr-10">
             <Link href="/" className="hover:scale-110">
-              <Image src={logo} alt="Logo Icon" width={140} />
+              <Image
+                src="/kaiju-logo.png"
+                alt="Logo Icon"
+                width={100}
+                height={100}
+                className="bg-white rounded-xl p-2"
+              />
             </Link>
             <Text size="2">Copyright © 2024</Text>
             <Text size="2">All rights reserved</Text>

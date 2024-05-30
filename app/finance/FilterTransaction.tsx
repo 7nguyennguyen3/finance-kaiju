@@ -29,7 +29,7 @@ const FilterTransaction = ({
   const [monthFilter, setMonthFilter] = useState(false);
 
   return (
-    <Flex gap="2">
+    <Flex gap="2" direction={{ initial: "column", xs: "row" }}>
       <Popover.Root>
         <Popover.Trigger>
           <Flex

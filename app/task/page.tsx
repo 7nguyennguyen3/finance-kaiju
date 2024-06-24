@@ -8,14 +8,17 @@ import { useSession } from "next-auth/react";
 const DailyTaskPage = () => {
   const { data: session, status } = useSession();
 
-  return session?.user?.email ? (
-    <Container>
-      <FlexBar gap="3">
-        <CreateTask />
-        <ShowTask />
-      </FlexBar>
-    </Container>
-  ) : (
+  if (session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL)
+    return (
+      <Container>
+        <FlexBar gap="3">
+          <CreateTask />
+          <ShowTask />
+        </FlexBar>
+      </Container>
+    );
+
+  return (
     <Container className="py-3 px-5 mb-20 h-screen justify-center">
       <h1 className="text-3xl text-center">
         This page is currently unavailable.

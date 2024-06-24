@@ -83,7 +83,7 @@ const PrivacyPolicyPage = () => {
         <h2 className="text-xl font-semibold mb-3">Contact Us</h2>
         <p>
           If you have any questions about this privacy policy, you can contact
-          us at: [Your Contact Information].
+          us at: financekaiju@gmail.com
         </p>
       </div>
     </Container>

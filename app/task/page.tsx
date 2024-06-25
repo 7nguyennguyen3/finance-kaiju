@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 const DailyTaskPage = () => {
   const { data: session, status } = useSession();
 
-  if (session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL)
+  if (session?.user?.email === "etermic123@gmail.com")
     return (
       <Container>
         <FlexBar gap="3">

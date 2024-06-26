@@ -21,3 +21,13 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json(createdTask, { status: 201 });
 }
+
+export async function GET(request: NextRequest) {
+  const tasks = await prisma.tASK.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return NextResponse.json(tasks, { status: 200 });
+}

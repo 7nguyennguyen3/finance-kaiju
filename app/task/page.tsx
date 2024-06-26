@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import { Container } from "@radix-ui/themes";
 import ShowTask from "./ShowTask";
 import FlexBar from "@/components/FlexBar";
@@ -6,9 +7,22 @@ import CreateTask from "./CreateTask";
 import { useSession } from "next-auth/react";
 
 const DailyTaskPage = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
-  if (session?.user?.email === "etermic123@gmail.com")
+  useEffect(() => {
+    if (session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+      setIsAuthorized(true);
+    } else {
+      setIsAuthorized(false);
+    }
+  }, [session]);
+
+  if (isAuthorized === null) {
+    return <div>Loading...</div>; // Or any other loading state
+  }
+
+  if (isAuthorized) {
     return (
       <Container>
         <FlexBar gap="3">
@@ -17,6 +31,7 @@ const DailyTaskPage = () => {
         </FlexBar>
       </Container>
     );
+  }
 
   return (
     <Container className="py-3 px-5 mb-20 h-screen justify-center">
@@ -26,7 +41,6 @@ const DailyTaskPage = () => {
     </Container>
   );
 };
-
 export const dynamic = "force-dynamic";
 
 export default DailyTaskPage;

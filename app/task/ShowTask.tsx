@@ -1,13 +1,20 @@
 import prisma from "@/prisma/client";
 import { Badge, Box, Card, Flex, Grid, Heading, Text } from "@radix-ui/themes";
+import axios from "axios";
 import Image from "next/image";
 
+interface Task {
+  id: string;
+  imgUrl: string;
+  createdAt: string; // or Date, depending on how you handle dates
+  status: string;
+  title: string;
+  description: string;
+}
+
 const ShowTask = async () => {
-  const tasks = await prisma.tASK.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const response = await axios.get("/api/task");
+  const tasks: Task[] = response.data;
 
   return (
     <Flex direction="row" align="center" justify="center">
